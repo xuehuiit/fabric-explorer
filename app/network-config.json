@@ -1,0 +1,16 @@
+{
+	"network-config": {
+		"orderer": {
+			"url": "grpc://172.16.10.82:7050"
+		},
+		"org1": {
+			"name": "PeerOrg1",
+			"mspid": "PeerOrg1",
+			"ca": "http://172.16.10.81:19900",
+			"peer1": {
+				"requests": "grpc://172.16.10.81:7051",
+				"events": "grpc://172.16.10.81:7053"
+			}
+		}
+	}
+}

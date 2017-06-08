@@ -1,0 +1,12 @@
+{
+   "channelName":"testChannel1",
+   "keyValueStore":"/tmp/fabric-client-kvs",
+   "orgsList": ["org1"],
+   "eventWaitTime":"30000",
+   "users":[
+      {
+         "username":"admin",
+         "secret":"adminpw"
+      }
+   ]
+}
