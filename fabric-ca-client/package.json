@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "asn1": "git+https://github.com/mcavage/node-asn1.git",
+    "bn.js": "^4.11.3",
+    "elliptic": "^6.2.3",
+    "fs-extra": ">=0.30.0 <0.31.0",
+    "js-sha3": "^0.5.1",
+    "jsrsasign": "^6.2.2",
+    "jssha": "^2.1.0",
+    "nconf": "^0.8.4",
+    "sjcl": "1.0.3",
+    "sjcl-codec": "0.1.1",
+    "url": "^0.11.0",
+    "util": "^0.10.3",
+    "winston": "^2.2.0"
+  },
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://github.com/hyperledger/fabric/blob/master/LICENSE"
+    }
+  ],
+  "main": "index.js",
+  "name": "fabric-ca-client",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "gerrit",
+    "url": "http://gerrit.hyperledger.org/r/fabric-sdk-node"
+  },
+  "version": "1.0.0-alpha.1"
+}
