@@ -1,0 +1,16 @@
+{ 
+	"request-timeout" : 3000,
+	"tcert-batch-size" : 10,
+	"crypto-hash-algo": "SHA2",
+	"crypto-keysize": 256,
+	"crypto-hsm": false,
+	"crypto-suite-software": {
+		"EC": "fabric-client/lib/impl/CryptoSuite_ECDSA_AES.js"
+	},
+	"crypto-suite-hsm": {
+		"EC": "fabric-client/lib/impl/bccsp_pkcs11.js"
+	},
+	"key-value-store": "fabric-client/lib/impl/FileKeyValueStore.js",
+	"nonce-size" : 24,
+	"grpc-ssl-cipher-suites": "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384"
+}
