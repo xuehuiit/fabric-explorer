@@ -2,17 +2,65 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d2a712c-4322-48be-a485-1bb7bc25289d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/create-channel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/install-chaincode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/instantiate-chaincode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/invoke-transaction.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/join-channel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/query.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/runApp.sh" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helper.js" afterPath="$PROJECT_DIR$/app/helper.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/network-config.json" afterPath="$PROJECT_DIR$/app/network-config.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.json" afterPath="$PROJECT_DIR$/config.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/channel/mychannel.tx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/channel/twoorgs.orderer.block" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/fabric_v1_nodesample_nontls.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/exploer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/helper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/network-config.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/channel/configtx.yaml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/ca/4d4a772215168b6594c87e82650e438f1f37c303e14b5f9e6f3ee06cc2bb823a_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/ca/ordererOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/msp/admincerts/ordererOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/msp/cacerts/ordererOrg0.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/msp/cacerts/ordererOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/msp/cacerts/peerOrg0.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/msp/cacerts/peerOrg1.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/msp/cacerts/peerOrg2.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/msp/signcerts/ordererOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/admincerts/ordererOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/cacerts/ordererOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/keystore/9707908924f92bbaa5c8a6961c260dc4992ad2fd7043cccf3f3948ffbea989e1_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/signcerts/ordererOrg1orderer1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/ca/d8a5b3cac1b821f6e4b487ceaf1fd239cdcfc310894150908b90f05e9179556a_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/ca/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/msp/admincerts/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/msp/cacerts/peerOrg0.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/msp/cacerts/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/msp/signcerts/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/admincerts/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/cacerts/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/keystore/5e67f35124df6a9124bf3659365b8476af4090f73c82c9b626efc15f12739d5d_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/signcerts/peerOrg1Peer1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/admincerts/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/cacerts/peerOrg1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/keystore/707c2b3c02ddd36a6c4a17771769b54a3dc9066e05be1e76582cabd65c110e4e_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/signcerts/peerOrg1Peer2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/ca/96bdb57f4efbdcf201a269899eb47e2a73fbb728ae14d47d0d5afb75ddea71de_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/ca/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/msp/admincerts/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/msp/cacerts/peerOrg1.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/msp/cacerts/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/msp/signcerts/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer1/admincerts/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer1/cacerts/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer1/keystore/26d8ff264dd3956922ff23e2fa2bca59817df114630f95adce343388f9fffe7a_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer1/signcerts/peerOrg2Peer1-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer2/admincerts/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer2/cacerts/peerOrg2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer2/keystore/cc80356f4275390b2090bf0a62b26d3c5e9420c022d196267990eed7014bfcec_sk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/crypto-config/peerOrganizations/peerOrg2/peers/peerOrg2Peer2/signcerts/peerOrg2Peer2-cert.pem" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/docker-compose.yaml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifacts/src/github.com/example_cc/example_cc.go" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -356,12 +404,12 @@
       <workItem from="1496800474177" duration="9832000" />
       <workItem from="1496846565199" duration="4933000" />
       <workItem from="1496884855637" duration="3405000" />
-      <workItem from="1496888625309" duration="521000" />
+      <workItem from="1496888625309" duration="737000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56706000" />
+    <option name="totallyTimeSpent" value="56922000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
