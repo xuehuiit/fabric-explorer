@@ -1,0 +1,125 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "fabric-client@>=1.0.0-alpha <1.0.0-alpha.10",
+        "scope": null,
+        "escapedName": "fabric-client",
+        "name": "fabric-client",
+        "rawSpec": ">=1.0.0-alpha <1.0.0-alpha.10",
+        "spec": ">=1.0.0-alpha <1.0.0-alpha.10",
+        "type": "range"
+      },
+      "/home/nodejsworkspace/fabric_v1_nodesample_nontls"
+    ]
+  ],
+  "_from": "fabric-client@>=1.0.0-alpha <1.0.0-alpha.10",
+  "_id": "fabric-client@1.0.0-alpha.1",
+  "_inCache": true,
+  "_location": "/fabric-client",
+  "_nodeVersion": "6.9.4",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/fabric-client-1.0.0-alpha.1.tgz_1493404868306_0.5466685846913606"
+  },
+  "_npmUser": {
+    "name": "jimthematrix",
+    "email": "jim_the_matrix@hotmail.com"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "fabric-client@>=1.0.0-alpha <1.0.0-alpha.10",
+    "scope": null,
+    "escapedName": "fabric-client",
+    "name": "fabric-client",
+    "rawSpec": ">=1.0.0-alpha <1.0.0-alpha.10",
+    "spec": ">=1.0.0-alpha <1.0.0-alpha.10",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/fabric-client/-/fabric-client-1.0.0-alpha.1.tgz",
+  "_shasum": "333eeba3e48a0b7977a6f833e08ad4886d19a613",
+  "_shrinkwrap": null,
+  "_spec": "fabric-client@>=1.0.0-alpha <1.0.0-alpha.10",
+  "_where": "/home/nodejsworkspace/fabric_v1_nodesample_nontls",
+  "dependencies": {
+    "aes-js": "^1.0.0",
+    "asn1": "git+https://github.com/mcavage/node-asn1.git",
+    "asn1js": "^1.2.12",
+    "bn.js": "^4.11.3",
+    "callsite": "^1.0.0",
+    "crypto": "0.0.3",
+    "elliptic": "^6.2.3",
+    "events": "^1.1.0",
+    "fs": "0.0.2",
+    "fs-extra": ">=0.30.0 <0.31.0",
+    "grpc": ">=1.1.2 <1.3.0",
+    "hashtable": "^2.0.2",
+    "js-sha3": "^0.5.1",
+    "json-stringify-safe": "^5.0.1",
+    "jsrsasign": "6.2.2",
+    "jssha": "^2.1.0",
+    "klaw": "1.3.1",
+    "lodash": "^4.15.0",
+    "nconf": "^0.8.4",
+    "node-dir": "^0.1.16",
+    "node.extend": "^1.1.5",
+    "path": "^0.12.7",
+    "pkcs11js": "^1.0.6",
+    "pkijs": "^1.3.19",
+    "promise-settle": "^0.3.0",
+    "sjcl": "1.0.3",
+    "sjcl-codec": "0.1.1",
+    "sleep": "^3.0.1",
+    "stream-buffers": "3.0.1",
+    "tar-stream": "1.5.2",
+    "url": "^0.11.0",
+    "util": "^0.10.3",
+    "winston": "^2.2.0"
+  },
+  "description": "This package encapsulates the APIs to interact with Peers and Orderers of the Fabric network to install and instantiate chaincodes, send transaction invocations and perform chaincode queries. There is a separate package that interacts with the Fabric memb",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "333eeba3e48a0b7977a6f833e08ad4886d19a613",
+    "tarball": "https://registry.npmjs.org/fabric-client/-/fabric-client-1.0.0-alpha.1.tgz"
+  },
+  "engine-strict": true,
+  "engineStrict": true,
+  "engines": {
+    "node": ">=6.9.0 <7.0",
+    "npm": ">=3.10.0"
+  },
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://github.com/hyperledger/fabric/blob/master/LICENSE"
+    }
+  ],
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "hyperledger-ci",
+      "email": "collab-it+hyp+ci@linuxfoundation.org"
+    },
+    {
+      "name": "jimthematrix",
+      "email": "jim_the_matrix@hotmail.com"
+    }
+  ],
+  "name": "fabric-client",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "gerrit",
+    "url": "http://gerrit.hyperledger.org/r/fabric-sdk-node"
+  },
+  "scripts": {
+    "test": "node test/unit/headless-tests.js"
+  },
+  "version": "1.0.0-alpha.1"
+}
