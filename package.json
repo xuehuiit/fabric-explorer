@@ -2,7 +2,7 @@
   "name": "fabric-explorer",
   "version": "0.0.1",
   "description": "fabric-explorer",
-  "main": "app/app.js",
+  "main": "main.js",
   "keywords": [
     "fabric-client sample app",
     "v1.0 fabric nodesdk sample",
@@ -13,6 +13,8 @@
     "npm": ">=3.10.10"
   },
   "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
     "fabric-ca-client": "file:./fabric-ca-client",
     "fabric-client": "file:./fabric-client",
     "log4js": "^0.6.38",

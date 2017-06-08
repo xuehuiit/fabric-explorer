@@ -31,6 +31,9 @@ var hfc = require('fabric-client');
 hfc.addConfigFile(path.join(__dirname, 'network-config.json'));
 var ORGS = hfc.getConfigSetting('network-config');
 
+var clients = {};
+var channels = {};
+
 logger.setLevel('DEBUG');
 
 module.exports.getSubmitter = function(client, userOrg) {
@@ -102,4 +105,12 @@ module.exports.getTxId = function() {
 	return utils.buildTransactionID({
 		length: 12
 	});
+};
+
+module.exports.getChannelForOrg = function(org) {
+    return channels[org];
+};
+
+module.exports.getClientForOrg = function(org) {
+    return clients[org];
 };
