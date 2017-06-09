@@ -25,8 +25,6 @@ module.exports.getAllOrgs= function(){
 
 }
 
-console.info(getAllOrgs())
-
 
 /**
  * 获取所有的账本
