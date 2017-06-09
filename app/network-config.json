@@ -1,15 +1,96 @@
 {
 	"network-config": {
 		"orderer": {
-			"url": "grpc://172.16.10.82:7050"
+			"url": "grpc://192.168.23.52:5005"
 		},
 		"org1": {
 			"name": "PeerOrg1",
 			"mspid": "PeerOrg1",
-			"ca": "http://172.16.10.81:19900",
+			"ca": "http://192.168.23.52:7054",
 			"peer1": {
-				"requests": "grpc://172.16.10.81:7051",
-				"events": "grpc://172.16.10.81:7053"
+				"requests": "grpc://192.168.23.52:8061",
+				"events": "grpc://192.168.23.52:6051"
+			}
+		},
+		"org2": {
+			"name": "PeerOrg2",
+			"mspid": "PeerOrg2",
+			"ca": "http://192.168.23.52:7055",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8062",
+				"events": "grpc://192.168.23.52:6052"
+			}
+		},
+		"org3": {
+			"name": "PeerOrg3",
+			"mspid": "PeerOrg3",
+			"ca": "http://192.168.23.52:7056",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8063",
+				"events": "grpc://192.168.23.52:6053"
+			}
+		},
+		"org4": {
+			"name": "PeerOrg4",
+			"mspid": "PeerOrg4",
+			"ca": "http://192.168.23.52:7057",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8064",
+				"events": "grpc://192.168.23.52:6054"
+			}
+		},
+		"org5": {
+			"name": "PeerOrg5",
+			"mspid": "PeerOrg5",
+			"ca": "http://192.168.23.52:7058",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8065",
+				"events": "grpc://192.168.23.52:6055"
+			}
+		},
+		"org6": {
+			"name": "PeerOrg6",
+			"mspid": "PeerOrg6",
+			"ca": "http://192.168.23.52:7059",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8066",
+				"events": "grpc://192.168.23.52:6056"
+			}
+		},
+		"org7": {
+			"name": "PeerOrg7",
+			"mspid": "PeerOrg7",
+			"ca": "http://192.168.23.52:7060",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8067",
+				"events": "grpc://192.168.23.52:6057"
+			}
+		},
+		"org8": {
+			"name": "PeerOrg8",
+			"mspid": "PeerOrg8",
+			"ca": "http://192.168.23.52:7061",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8068",
+				"events": "grpc://192.168.23.52:6058"
+			}
+		},
+		"org9": {
+			"name": "PeerOrg9",
+			"mspid": "PeerOrg9",
+			"ca": "http://192.168.23.52:7062",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8069",
+				"events": "grpc://192.168.23.52:6059"
+			}
+		},
+		"org10": {
+			"name": "PeerOrg10",
+			"mspid": "PeerOrg10",
+			"ca": "http://192.168.23.52:7063",
+			"peer1": {
+				"requests": "grpc://192.168.23.52:8070",
+				"events": "grpc://192.168.23.52:6060"
 			}
 		}
 	}

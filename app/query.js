@@ -166,7 +166,7 @@ function getChannels(){
         adminUser = admin;
         return chain.queryInfo();
     }).then(blockchainInfo =>{
-        return chain.queryChannels(new Peer('grpc://172.16.10.81:7051'));
+        return chain.queryChannels(new Peer(ORGS['org1'].peer1.requests));
         // return chain.queryChannels();
     }).then( ch => {
         console.info(ch);
