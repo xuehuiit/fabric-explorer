@@ -16,10 +16,10 @@
 
     <div id="wrapper">
 
-        <?php require_once 'nav_menu.php';?>
+        <% include nav_menu.ejs %>
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
-        <?php require_once 'nav_head.php';?>
+            <% include nav_head.ejs %>
         </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
@@ -130,8 +130,7 @@
             </div>
         </div>
         
-        <?php require_once 'nav_foot.php';?>
-
+        <% include nav_foot.ejs %>
         </div>
         </div>
 

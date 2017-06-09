@@ -8,19 +8,19 @@
     
     <title>旺链FABRIC浏览器</title>
 
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="source/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="source/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/animate.css" rel="stylesheet">
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/style.css" rel="stylesheet">
- <link href="<?php echo SOURCE_ROOT;?>/grap/vis.css" rel="stylesheet">
+    <link href="source/inspinia/css/animate.css" rel="stylesheet">
+    <link href="source/inspinia/css/style.css" rel="stylesheet">
+ <link href="source/grap/vis.css" rel="stylesheet">
     
 </head>
 
 <body>
     <div id="wrapper">
        
-       <?php require_once 'nav_menu.php';?>
+       <% include nav_menu.ejs %>
 
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
@@ -380,34 +380,33 @@
                 <!--  -->
                 
                 </div>
-                <?php require_once 'nav_foot.php';?>
-        </div>
+                <% include nav_foot.ejs %>        </div>
         
     </div>
 
     <!-- Mainly scripts -->
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/jquery-3.1.1.min.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/bootstrap.min.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="source/inspinia/js/jquery-3.1.1.min.js"></script>
+    <script src="source/inspinia/js/bootstrap.min.js"></script>
+    <script src="source/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="source/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Flot -->
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/flot/jquery.flot.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/flot/jquery.flot.time.js"></script>
+    <script src="source/inspinia/js/plugins/flot/jquery.flot.js"></script>
+    <script src="source/inspinia/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="source/inspinia/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="source/inspinia/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="source/inspinia/js/plugins/flot/jquery.flot.time.js"></script>
         
     <!-- Custom and plugin javascript -->
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/inspinia.js"></script>
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/pace/pace.min.js"></script>
+    <script src="source/inspinia/js/inspinia.js"></script>
+    <script src="source/inspinia/js/plugins/pace/pace.min.js"></script>
 
     <!-- Flot demo data -->
     <!-- 
-    <script src="<?php echo SOURCE_ROOT;?>/inspinia/js/demo/flot-demo.js"></script>
+    <script src="source/inspinia/js/demo/flot-demo.js"></script>
     -->
     
-    <script src="<?php echo SOURCE_ROOT;?>/grap/vis.js"></script>
+    <script src="source/grap/vis.js"></script>
 
    
 <script type="text/javascript">

@@ -5,22 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>旺链浏览器</title>
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/animate.css" rel="stylesheet">
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/style.css" rel="stylesheet">
-    <link href="<?php echo SOURCE_ROOT;?>/grap/vis.css" rel="stylesheet">
+    <link href="source/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="source/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="source/inspinia/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="source/inspinia/css/animate.css" rel="stylesheet">
+    <link href="source/inspinia/css/style.css" rel="stylesheet">
+    <link href="source/grap/vis.css" rel="stylesheet">
 </head>
+
 
 <body>
 
     <div id="wrapper">
 
-        <?php require_once 'nav_menu.php';?>
+        <% include nav_menu.ejs %>
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
-        <?php require_once 'nav_head.php';?>
+        <% include nav_head.ejs %>
         </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
@@ -81,7 +82,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><a href="<?php echo APP_WEB_INDEX_ROOT;?>/inspinia/peer_detail">1</a></td>
+                                    <td><a href="peer_detail">1</a></td>
                                      <td>1</td>
                                     <td>1</td>
                                     <td>Mark</td>
@@ -108,36 +109,34 @@
             </div>
         </div>
         
-        <?php require_once 'nav_foot.php';?>
-
+        <% include nav_foot.ejs %>
         </div>
         </div>
 
 
 
     <!-- Mainly scripts -->
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/jquery-3.1.1.min.js"></script>
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/bootstrap.min.js"></script>
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script href="source/inspinia/js/jquery-3.1.1.min.js"></script>
+    <script href="source/inspinia/js/bootstrap.min.js"></script>
+    <script href="source/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script href="source/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Peity -->
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
+    <script href="source/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
 
     <!-- Custom and plugin javascript -->
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/inspinia.js"></script>
+    <script href="source/inspinia/js/inspinia.js"></script>
     
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/pace/pace.min.js"></script>
+    <script href="source/inspinia/js/plugins/pace/pace.min.js"></script>
 
     <!-- iCheck -->
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/iCheck/icheck.min.js"></script>
+    <script href="source/inspinia/js/plugins/iCheck/icheck.min.js"></script>
 
     <!-- Peity -->
-    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/demo/peity-demo.js"></script>
+    <script href="source/inspinia/js/demo/peity-demo.js"></script>
     
-    
-    
-    <script src="<?php echo SOURCE_ROOT;?>/grap/vis.js"></script>
+
+    <script src="source/grap/vis.js"></script>
     
     
 <script type="text/javascript">
@@ -170,10 +169,7 @@
   var network = new vis.Network(container, data, options);
 </script>
     
-    
-    
-    
-   
+
 
 </body>
 
