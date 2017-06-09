@@ -1,12 +1,13 @@
 /**
+ *
  * Created by shouhewu on 6/8/17.
+ *
  */
 var express = require("express");
 var path = require('path');
 var app = express();
 
 //app.use(express.static('source'));
-
 //app.use('/source', express.static('source'));
 app.use('/source', express.static('public'));
 
@@ -20,8 +21,6 @@ app.set("view engine", 'ejs');
 app.set('views', __dirname + '/views');
 
 
-
-
 // =======================   控制器绑定  ===================
 
 
@@ -31,6 +30,15 @@ app.get("/", function(req, res) {
         name: 'tinyphp',item_index_active:'1'
     });
 });
+
+
+//首页
+app.get("/index", function(req, res) {
+    res.render('index.ejs', {
+        name: 'tinyphp',item_index_active:'1'
+    });
+});
+
 
 
 //组织列表
@@ -93,6 +101,8 @@ var server = app.listen(8080, function() {
     console.log("请在浏览器访问：http://localhost:8080/");
     //console.log(path.join(__dirname, 'source'));
 });
+
+
 
 
 
