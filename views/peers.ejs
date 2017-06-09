@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旺链浏览器</title>
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/animate.css" rel="stylesheet">
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/css/style.css" rel="stylesheet">
+    <link href="<?php echo SOURCE_ROOT;?>/grap/vis.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <?php require_once 'nav_menu.php';?>
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+        <?php require_once 'nav_head.php';?>
+        </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>基础信息</h2>
+                    
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>节点列表 </h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            
+                            <div class="row">
+                                    <div class="col-sm-5 m-b-xs">
+                                     
+                                    </div>
+                                    
+                                    <div class="col-sm-7">
+                                          
+                                    </div>
+                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>节点名称</th>
+                                     <th>组织</th>
+                                    <th>节点IP地址</th>
+                                    <th>加入通道</th>                                    
+                                    <th>区块数</th>
+                                    <th>交易数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><a href="<?php echo APP_WEB_INDEX_ROOT;?>/inspinia/peer_detail">1</a></td>
+                                     <td>1</td>
+                                    <td>1</td>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                     <td>1</td>
+                                    <td>2</td>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <?php require_once 'nav_foot.php';?>
+
+        </div>
+        </div>
+
+
+
+    <!-- Mainly scripts -->
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/jquery-3.1.1.min.js"></script>
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/bootstrap.min.js"></script>
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Peity -->
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/inspinia.js"></script>
+    
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/pace/pace.min.js"></script>
+
+    <!-- iCheck -->
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <link href="<?php echo SOURCE_ROOT;?>/inspinia/js/demo/peity-demo.js"></script>
+    
+    
+    
+    <script src="<?php echo SOURCE_ROOT;?>/grap/vis.js"></script>
+    
+    
+<script type="text/javascript">
+  // create an array with nodes
+  var nodes = new vis.DataSet([
+    {id: 1, label: 'peer 1',color: '#7BE141'},
+    {id: 2, label: 'peer 2',color: '#7BE141'},
+    {id: 3, label: 'peer 3',color: '#7BE141'},
+    {id: 4, label: 'peer 4'},
+    {id: 5, label: 'peer 5'}
+  ]);
+
+  // create an array with edges
+  var edges = new vis.DataSet([
+    {from: 1, to: 3},
+    {from: 1, to: 2},
+    {from: 2, to: 4},
+    {from: 2, to: 5},
+    {from: 4, to: 5},
+    {from: 3, to: 2}
+  ]);
+
+  // create a network
+  var container = document.getElementById('main');
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+</script>
+    
+    
+    
+    
+   
+
+</body>
+
+</html>
