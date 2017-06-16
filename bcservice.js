@@ -16,7 +16,7 @@ var ORGS = hfc.getConfigSetting('network-config');
 /**
  * 获取所有的组织
  */
-module.exports.getAllOrgs= function(){
+function getAllOrgs(){
     var OrgArray=[]
     for (let key in ORGS) {
         if (key.indexOf('org') === 0) {
@@ -41,7 +41,7 @@ function getAllChannels(){
 /**
  * 获取所有的节点
  */
-module.exports.getallPeers=function () {
+function getallPeers () {
 
     var peerArray=[]
     for (let key in ORGS) {
@@ -97,3 +97,6 @@ function getChainCode4Channel(channelName) {
 
 
 }
+
+module.exports.getAllOrgs=getAllOrgs
+module.exports.getallPeers=getallPeers
