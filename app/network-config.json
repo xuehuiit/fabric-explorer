@@ -25,8 +25,8 @@
 				"server-hostname": "peer1.org1.example.com"
 			},
 			"admin": {
-				"key": "/home/shouhewu/goWorkspace/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
-				"cert": "/home/shouhewu/goWorkspace/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
+				"key": "/artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
+				"cert": "/artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
 			}
 		},
 		"org2": {

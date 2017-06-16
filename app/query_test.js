@@ -42,15 +42,16 @@ query.getTransactionByID('peer1','63843009a8114e3a6fb68f510f638b5f6a7e1448759c03
     console.info(err)
 })*/
 
-/*
 query.getInstalledChaincodes('peer1','installed','admin','org1').then(response=>{
     console.info(response)
 }).catch(err=>{
     console.info(err)
-})*/
+})
 
+/*
 query.getChannels('peer1','admin','org1').then(response=>{
     console.info(response)
 }).catch(err=>{
     console.info(err)
 })
+*/
