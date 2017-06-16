@@ -10,6 +10,9 @@ var hfc = require('fabric-client');
 hfc.addConfigFile(path.join(__dirname, '/app/network-config.json'));
 var ORGS = hfc.getConfigSetting('network-config');
 
+
+
+
 /**
  * 获取所有的组织
  */
@@ -38,9 +41,16 @@ function getAllChannels(){
 /**
  * 获取所有的节点
  */
-function getallPeers() {
+module.exports.getallPeers=function () {
 
-
+    var peerArray=[]
+    for (let key in ORGS) {
+        if (key.indexOf('org') === 0) {
+            let peerName = ORGS[key].peer1.requests;
+            peerArray.push(peerName)
+        }
+    }
+    return peerArray
 
 }
 

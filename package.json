@@ -14,9 +14,8 @@
   },
   "dependencies": {
     "ejs": "^2.5.6",
-    "express": "^4.15.3",
-    "fabric-ca-client": "file:./fabric-ca-client",
-    "fabric-client": "file:./fabric-client",
+    "fabric-ca-client":">=1.0.0-beta <1.0.0-beta.10",
+    "fabric-client": ">=1.0.0-beta <1.0.0-beta.10",
     "log4js": "^0.6.38",
     "winston": "^2.2.0"
   },

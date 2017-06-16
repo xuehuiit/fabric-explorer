@@ -1,201 +1,238 @@
-'use strict';
-
-
+/**
+ * Copyright 2017 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 var path = require('path');
-/*
 var fs = require('fs');
-*/
 var util = require('util');
-
-
 var hfc = require('fabric-client');
 var Peer = require('fabric-client/lib/Peer.js');
-var Block=require('fabric-client/lib/Block.js');
-/*
- var utils = require('fabric-client/lib/utils.js');
 var EventHub = require('fabric-client/lib/EventHub.js');
-*/
-
 var config = require('../config.json');
 var helper = require('./helper.js');
+var logger = helper.getLogger('Query');
 
-var logger = helper.getLogger('query');
+
+var getBlockByNumber = function(peer, blockNumber, username, org) {
+	var target = buildTarget(peer, org);
+	var channel = helper.getChannelForOrg(org);
+
+	return helper.getRegisteredUsers(username, org).then((member) => {
+		return channel.queryBlock(parseInt(blockNumber), target);
+	}, (err) => {
+		logger.info('Failed to get submitter "' + username + '"');
+		return 'Failed to get submitter "' + username + '". Error: ' + err.stack ?
+			err.stack : err;
+	}).then((response_payloads) => {
+		if (response_payloads) {
+			//logger.debug(response_payloads);
+			logger.debug(response_payloads);
+			return response_payloads; //response_payloads.data.data[0].buffer;
+		} else {
+			logger.error('response_payloads is null');
+			return 'response_payloads is null';
+		}
+	}, (err) => {
+		logger.error('Failed to send query due to error: ' + err.stack ? err.stack :
+			err);
+		return 'Failed to send query due to error: ' + err.stack ? err.stack : err;
+	}).catch((err) => {
+		logger.error('Failed to query with error:' + err.stack ? err.stack : err);
+		return 'Failed to query with error:' + err.stack ? err.stack : err;
+	});
+};
 
 
-hfc.addConfigFile(path.join(__dirname, 'network-config.json'));
-var ORGS = hfc.getConfigSetting('network-config');
+var getTransactionByID = function(peer, trxnID, username, org) {
+	var target = buildTarget(peer, org);
+	var channel = helper.getChannelForOrg(org);
 
-var client = new hfc();
-var chain = client.newChain(config.channelName);
-chain.addOrderer(
-    helper.getOrderer()
-);
-for (let key in ORGS) {
-    if (ORGS.hasOwnProperty(key) && typeof ORGS[key].peer1 !== 'undefined') {
-        let peer = new Peer(
-            ORGS[key].peer1.requests
-        );
-        chain.addPeer(peer);
-    }
+	return helper.getRegisteredUsers(username, org).then((member) => {
+		return channel.queryTransaction(trxnID, target);
+	}, (err) => {
+		logger.info('Failed to get submitter "' + username + '"');
+		return 'Failed to get submitter "' + username + '". Error: ' + err.stack ?
+			err.stack : err;
+	}).then((response_payloads) => {
+		if (response_payloads) {
+			logger.debug(response_payloads);
+			return response_payloads;
+		} else {
+			logger.error('response_payloads is null');
+			return 'response_payloads is null';
+		}
+	}, (err) => {
+		logger.error('Failed to send query due to error: ' + err.stack ? err.stack :
+			err);
+		return 'Failed to send query due to error: ' + err.stack ? err.stack : err;
+	}).catch((err) => {
+		logger.error('Failed to query with error:' + err.stack ? err.stack : err);
+		return 'Failed to query with error:' + err.stack ? err.stack : err;
+	});
+};
+var getBlockByHash = function(peer, hash, username, org) {
+	var target = buildTarget(peer, org);
+	var channel = helper.getChannelForOrg(org);
+
+	return helper.getRegisteredUsers(username, org).then((member) => {
+		return channel.queryBlockByHash(new Buffer(hash,"hex"), target);
+	}, (err) => {
+		logger.info('Failed to get submitter "' + username + '"');
+		return 'Failed to get submitter "' + username + '". Error: ' + err.stack ?
+			err.stack : err;
+	}).then((response_payloads) => {
+		if (response_payloads) {
+			logger.debug(response_payloads);
+			return response_payloads;
+		} else {
+			logger.error('response_payloads is null');
+			return 'response_payloads is null';
+		}
+	}, (err) => {
+		logger.error('Failed to send query due to error: ' + err.stack ? err.stack :
+			err);
+		return 'Failed to send query due to error: ' + err.stack ? err.stack : err;
+	}).catch((err) => {
+		logger.error('Failed to query with error:' + err.stack ? err.stack : err);
+		return 'Failed to query with error:' + err.stack ? err.stack : err;
+	});
+};
+var getChainInfo = function(peer, username, org) {
+	var target = buildTarget(peer, org);
+	var channel = helper.getChannelForOrg(org);
+
+	return helper.getRegisteredUsers(username, org).then((member) => {
+		return channel.queryInfo(target);
+	}, (err) => {
+		logger.info('Failed to get submitter "' + username + '"');
+		return 'Failed to get submitter "' + username + '". Error: ' + err.stack ?
+			err.stack : err;
+	}).then((blockchainInfo) => {
+		if (blockchainInfo) {
+			// FIXME: Save this for testing 'getBlockByHash'  ?
+			logger.debug('===========================================');
+			logger.debug(blockchainInfo.currentBlockHash);
+			logger.debug('===========================================');
+			//logger.debug(blockchainInfo);
+			return blockchainInfo;
+		} else {
+			logger.error('response_payloads is null');
+			return 'response_payloads is null';
+		}
+	}, (err) => {
+		logger.error('Failed to send query due to error: ' + err.stack ? err.stack :
+			err);
+		return 'Failed to send query due to error: ' + err.stack ? err.stack : err;
+	}).catch((err) => {
+		logger.error('Failed to query with error:' + err.stack ? err.stack : err);
+		return 'Failed to query with error:' + err.stack ? err.stack : err;
+	});
+};
+//getInstalledChaincodes
+var getInstalledChaincodes = function(peer, type, username, org) {
+	var target = buildTarget(peer, org);
+	var channel = helper.getChannelForOrg(org);
+	var client = helper.getClientForOrg(org);
+
+	return helper.getOrgAdmin(org).then((member) => {
+		if (type === 'installed') {
+			return client.queryInstalledChaincodes(target);
+		} else {
+			return channel.queryInstantiatedChaincodes(target);
+		}
+	}, (err) => {
+		logger.info('Failed to get submitter "' + username + '"');
+		return 'Failed to get submitter "' + username + '". Error: ' + err.stack ?
+			err.stack : err;
+	}).then((response) => {
+		if (response) {
+			if (type === 'installed') {
+				logger.debug('<<< Installed Chaincodes >>>');
+			} else {
+				logger.debug('<<< Instantiated Chaincodes >>>');
+			}
+			var details = [];
+			for (let i = 0; i < response.chaincodes.length; i++) {
+				logger.debug('name: ' + response.chaincodes[i].name + ', version: ' +
+					response.chaincodes[i].version + ', path: ' + response.chaincodes[i].path
+				);
+				details.push('name: ' + response.chaincodes[i].name + ', version: ' +
+					response.chaincodes[i].version + ', path: ' + response.chaincodes[i].path
+				);
+			}
+			return details;
+		} else {
+			logger.error('response is null');
+			return 'response is null';
+		}
+	}, (err) => {
+		logger.error('Failed to send query due to error: ' + err.stack ? err.stack :
+			err);
+		return 'Failed to send query due to error: ' + err.stack ? err.stack : err;
+	}).catch((err) => {
+		logger.error('Failed to query with error:' + err.stack ? err.stack : err);
+		return 'Failed to query with error:' + err.stack ? err.stack : err;
+	});
+};
+var getChannels = function(peer, username, org) {
+	var target = buildTarget(peer, org);
+	var channel = helper.getChannelForOrg(org);
+	var client = helper.getClientForOrg(org);
+
+	return helper.getRegisteredUsers(username, org).then((member) => {
+		//channel.setPrimaryPeer(targets[0]);
+		return client.queryChannels(target);
+	}, (err) => {
+		logger.info('Failed to get submitter "' + username + '"');
+		return 'Failed to get submitter "' + username + '". Error: ' + err.stack ?
+			err.stack : err;
+	}).then((response) => {
+		if (response) {
+			logger.debug('<<< channels >>>');
+			var channelNames = [];
+			for (let i = 0; i < response.channels.length; i++) {
+				channelNames.push('channel id: ' + response.channels[i].channel_id);
+			}
+			logger.debug(channelNames);
+			return response;
+		} else {
+			logger.error('response_payloads is null');
+			return 'response_payloads is null';
+		}
+	}, (err) => {
+		logger.error('Failed to send query due to error: ' + err.stack ? err.stack :
+			err);
+		return 'Failed to send query due to error: ' + err.stack ? err.stack : err;
+	}).catch((err) => {
+		logger.error('Failed to query with error:' + err.stack ? err.stack : err);
+		return 'Failed to query with error:' + err.stack ? err.stack : err;
+	});
+};
+
+function buildTarget(peer, org) {
+	var target = null;
+	if (typeof peer !== 'undefined') {
+		let targets = helper.newPeers([helper.getPeerAddressByName(org, peer)]);
+		if (targets && targets.length > 0) target = targets[0];
+	}
+
+	return target;
 }
 
-
-
-var adminUser = null;
-
-var org = config.orgsList[0]; // org1
-
-
-
-var orgName = ORGS[org].name;
-
-
-
-function getChannelInfo(){
-    hfc.newDefaultKeyValueStore({
-        path: helper.getKeyStoreForOrg('org1')
-    }).then((store) => {
-
-        client.setStateStore(store);
-        return helper.getSubmitter(client, org);
-
-    }).then((admin) => {
-        adminUser = admin;
-        return chain.queryInfo();
-    }).then(blockchainInfo =>{
-        logger.debug('===========================================');
-        logger.debug(blockchainInfo.currentBlockHash.toString("hex"));
-        logger.debug(blockchainInfo.height.toString());
-        logger.debug(blockchainInfo.previousBlockHash.toString("hex"));
-        logger.debug('===========================================');
-    }).catch(err =>{
-        console.info(err)
-    });
-}
-
-
-// getChannelInfo();
-
-
-function queryBlockByHash(blockHash){
-    hfc.newDefaultKeyValueStore({
-        path: helper.getKeyStoreForOrg('org1')
-    }).then((store) => {
-
-        client.setStateStore(store);
-        return helper.getSubmitter(client, org);
-
-    }).then((admin) => {
-        adminUser = admin;
-        return chain.queryInfo();
-    }).then(blockchainInfo =>{
-        return chain.queryBlockByHash(new Buffer(blockHash,"hex"));
-    }).then( block => {
-        var b=Block.decode(block);
-        // console.info(b);
-        console.info('===============data=================')
-        console.info(JSON.stringify(b));
-        console.info(util.inspect(b))
-    }).catch(err =>{
-        console.info(err);
-    });
-}
-
-// queryBlockByHash("5d3258accfd72541a4b47db3a4fcf5c1287541bf52faf6905e643207eb3f8d64");
-
-function getBlockByNumber(blockNum){
-    hfc.newDefaultKeyValueStore({
-        path: helper.getKeyStoreForOrg('org1')
-    }).then((store) => {
-
-        client.setStateStore(store);
-        return helper.getSubmitter(client, org);
-
-    }).then((admin) => {
-        adminUser = admin;
-        return chain.queryInfo();
-    }).then(blockchainInfo =>{
-        return chain.queryBlock(blockNum);
-    }).then( block => {
-        var b=Block.decode(block);
-        // console.info(b);
-        console.info('===============data=================')
-        console.info(JSON.stringify(b));
-    }).catch(err =>{
-        console.info(err);
-    });
-}
-
-// getBlockByNumber(0);
-
-function getTransactionByID(txid){
-    hfc.newDefaultKeyValueStore({
-        path: helper.getKeyStoreForOrg('org1')
-    }).then((store) => {
-
-        client.setStateStore(store);
-        return helper.getSubmitter(client, org);
-
-    }).then((admin) => {
-        adminUser = admin;
-        return chain.queryInfo();
-    }).then(blockchainInfo =>{
-        return chain.queryTransaction(txid);
-    }).then( tx => {
-        var t=Block.decodeTransaction(tx);
-        console.info(JSON.stringify(t));
-        console.info(util.inspect(t))
-    }).catch(err =>{
-        console.info(err);
-    });
-}
-
-
- // getTransactionByID('5d4d960721ff8e7821d084c3450bdcd9c4294c9130f8574fef9ca2b9b869149d');
-
-
-function getChannels(){
-    hfc.newDefaultKeyValueStore({
-        path: helper.getKeyStoreForOrg('org1')
-    }).then((store) => {
-
-        client.setStateStore(store);
-        return helper.getSubmitter(client, org);
-
-    }).then((admin) => {
-        adminUser = admin;
-        return chain.queryInfo();
-    }).then(blockchainInfo =>{
-        return chain.queryChannels(new Peer(ORGS['org1'].peer1.requests));
-        // return chain.queryChannels();
-    }).then( ch => {
-        console.info(ch);
-    }).catch(err =>{
-        console.info(err);
-    });
-}
-
-getChannels();
-
-
-function getInstantiatedChaincodes(){
-    hfc.newDefaultKeyValueStore({
-        path: helper.getKeyStoreForOrg('org1')
-    }).then((store) => {
-
-        client.setStateStore(store);
-        return helper.getSubmitter(client, org);
-
-    }).then((admin) => {
-        adminUser = admin;
-        return chain.queryInfo();
-    }).then(blockchainInfo =>{
-        return chain.queryInstantiatedChaincodes();
-    }).then( ch => {
-        console.info(ch);
-    }).catch(err =>{
-        console.info(err);
-    });
-}
-
-// getInstantiatedChaincodes();
+exports.getBlockByNumber = getBlockByNumber;
+exports.getTransactionByID = getTransactionByID;
+exports.getBlockByHash = getBlockByHash;
+exports.getChainInfo = getChainInfo;
+exports.getInstalledChaincodes = getInstalledChaincodes;
+exports.getChannels = getChannels;

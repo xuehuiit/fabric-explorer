@@ -1,96 +1,51 @@
 {
 	"network-config": {
-		"orderer": {
-			"url": "grpc://192.168.23.52:5005"
-		},
+		"orderer": [{
+			"url": "grpc://localhost:7050",
+			"server-hostname": "orderer0.example.com"
+		},{
+			"url": "grpc://localhost:8050",
+			"server-hostname": "orderer1.example.com"
+		},{
+			"url": "grpc://localhost:9050",
+			"server-hostname": "orderer2.example.com"
+		}],
 		"org1": {
-			"name": "PeerOrg1",
-			"mspid": "PeerOrg1",
-			"ca": "http://192.168.23.52:7054",
+			"name": "peerOrg1",
+			"mspid": "Org1MSP",
+			"ca": "http://localhost:7054",
 			"peer1": {
-				"requests": "grpc://192.168.23.52:8061",
-				"events": "grpc://192.168.23.52:6051"
+				"requests": "grpc://localhost:7051",
+				"events": "grpc://localhost:7053",
+				"server-hostname": "peer0.org1.example.com"
+			},
+			"peer2": {
+				"requests": "grpc://localhost:8051",
+				"events": "grpc://localhost:8053",
+				"server-hostname": "peer1.org1.example.com"
+			},
+			"admin": {
+				"key": "/home/shouhewu/goWorkspace/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
+				"cert": "/home/shouhewu/goWorkspace/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
 			}
 		},
 		"org2": {
-			"name": "PeerOrg2",
-			"mspid": "PeerOrg2",
-			"ca": "http://192.168.23.52:7055",
+			"name": "peerOrg2",
+			"mspid": "Org2MSP",
+			"ca": "http://localhost:8054",
 			"peer1": {
-				"requests": "grpc://192.168.23.52:8062",
-				"events": "grpc://192.168.23.52:6052"
-			}
-		},
-		"org3": {
-			"name": "PeerOrg3",
-			"mspid": "PeerOrg3",
-			"ca": "http://192.168.23.52:7056",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8063",
-				"events": "grpc://192.168.23.52:6053"
-			}
-		},
-		"org4": {
-			"name": "PeerOrg4",
-			"mspid": "PeerOrg4",
-			"ca": "http://192.168.23.52:7057",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8064",
-				"events": "grpc://192.168.23.52:6054"
-			}
-		},
-		"org5": {
-			"name": "PeerOrg5",
-			"mspid": "PeerOrg5",
-			"ca": "http://192.168.23.52:7058",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8065",
-				"events": "grpc://192.168.23.52:6055"
-			}
-		},
-		"org6": {
-			"name": "PeerOrg6",
-			"mspid": "PeerOrg6",
-			"ca": "http://192.168.23.52:7059",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8066",
-				"events": "grpc://192.168.23.52:6056"
-			}
-		},
-		"org7": {
-			"name": "PeerOrg7",
-			"mspid": "PeerOrg7",
-			"ca": "http://192.168.23.52:7060",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8067",
-				"events": "grpc://192.168.23.52:6057"
-			}
-		},
-		"org8": {
-			"name": "PeerOrg8",
-			"mspid": "PeerOrg8",
-			"ca": "http://192.168.23.52:7061",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8068",
-				"events": "grpc://192.168.23.52:6058"
-			}
-		},
-		"org9": {
-			"name": "PeerOrg9",
-			"mspid": "PeerOrg9",
-			"ca": "http://192.168.23.52:7062",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8069",
-				"events": "grpc://192.168.23.52:6059"
-			}
-		},
-		"org10": {
-			"name": "PeerOrg10",
-			"mspid": "PeerOrg10",
-			"ca": "http://192.168.23.52:7063",
-			"peer1": {
-				"requests": "grpc://192.168.23.52:8070",
-				"events": "grpc://192.168.23.52:6060"
+				"requests": "grpc://localhost:9051",
+				"events": "grpc://localhost:9053",
+				"server-hostname": "peer0.org2.example.com"
+			},
+			"peer2": {
+				"requests": "grpc://localhost:10051",
+				"events": "grpc://localhost:10053",
+				"server-hostname": "peer1.org2.example.com"
+			},
+			"admin": {
+				"key": "../artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/5681d5bed252077272137ebbcd141616229862fa4deeedbb9c1cb515e95ed82d_sk",
+				"cert": "../artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem"
 			}
 		}
 	}
