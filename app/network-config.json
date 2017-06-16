@@ -1,27 +1,27 @@
 {
 	"network-config": {
 		"orderer": [{
-			"url": "grpc://localhost:7050",
+			"url": "grpc://112.124.115.82:7050",
 			"server-hostname": "orderer0.example.com"
 		},{
-			"url": "grpc://localhost:8050",
+			"url": "grpc://112.124.115.82:8050",
 			"server-hostname": "orderer1.example.com"
 		},{
-			"url": "grpc://localhost:9050",
+			"url": "grpc://112.124.115.82:9050",
 			"server-hostname": "orderer2.example.com"
 		}],
 		"org1": {
 			"name": "peerOrg1",
 			"mspid": "Org1MSP",
-			"ca": "http://localhost:7054",
+			"ca": "http://112.124.115.82:7054",
 			"peer1": {
-				"requests": "grpc://localhost:7051",
-				"events": "grpc://localhost:7053",
+				"requests": "grpc://112.124.115.82:7051",
+				"events": "grpc://112.124.115.82:7053",
 				"server-hostname": "peer0.org1.example.com"
 			},
 			"peer2": {
-				"requests": "grpc://localhost:8051",
-				"events": "grpc://localhost:8053",
+				"requests": "grpc://112.124.115.82:8051",
+				"events": "grpc://112.124.115.82:8053",
 				"server-hostname": "peer1.org1.example.com"
 			},
 			"admin": {
@@ -32,15 +32,15 @@
 		"org2": {
 			"name": "peerOrg2",
 			"mspid": "Org2MSP",
-			"ca": "http://localhost:8054",
+			"ca": "http://112.124.115.82:8054",
 			"peer1": {
-				"requests": "grpc://localhost:9051",
-				"events": "grpc://localhost:9053",
+				"requests": "grpc://112.124.115.82:9051",
+				"events": "grpc://112.124.115.82:9053",
 				"server-hostname": "peer0.org2.example.com"
 			},
 			"peer2": {
-				"requests": "grpc://localhost:10051",
-				"events": "grpc://localhost:10053",
+				"requests": "grpc://112.124.115.82:10051",
+				"events": "grpc://112.124.115.82:10053",
 				"server-hostname": "peer1.org2.example.com"
 			},
 			"admin": {
