@@ -177,7 +177,7 @@ app.get("/peers", function(req, res) {
         var chaincodenums = res_chaincodes.length
 
         res.render('peers.ejs', {
-            name: 'tinyphp',item_index_active:'1',blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
+            name: 'tinyphp',item_index_peers:'1',blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
         });
 
 
@@ -243,7 +243,7 @@ app.get("/peer_detail", function(req, res) {
         console.info(chaincodes)
         res.render('peer_detail.ejs', {
             name: 'tinyphp',
-            item_index_active:'1',
+            item_index_peers:'1',
             peers:peers.length,blocks1:blocks,
             trans:txallums,
             chaincodenums:chaincodenums,
@@ -399,7 +399,7 @@ app.get("/channels", function(req, res) {
         var chaincodenums = res_chaincodes.length
 
         res.render('channels.ejs', {
-            name: 'tinyphp',item_index_active:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
+            name: 'tinyphp',item_index_channels:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
         });
 
 
@@ -465,7 +465,7 @@ app.get("/channel_detail", function(req, res) {
         console.info(chaincodes)
         res.render('channel_detail.ejs', {
             name: 'tinyphp',
-            item_index_active:'1',
+            item_index_channels:'1',
             peers:peers.length,blocks1:blocks,
             trans:txallums,
             chaincodenums:chaincodenums,

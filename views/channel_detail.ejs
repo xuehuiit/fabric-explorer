@@ -427,18 +427,14 @@
   var nodes = new vis.DataSet([
     {id: 1, label: 'peer 1',color: '#7BE141'},
     {id: 2, label: 'peer 2',color: '#7BE141'},
-    {id: 3, label: 'peer 3',color: '#7BE141'},
-    {id: 4, label: 'peer 4'},
-    {id: 5, label: 'peer 5'}
+    {id: 3, label: 'peer 3',color: '#7BE141'}
   ]);
 
   // create an array with edges
   var edges = new vis.DataSet([
     {from: 1, to: 3},
     {from: 1, to: 2},
-    {from: 5, to: 4},
-    {from: 2, to: 5},
-    {from: 4, to: 3}
+    {from: 2, to: 3}
   ]);
 
   // create a network
