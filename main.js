@@ -12,7 +12,11 @@ var app = express();
 //app.use(express.static('source'));
 //app.use('/source', express.static('source'));
 app.use('/source', express.static('public'));
-
+app.use(bodyParser.json());
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 //app.use(express.static(path.join(__dirname, '/source')))
 
 var query=require('./app/query.js');
@@ -252,7 +256,11 @@ app.get("/channel_detail", function(req, res) {
         });
 
 
-    } ).catch(err=>{
+    } ).then(a=>{
+
+    }).then(b=>{
+
+    }).catch(err=>{
         console.info(err)
     })
 
@@ -356,5 +364,21 @@ function getTxCount(blocknums){
     })
 }
 
+function getBlock(from,to){
+
+    var parms = [];
+
+    for(var ind = from ; ind < to ; ind++){
+
+        parms.push(query.getBlockByNumber('peer1','mychannel',ind,'admin','org1'));
+    }
+
+    return Promise.all(parms
+    ).then(datas=>{
+        return Promise.resolve(datas)
+    }).catch(err=>{
+        console.info(err)
+    })
+}
 
 
