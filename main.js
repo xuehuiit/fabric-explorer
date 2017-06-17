@@ -41,9 +41,7 @@ app.set('views', __dirname + '/views');
 
 //首页
 app.get("/", function(req, res) {
-    res.render('index.ejs', {
-        name: 'tinyphp',item_index_active:'1'
-    });
+    res.redirect("/index")
 });
 
 
