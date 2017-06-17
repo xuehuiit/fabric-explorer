@@ -265,13 +265,12 @@ app.get("/channels", function(req, res) {
 app.get("/channel_detail", function(req, res) {
 
     var peers = bcservice.getAllPeerRequest();
-
-
     var blocks;
     var txallums = 0;
     var chaincodenums
     var block_array
-
+    var tx_array=[]
+    var chaincodes
     query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
 
         blocks = response_payloads.height.toString();
@@ -296,13 +295,38 @@ app.get("/channel_detail", function(req, res) {
 
         return chaincodenums = res_chaincodes.length
     } ).then(a=>{
-        return bcservice.getBlockRange(0,10)
+        return bcservice.getBlockRange(parseInt(blocks)-5<=0?0:parseInt(blocks)-5,parseInt(blocks))
     }).then(b_array=>{
         block_array=b_array
+
+        let tx_array=block_array[block_array.length-1].tx
+        return bcservice.getTx('mychannel',tx_array)
+    }).then(txs=>{
+
+        txs.forEach(t=>{
+            let tx={}
+            tx.type=t.transactionEnvelope.payload.header.channel_header.type
+            tx.timestamp=t.transactionEnvelope.payload.header.channel_header.timestamp
+            tx.channel_id=t.transactionEnvelope.payload.header.channel_header.channel_id
+            tx.id=t.transactionEnvelope.payload.header.channel_header.tx_id
+            tx_array.push(tx)
+        })
+        return query.getInstalledChaincodes('peer1','mychannel','installed','admin','org1')
+    }).then(cs=>{
+        chaincodes=cs
+        console.info(chaincodes)
         res.render('channel_detail.ejs', {
-            name: 'tinyphp',item_index_active:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums,block_array:block_array
+            name: 'tinyphp',
+            item_index_active:'1',
+            peers:peers.length,blocks1:blocks,
+            trans:txallums,
+            chaincodenums:chaincodenums,
+            block_array:block_array,
+            tx_array:tx_array,
+            chaincodes:chaincodes
         });
     }).catch(err=>{
+
         console.info(err)
     })
 
