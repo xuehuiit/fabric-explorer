@@ -177,7 +177,7 @@ app.get("/peers", function(req, res) {
         var chaincodenums = res_chaincodes.length
 
         res.render('peers.ejs', {
-            name: 'tinyphp',item_index_active:'1',blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
+            name: 'tinyphp',item_index_peers:'1',blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
         });
 
 
@@ -243,7 +243,7 @@ app.get("/peer_detail", function(req, res) {
         console.info(chaincodes)
         res.render('peer_detail.ejs', {
             name: 'tinyphp',
-            item_index_active:'1',
+            item_index_peers:'1',
             peers:peers.length,blocks1:blocks,
             trans:txallums,
             chaincodenums:chaincodenums,
@@ -261,6 +261,7 @@ app.get("/peer_detail", function(req, res) {
 
 //区块详情
 app.get("/block_detail", function(req, res) {
+
     var blocknums = req.query.blocknums
 
     console.log(` ===========   ${ JSON.stringify(req.query) } `)
@@ -299,12 +300,12 @@ app.get("/block_detail", function(req, res) {
         var head = response_payloads.header
         var metadata = response_payloads.metadata.metadata;
         var data = response_payloads.data.data;
-
-        console.log( JSON.stringify(metadata) )
+        var str = JSON.stringify(response_payloads)
+        console.log( JSON.stringify(metadata[0]['signatures'][0]['signature_header']['creator']['Mspid']) )
 
 
         res.render('block_detail.ejs', {
-            name: 'tinyphp',item_index_peers:'1',head:head,data:data,metadata:metadata
+            name: 'tinyphp',item_index_peers:'1',head:head,data:data,metadata:metadata,jsonstr:str
         });
 
     }).catch(err =>{
@@ -317,9 +318,49 @@ app.get("/block_detail", function(req, res) {
 
 //交易详情
 app.get("/trans_detail", function(req, res) {
-    res.render('trans_detail.ejs', {
-        name: 'tinyphp',item_index_peers:'1'
-    });
+
+    var txid = req.query.txid
+
+
+    query.getTransactionByID('peer1','mychannel',txid,'admin','org1').then(response_payloads=>{
+
+
+        return response_payloads
+
+    }).then( response_payloads =>{
+
+
+        var header = response_payloads['transactionEnvelope']['payload']['header']
+        var data = response_payloads['transactionEnvelope']['payload']['data']
+        var signature = response_payloads['transactionEnvelope']['signature'].toString("hex")
+        var str = JSON.stringify(response_payloads)
+            console.log( JSON.stringify( data['actions'][0]['payload'] ) )
+
+        var channel_header = header['channel_header']
+
+        for( key in channel_header){
+
+            console.log(` <div class="form-group">
+                           <label class="col-sm-2 control-label">${key}:</label>
+                            <div class="col-sm-10"><input type="text" class="form-control" value="<%=header.channel_header.${key}%>"></div>
+                      </div> `)
+
+        }
+
+
+
+        res.render('trans_detail.ejs', {
+            name: 'tinyphp',item_index_peers:'1',header:header,data:data,signature:signature,jsonstr:str
+        });
+
+
+
+    }).catch(err=>{
+        console.info(err)
+    })
+
+
+
 });
 
 
@@ -358,7 +399,7 @@ app.get("/channels", function(req, res) {
         var chaincodenums = res_chaincodes.length
 
         res.render('channels.ejs', {
-            name: 'tinyphp',item_index_active:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
+            name: 'tinyphp',item_index_channels:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
         });
 
 
@@ -424,7 +465,7 @@ app.get("/channel_detail", function(req, res) {
         console.info(chaincodes)
         res.render('channel_detail.ejs', {
             name: 'tinyphp',
-            item_index_active:'1',
+            item_index_channels:'1',
             peers:peers.length,blocks1:blocks,
             trans:txallums,
             chaincodenums:chaincodenums,

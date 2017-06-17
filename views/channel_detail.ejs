@@ -128,58 +128,7 @@
                <!--  -->
                
                
-               <div class="row">
-                
-                
-                <div class="col-lg-6">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>区块生成趋势</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Config option 1</a>
-                                    </li>
-                                    <li><a href="#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="flot-chart">
-                                <div class="flot-chart-content" id="flot-pie-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>交易生成趋势</h5>
-                            <div class="ibox-tools">
-                                
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
 
-                            <div class="flot-chart">
-                                <div class="flot-chart-content" id="flot-line-chart-moving"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             
             <div class="row">
 
@@ -278,7 +227,7 @@
                     <tbody>
                     <% tx_array.forEach(function(t){ %>
                     <tr>
-                        <td><a href="javascript:opentransdetail(<%=t.id%>);"><%=t.id%></a></td>
+                        <td><a href="javascript:opentransdetail('<%=t.id%>');"><%=t.id%></a></td>
                         <td><%=t.channel_id %></td>
                         <td><%=t.type %></td>
                         <td><%=t.timestamp %></td>
@@ -343,7 +292,58 @@
         </div>
 
         </div>
-        
+                <div class="row">
+
+
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>区块生成趋势</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li><a href="#">Config option 1</a>
+                                        </li>
+                                        <li><a href="#">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-pie-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>交易生成趋势</h5>
+                                <div class="ibox-tools">
+
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-line-chart-moving"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         
         
                     
@@ -383,17 +383,17 @@
 
         function openblockdetail(blockid){
 
-            var titleinfo = " 弹出窗口  ["+blockid+"] 区块详细信息";
+            var titleinfo = " 编号为  ["+blockid+"] 的区块详细信息";
 
             $.layer({
 
                 type:2,
                 border: [0],
-                area : ['850px' , '600px'],
+                area : ['850px' , '800px'],
                 offset : ['10px',''],
 
                 title:titleinfo,
-                iframe:{src: 'block_detail?purid='+blockid}
+                iframe:{src: 'block_detail?blocknums='+blockid}
 
             });
 
@@ -402,17 +402,17 @@
 
         function opentransdetail(tranid){
 
-            var titleinfo = " 弹出窗口  ["+tranid+"] 交易详细信息";
+            var titleinfo = " 编号为 ["+tranid+"] 的交易详细信息";
 
             $.layer({
 
                 type:2,
                 border: [0],
-                area : ['850px' , '600px'],
+                area : ['850px' , '800px'],
                 offset : ['10px',''],
 
                 title:titleinfo,
-                iframe:{src: 'trans_detail?purid='+tranid}
+                iframe:{src: 'trans_detail?txid='+tranid}
 
             });
 
@@ -427,18 +427,14 @@
   var nodes = new vis.DataSet([
     {id: 1, label: 'peer 1',color: '#7BE141'},
     {id: 2, label: 'peer 2',color: '#7BE141'},
-    {id: 3, label: 'peer 3',color: '#7BE141'},
-    {id: 4, label: 'peer 4'},
-    {id: 5, label: 'peer 5'}
+    {id: 3, label: 'peer 3',color: '#7BE141'}
   ]);
 
   // create an array with edges
   var edges = new vis.DataSet([
     {from: 1, to: 3},
     {from: 1, to: 2},
-    {from: 5, to: 4},
-    {from: 2, to: 5},
-    {from: 4, to: 3}
+    {from: 2, to: 3}
   ]);
 
   // create a network
