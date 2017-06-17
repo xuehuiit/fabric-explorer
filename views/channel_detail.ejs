@@ -225,7 +225,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>1</td>
+                        <td><a href="javascript:openblockdetail(1);">11212</a></td>
                         <td>Project <small>This is example of project</small></td>
                         <td>Patrick Smith</td>
                         <td>0800 051213</td>
@@ -281,33 +281,24 @@
                     <thead>
                     <tr>
 
-                        <th>#</th>
-                        <th>Project </th>
-                        <th>Name </th>
-                        <th>Phone </th>
-                        <th>Company </th>
-                        <th>Completed </th>
-                        <th>Task</th>
-                        <th>Date</th>
-                        <th>Action</th>
+                        <th>tx_id</th>
+                        <th>date</th>
+                        <th>channel_id</th>
+                        <th>Mspid</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>1</td>
+                        <td><a href="javascript:opentransdetail(1);">1112341241234</a></td>
                         <td>Project <small>This is example of project</small></td>
                         <td>Patrick Smith</td>
                         <td>0800 051213</td>
-                        <td>Inceptos Hymenaeos Ltd</td>
-                        <td><span class="pie">0.52/1.561</span></td>
-                        <td>20%</td>
-                        <td>Jul 14, 2013</td>
-                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+
                     </tr>
-                   
-                    
-                    
-                    
+
+
+
+
                     </tbody>
                 </table>
             </div>
@@ -407,9 +398,52 @@
     -->
     
     <script src="source/grap/vis.js"></script>
+    <script src="source/layer/layer.min.js"></script>
 
-   
-<script type="text/javascript">
+    <script type="text/javascript">
+
+        function openblockdetail(blockid){
+
+            var titleinfo = " 弹出窗口  ["+blockid+"] 区块详细信息";
+
+            $.layer({
+
+                type:2,
+                border: [0],
+                area : ['850px' , '600px'],
+                offset : ['10px',''],
+
+                title:titleinfo,
+                iframe:{src: 'block_detail?purid='+blockid}
+
+            });
+
+        }
+
+
+        function opentransdetail(tranid){
+
+            var titleinfo = " 弹出窗口  ["+tranid+"] 交易详细信息";
+
+            $.layer({
+
+                type:2,
+                border: [0],
+                area : ['850px' , '600px'],
+                offset : ['10px',''],
+
+                title:titleinfo,
+                iframe:{src: 'trans_detail?purid='+tranid}
+
+            });
+
+
+        }
+
+
+    </script>
+
+    <script type="text/javascript">
   // create an array with nodes
   var nodes = new vis.DataSet([
     {id: 1, label: 'peer 1',color: '#7BE141'},
