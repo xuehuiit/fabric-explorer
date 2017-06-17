@@ -6,6 +6,7 @@
 var bcservice=require('./service/bcservice.js')
 
 var express = require("express");
+var bodyParser = require('body-parser');
 var path = require('path');
 var app = express();
 
@@ -226,6 +227,8 @@ app.get("/channel_detail", function(req, res) {
 
     var blocks;
     var txallums = 0;
+    var chaincodenums
+    var block_array
 
     query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
 
@@ -249,17 +252,14 @@ app.get("/channel_detail", function(req, res) {
 
         console.info(` ################  ${res_chaincodes.length}  `)
 
-        var chaincodenums = res_chaincodes.length
-
-        res.render('channel_detail.ejs', {
-            name: 'tinyphp',item_index_active:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
-        });
-
-
+        return chaincodenums = res_chaincodes.length
     } ).then(a=>{
-
-    }).then(b=>{
-
+        return bcservice.getBlockRange(0,10)
+    }).then(b_array=>{
+        block_array=b_array
+        res.render('channel_detail.ejs', {
+            name: 'tinyphp',item_index_active:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums,block_array:block_array
+        });
     }).catch(err=>{
         console.info(err)
     })
@@ -364,21 +364,6 @@ function getTxCount(blocknums){
     })
 }
 
-function getBlock(from,to){
 
-    var parms = [];
-
-    for(var ind = from ; ind < to ; ind++){
-
-        parms.push(query.getBlockByNumber('peer1','mychannel',ind,'admin','org1'));
-    }
-
-    return Promise.all(parms
-    ).then(datas=>{
-        return Promise.resolve(datas)
-    }).catch(err=>{
-        console.info(err)
-    })
-}
 
 

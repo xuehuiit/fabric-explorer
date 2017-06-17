@@ -127,6 +127,31 @@ function getChainCode4Channel(channelName) {
 
 }
 
+function getBlockRange(from,to){
+    var parms = [];
+    for(var ind = from ; ind < to ; ind++){
+        parms.push(query.getBlockByNumber('peer1','mychannel',ind,'admin','org1'));
+    }
+
+    return Promise.all(parms).then(datas=>{
+        var block_array=[]
+        datas.forEach((k,v) =>{
+            var block_obj={}
+            var num = k.header.number.toString();
+            block_obj.num=num
+            var previous_hash=k.header.previous_hash
+            block_obj.previous_hash=previous_hash
+            var data_hash=k.header.data_hash
+            block_obj.data_hash=data_hash
+            block_array.push(block_obj)
+        })
+        return Promise.resolve(block_array)
+    }).catch(err=>{
+        console.info(err)
+    })
+}
+
+
 module.exports.getAllOrgs=getAllOrgs
 module.exports.getallPeers=getallPeers
 module.exports.getAllPeerRequest = getAllPeerRequest
@@ -136,4 +161,5 @@ module.exports.getTans4Chain=getTans4Chain
 module.exports.getChainCode4Channel=getChainCode4Channel
 module.exports.getChainInfo=getChainInfo
 module.exports.getBlock4Channel=getBlock4Channel
+module.exports.getBlockRange=getBlockRange
 
