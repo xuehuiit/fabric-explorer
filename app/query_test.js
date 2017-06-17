@@ -38,7 +38,8 @@ query.getTransactionByID('peer1','63843009a8114e3a6fb68f510f638b5f6a7e1448759c03
     console.info(err)
 })*/
 
-/*query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
+/*
+query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
     console.info(response_payloads)
 }).catch(err=>{
     console.info(err)

@@ -93,16 +93,26 @@ app.get("/index", function(req, res) {
 
 
 
-    } ).then( res_trans => {
+    } ).then( res_txs => {
+
+        txallums = res_txs
+
+        return query.getInstalledChaincodes('peer1','mychannel','installed','admin','org1')
+
+    } ).then( res_chaincodes => {
 
         //var txs = res_blockinfo.data.data;
 
         //console.info( `**************** res_blockinfo is ${txs.length} =======  all trans is ${txallums}` )
 
-        console.info( `**************** =======  all trans is ${res_trans}` )
+        console.info( `**************** =======  all trans is ${txallums}` )
+
+        console.info(` ################  ${res_chaincodes.length}  `)
+
+        var chaincodenums = res_chaincodes.length
 
         res.render('index.ejs', {
-            name: 'tinyphp',item_index_active:'1',blocks1:blocks,trans:res_trans
+            name: 'tinyphp',item_index_active:'1',blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
         });
 
 
