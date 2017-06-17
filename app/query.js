@@ -164,12 +164,14 @@ var getInstalledChaincodes = function(peer,channelName, type, username, org) {
 			}
 			var details = [];
 			for (let i = 0; i < response.chaincodes.length; i++) {
+				let detail={}
 				logger.debug('name: ' + response.chaincodes[i].name + ', version: ' +
 					response.chaincodes[i].version + ', path: ' + response.chaincodes[i].path
 				);
-				details.push('name: ' + response.chaincodes[i].name + ', version: ' +
-					response.chaincodes[i].version + ', path: ' + response.chaincodes[i].path
-				);
+                detail.name=response.chaincodes[i].name
+				detail.version=response.chaincodes[i].version
+				detail.path=response.chaincodes[i].path
+                details.push(detail);
 			}
 			return details;
 		} else {

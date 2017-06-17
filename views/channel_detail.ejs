@@ -213,33 +213,20 @@
                     <tr>
 
                         <th>#</th>
-                        <th>Project </th>
-                        <th>Name </th>
-                        <th>Phone </th>
-                        <th>Company </th>
-                        <th>Completed </th>
-                        <th>Task</th>
-                        <th>Date</th>
-                        <th>Action</th>
+                        <th>previous_hash </th>
+                        <th>data_hash </th>
                     </tr>
                     </thead>
                     <tbody>
 
+                    <% block_array.forEach(function(block){ %>
                     <tr>
-                        <td><a href="javascript:openblockdetail(1);">11212</a></td>
-                        <td>Project <small>This is example of project</small></td>
-                        <td>Patrick Smith</td>
-                        <td>0800 051213</td>
-                        <td>Inceptos Hymenaeos Ltd</td>
-                        <td><span class="pie">0.52/1.561</span></td>
-                        <td>20%</td>
-                        <td>Jul 14, 2013</td>
-                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                        <td><a href="javascript:openblockdetail(<%=block.num %>);"><%=block.num %></a></td>
+                        <td> <small><%=block.previous_hash %></small></td>
+                        <td><%=block.data_hash %></td>
                     </tr>
-                   
-                    
-                    
-                    
+                    <% })%>
+
                     </tbody>
                 </table>
             </div>
@@ -283,19 +270,22 @@
                     <tr>
 
                         <th>tx_id</th>
-                        <th>date</th>
                         <th>channel_id</th>
-                        <th>Mspid</th>
+                        <th>type</th>
+                        <th>timestamp</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <% tx_array.forEach(function(t){ %>
                     <tr>
-                        <td><a href="javascript:opentransdetail(1);">1112341241234</a></td>
-                        <td>Project <small>This is example of project</small></td>
-                        <td>Patrick Smith</td>
-                        <td>0800 051213</td>
+                        <td><a href="javascript:opentransdetail(<%=t.id%>);"><%=t.id%></a></td>
+                        <td><%=t.channel_id %></td>
+                        <td><%=t.type %></td>
+                        <td><%=t.timestamp %></td>
 
                     </tr>
+                    <%})%>
+
 
 
 
@@ -330,32 +320,20 @@
                     <tr>
 
                         <th>#</th>
-                        <th>Project </th>
                         <th>Name </th>
-                        <th>Phone </th>
-                        <th>Company </th>
-                        <th>Completed </th>
-                        <th>Task</th>
-                        <th>Date</th>
-                        <th>Action</th>
+                        <th>version </th>
+                        <th>path </th>
                     </tr>
                     </thead>
                     <tbody>
+                    <% chaincodes.forEach(function(c){%>
                     <tr>
-                        <td>1</td>
-                        <td>Project <small>This is example of project</small></td>
-                        <td>Patrick Smith</td>
-                        <td>0800 051213</td>
-                        <td>Inceptos Hymenaeos Ltd</td>
-                        <td><span class="pie">0.52/1.561</span></td>
-                        <td>20%</td>
-                        <td>Jul 14, 2013</td>
-                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                        <td><%=c.name %></td>
+                        <td><%=c.name %></td>
+                        <td><%=c.version %></td>
+                        <td><%=c.path %></td>
                     </tr>
-                   
-                    
-                    
-                    
+                    <%})%>
                     </tbody>
                 </table>
             </div>

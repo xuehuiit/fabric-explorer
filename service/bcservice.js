@@ -143,9 +143,25 @@ function getBlockRange(from,to){
             block_obj.previous_hash=previous_hash
             var data_hash=k.header.data_hash
             block_obj.data_hash=data_hash
+            block_obj.tx=[]
+            k.data.data.forEach(t=>{
+                block_obj.tx.push(t.payload.header.channel_header.tx_id)
+            })
             block_array.push(block_obj)
         })
         return Promise.resolve(block_array)
+    }).catch(err=>{
+        console.info(err)
+    })
+}
+
+function getTx(channelName,tx_array){
+    let params=[]
+    tx_array.forEach(tx=>{
+        params.push(getTans4Chain(channelName,tx))
+    })
+    return Promise.all(params).then(datas=>{
+        return Promise.resolve(datas)
     }).catch(err=>{
         console.info(err)
     })
@@ -162,4 +178,5 @@ module.exports.getChainCode4Channel=getChainCode4Channel
 module.exports.getChainInfo=getChainInfo
 module.exports.getBlock4Channel=getBlock4Channel
 module.exports.getBlockRange=getBlockRange
+module.exports.getTx=getTx
 
