@@ -16,8 +16,7 @@ helper.getAdminUser('org1').then(user =>{
 */
 
 
-query.getBlockByNumber('peer1','mychannel',58,'admin','org1').then(response_payloads=>{
-
+/*query.getBlockByNumber('peer1','mychannel',58,'admin','org1').then(response_payloads=>{
     console.info("==========================================")
     // console.info(JSON.stringify(response_payloads.data.data[0]))
 
@@ -44,7 +43,7 @@ query.getBlockByNumber('peer1','mychannel',58,'admin','org1').then(response_payl
 
     console.info(err)
 
-})
+})*/
 
 
 /*
@@ -124,3 +123,20 @@ query.getChannels('peer1','admin','org1').then(response=>{
 getTxCount().then(txcount=>{
     console.info(txcount)
 })*/
+
+
+query.getBlockByNumber('peer1','mychannel',4,'admin','org1').then(block=>{
+    console.info("==========================================")
+    // console.info(JSON.stringify(response_payloads.data.data[0]))
+    var block_obj={}
+    var num = block.header.number.toString();
+    block_obj.num=num
+    var previous_hash=block.header.previous_hash
+    block_obj.previous_hash=previous_hash
+    var data_hash=block.header.data_hash
+    block_obj.data_hash=data_hash
+
+    console.info(JSON.stringify(block_obj))
+}).catch(err =>{
+    console.info(err)
+})

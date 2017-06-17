@@ -6,18 +6,12 @@
 var bcservice=require('./service/bcservice.js')
 
 var express = require("express");
-var bodyParser = require('body-parser');
 var path = require('path');
 var app = express();
 
 //app.use(express.static('source'));
 //app.use('/source', express.static('source'));
 app.use('/source', express.static('public'));
-app.use(bodyParser.json());
-//support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
 //app.use(express.static(path.join(__dirname, '/source')))
 
 var query=require('./app/query.js');
