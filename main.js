@@ -140,16 +140,123 @@ app.get("/peers", function(req, res) {
     var orgs=bcservice.getAllOrgs()
     //res.json(orgs)
 
-    res.render('peers.ejs', {
-        name: 'tinyphp',item_index_peers:'1'
-    });
+    var blocks;
+    var txallums = 0;
+
+    query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
+
+        blocks = response_payloads.height.toString();
+        return blocks
+
+    }).then( res_blocks => {
+
+        var blocknum = parseInt(res_blocks)
+
+        //txallums = getTxCount(blocknum);
+
+        return getTxCount(blocknum);
+
+
+
+    } ).then( res_txs => {
+
+        txallums = res_txs
+
+        return query.getInstalledChaincodes('peer1','mychannel','installed','admin','org1')
+
+    } ).then( res_chaincodes => {
+
+        //var txs = res_blockinfo.data.data;
+
+        //console.info( `**************** res_blockinfo is ${txs.length} =======  all trans is ${txallums}` )
+
+        console.info( `**************** =======  all trans is ${txallums}` )
+
+        console.info(` ################  ${res_chaincodes.length}  `)
+
+        var chaincodenums = res_chaincodes.length
+
+        res.render('peers.ejs', {
+            name: 'tinyphp',item_index_active:'1',blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
+        });
+
+
+    } ).catch(err=>{
+        console.info(err)
+    })
+
+
 });
 
 //节点详情
 app.get("/peer_detail", function(req, res) {
-    res.render('peer_detail.ejs', {
-        name: 'tinyphp',item_index_peers:'1'
-    });
+    var peers = bcservice.getAllPeerRequest();
+    var blocks;
+    var txallums = 0;
+    var chaincodenums
+    var block_array
+    var tx_array=[]
+    var chaincodes
+    query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
+
+        blocks = response_payloads.height.toString();
+        return blocks
+
+    }).then( res_blocks => {
+
+        var blocknum = parseInt(res_blocks)
+        return getTxCount(blocknum);
+
+    } ).then( res_txs => {
+
+        txallums = res_txs
+
+        return query.getInstalledChaincodes('peer1','mychannel','installed','admin','org1')
+
+    } ).then( res_chaincodes => {
+
+        console.info( `**************** =======  all trans is ${txallums}` )
+
+        console.info(` ################  ${res_chaincodes.length}  `)
+
+        return chaincodenums = res_chaincodes.length
+    } ).then(a=>{
+        return bcservice.getBlockRange(parseInt(blocks)-5<=0?0:parseInt(blocks)-5,parseInt(blocks))
+    }).then(b_array=>{
+        block_array=b_array
+
+        let tx_array=block_array[block_array.length-1].tx
+        return bcservice.getTx('mychannel',tx_array)
+    }).then(txs=>{
+
+        txs.forEach(t=>{
+            let tx={}
+            tx.type=t.transactionEnvelope.payload.header.channel_header.type
+            tx.timestamp=t.transactionEnvelope.payload.header.channel_header.timestamp
+            tx.channel_id=t.transactionEnvelope.payload.header.channel_header.channel_id
+            tx.id=t.transactionEnvelope.payload.header.channel_header.tx_id
+            tx_array.push(tx)
+        })
+        return query.getInstalledChaincodes('peer1','mychannel','installed','admin','org1')
+    }).then(cs=>{
+        chaincodes=cs
+        console.info(chaincodes)
+        res.render('peer_detail.ejs', {
+            name: 'tinyphp',
+            item_index_active:'1',
+            peers:peers.length,blocks1:blocks,
+            trans:txallums,
+            chaincodenums:chaincodenums,
+            block_array:block_array,
+            tx_array:tx_array,
+            chaincodes:chaincodes
+        });
+    }).catch(err=>{
+
+        console.info(err)
+    })
+
+
 });
 
 //区块详情
