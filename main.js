@@ -60,22 +60,27 @@ app.get("/index", function(req, res) {
 
     var peers = bcservice.getAllPeerRequest();
 
-    peers.forEach((item,index)=>{
+    /*peers.forEach((item,index)=>{
 
         console.log(` ${index}  ==> ${item.name}  ==> ${item.org}`);
 
         query.getChannels(item.name,'admin',item.org).then(response=>{
 
             console.log(response)
-
             console.log("   =======  ")
 
         }).catch(err=>{
             console.log(err)
         })
 
-    })
+    })*/
 
+
+    query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
+        console.info(response_payloads.height)
+    }).catch(err=>{
+        console.info(err)
+    })
 
 
 
@@ -92,7 +97,67 @@ app.get("/index", function(req, res) {
 //组织列表
 app.get("/orgs", function(req, res) {
     var orgs=bcservice.getAllOrgs()
-    res.json(orgs)
+    //res.json(orgs)
+
+    res.render('orgs.ejs', {
+        name: 'tinyphp',item_index_orgs:'1'
+    });
+});
+
+//组织列表
+app.get("/peers", function(req, res) {
+    var orgs=bcservice.getAllOrgs()
+    //res.json(orgs)
+
+    res.render('peers.ejs', {
+        name: 'tinyphp',item_index_peers:'1'
+    });
+});
+
+//节点详情
+app.get("/peer_detail", function(req, res) {
+    res.render('peer_detail.ejs', {
+        name: 'tinyphp',item_index_peers:'1'
+    });
+});
+
+//区块详情
+app.get("/block_detail", function(req, res) {
+    res.render('block_detail.ejs', {
+        name: 'tinyphp',item_index_peers:'1'
+    });
+});
+
+
+//交易详情
+app.get("/trans_detail", function(req, res) {
+    res.render('trans_detail.ejs', {
+        name: 'tinyphp',item_index_peers:'1'
+    });
+});
+
+
+
+//channel列表
+app.get("/channels", function(req, res) {
+
+    res.render('channels.ejs', {
+        name: 'tinyphp',item_index_channels:'1'
+    });
+
+    /*bcservice.getAllChannels().then(channels=>{
+        res.send(channels)
+    }).catch(err=>{
+        res.send(err)
+    })*/
+});
+
+
+//账本详情
+app.get("/channel_detail", function(req, res) {
+    res.render('channel_detail.ejs', {
+        name: 'tinyphp',item_index_channels:'1'
+    });
 });
 
 app.get("/orgs/peers", function(req, res) {
@@ -101,14 +166,9 @@ app.get("/orgs/peers", function(req, res) {
     });
 });
 
-//channel列表
-app.get("/channels", function(req, res) {
-    bcservice.getAllChannels().then(channels=>{
-        res.send(channels)
-    }).catch(err=>{
-        res.send(err)
-    })
-});
+
+
+
 
 //channel详情
 app.get("/channels/:channelName", function(req, res) {
