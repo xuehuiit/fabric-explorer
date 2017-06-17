@@ -24,9 +24,9 @@ var helper = require('./helper.js');
 var logger = helper.getLogger('Query');
 
 
-var getBlockByNumber = function(peer, blockNumber, username, org) {
+var getBlockByNumber = function(peer,channelName, blockNumber, username, org) {
 	var target = buildTarget(peer, org);
-	var channel = helper.getChannelForOrg(org);
+	var channel = helper.getChannelForOrg(org,channelName);
 
 	return helper.getRegisteredUsers(username, org).then((member) => {
 		return channel.queryBlock(parseInt(blockNumber), target);
@@ -54,9 +54,9 @@ var getBlockByNumber = function(peer, blockNumber, username, org) {
 };
 
 
-var getTransactionByID = function(peer, trxnID, username, org) {
+var getTransactionByID = function(peer,channelName, trxnID, username, org) {
 	var target = buildTarget(peer, org);
-	var channel = helper.getChannelForOrg(org);
+	var channel = helper.getChannelForOrg(org,channelName);
 
 	return helper.getRegisteredUsers(username, org).then((member) => {
 		return channel.queryTransaction(trxnID, target);
@@ -108,9 +108,9 @@ var getBlockByHash = function(peer, hash, username, org) {
 		return 'Failed to query with error:' + err.stack ? err.stack : err;
 	});
 };
-var getChainInfo = function(peer, username, org) {
+var getChainInfo = function(peer,channelName, username, org) {
 	var target = buildTarget(peer, org);
-	var channel = helper.getChannelForOrg(org);
+	var channel = helper.getChannelForOrg(org,channelName);
 
 	return helper.getRegisteredUsers(username, org).then((member) => {
 		return channel.queryInfo(target);
@@ -140,9 +140,9 @@ var getChainInfo = function(peer, username, org) {
 	});
 };
 //getInstalledChaincodes
-var getInstalledChaincodes = function(peer, type, username, org) {
+var getInstalledChaincodes = function(peer,channelName, type, username, org) {
 	var target = buildTarget(peer, org);
-	var channel = helper.getChannelForOrg(org);
+	var channel = helper.getChannelForOrg(org,channelName);
 	var client = helper.getClientForOrg(org);
 
 	return helper.getOrgAdmin(org).then((member) => {
