@@ -31,7 +31,6 @@ function getAllOrgs(){
 
 }
 
-<<<<<<< HEAD:bcservice.js
 /**
  * 获取所有的peers的请求地址
  *
@@ -66,9 +65,6 @@ function getAllChannels(){
 
 }
 
-
-=======
->>>>>>> 54cec0e8bdb7a520f921d72103fbb85566047a6c:service/bcservice.js
 /**
  * 获取所有的节点
  */
@@ -129,14 +125,12 @@ function getChainCode4Channel(channelName) {
 }
 
 module.exports.getAllOrgs=getAllOrgs
-<<<<<<< HEAD:bcservice.js
 module.exports.getallPeers=getallPeers
 module.exports.getAllPeerRequest = getAllPeerRequest
-=======
 module.exports.getAllChannels=getAllChannels
 module.exports.getallPeers=getallPeers
 module.exports.getTans4Chain=getTans4Chain
 module.exports.getChainCode4Channel=getChainCode4Channel
 module.exports.getChainInfo=getChainInfo
 module.exports.getBlock4Channel=getBlock4Channel
->>>>>>> 54cec0e8bdb7a520f921d72103fbb85566047a6c:service/bcservice.js
+
