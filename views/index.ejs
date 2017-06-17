@@ -29,7 +29,7 @@
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>基础信息</h2>
-                    
+
                 </div>
                 <div class="col-lg-2">
 
@@ -53,7 +53,7 @@
                                 <h5>区块</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">8888</h1>
+                                <h1 class="no-margins"><%=blocks1%></h1>
                                 
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                 <h5>交易</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">188888</h1>
+                                <h1 class="no-margins"><%=trans%></h1>
                               
                             </div>
                         </div>
@@ -162,21 +162,13 @@
 <script type="text/javascript">
   // create an array with nodes
   var nodes = new vis.DataSet([
-    {id: 1, label: 'peer 1',color: '#7BE141'},
-    {id: 2, label: 'peer 2',color: '#7BE141'},
-    {id: 3, label: 'peer 3',color: '#7BE141'},
-    {id: 4, label: 'peer 4'},
-    {id: 5, label: 'peer 5'}
+    {id: 1, label: 'org 1',color: '#7BE141'},
+    {id: 2, label: 'org 2',color: '#7BE141'}
   ]);
 
   // create an array with edges
   var edges = new vis.DataSet([
-    {from: 1, to: 3},
-    {from: 1, to: 2},
-    {from: 2, to: 4},
-    {from: 2, to: 5},
-    {from: 4, to: 5},
-    {from: 3, to: 2}
+    {from: 1, to: 2}
   ]);
 
   // create a network
@@ -195,19 +187,15 @@
   var nodes1 = new vis.DataSet([
     {id: 1, label: 'peer 1',color: '#7BE141'},
     {id: 2, label: 'peer 2',color: '#7BE141'},
-    {id: 3, label: 'peer 3',color: '#7BE141'},
-    {id: 4, label: 'peer 4'},
-    {id: 5, label: 'peer 5'}
+    {id: 3, label: 'peer 3',color: '#7BE141'}
+
   ]);
 
   // create an array with edges
   var edges1 = new vis.DataSet([
     {from: 1, to: 3},
     {from: 1, to: 2},
-    {from: 2, to: 4},
-    {from: 2, to: 5},
-    {from: 4, to: 5},
-    {from: 3, to: 2}
+    {from: 2, to: 3}
   ]);
 
   // create a network

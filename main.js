@@ -75,19 +75,43 @@ app.get("/index", function(req, res) {
 
     })*/
 
+    var blocks;
+    var txallums = 0;
 
     query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
-        console.info(response_payloads.height)
-    }).catch(err=>{
+
+            blocks = response_payloads.height.toString();
+            return blocks
+
+    }).then( res_blocks => {
+
+        var blocknum = parseInt(res_blocks)
+
+        //txallums = getTxCount(blocknum);
+
+        return getTxCount(blocknum);
+
+
+
+    } ).then( res_trans => {
+
+        //var txs = res_blockinfo.data.data;
+
+        //console.info( `**************** res_blockinfo is ${txs.length} =======  all trans is ${txallums}` )
+
+        console.info( `**************** =======  all trans is ${res_trans}` )
+
+        res.render('index.ejs', {
+            name: 'tinyphp',item_index_active:'1',blocks1:blocks,trans:res_trans
+        });
+
+
+    } ).catch(err=>{
         console.info(err)
     })
 
 
 
-
-    res.render('index.ejs', {
-        name: 'tinyphp',item_index_active:'1'
-    });
 
 
 });
@@ -232,3 +256,31 @@ var server = app.listen(8080, function() {
     console.log("请在浏览器访问：http://localhost:8080/");
     //console.log(path.join(__dirname, 'source'));
 });
+
+
+
+function getTxCount(blocknums){
+
+    var parms = [];
+
+    for(var ind = 0 ; ind < blocknums ; ind++){
+
+        parms.push(query.getBlockByNumber('peer1','mychannel',ind,'admin','org1'));
+    }
+
+
+
+    return Promise.all(parms
+    ).then(datas=>{
+        let txcount=0
+        datas.forEach((k,v) =>{
+            txcount+=k.data.data.length
+        })
+        return Promise.resolve(txcount)
+    }).catch(err=>{
+        console.info(err)
+    })
+}
+
+
+
