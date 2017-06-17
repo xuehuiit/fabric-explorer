@@ -173,23 +173,89 @@ app.get("/trans_detail", function(req, res) {
 //channel列表
 app.get("/channels", function(req, res) {
 
-    res.render('channels.ejs', {
-        name: 'tinyphp',item_index_channels:'1'
-    });
+    var peers = bcservice.getAllPeerRequest();
 
-    /*bcservice.getAllChannels().then(channels=>{
-        res.send(channels)
-    }).catch(err=>{
-        res.send(err)
-    })*/
+
+    var blocks;
+    var txallums = 0;
+
+    query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
+
+        blocks = response_payloads.height.toString();
+        return blocks
+
+    }).then( res_blocks => {
+
+        var blocknum = parseInt(res_blocks)
+        return getTxCount(blocknum);
+
+    } ).then( res_txs => {
+
+        txallums = res_txs
+
+        return query.getInstalledChaincodes('peer1','mychannel','installed','admin','org1')
+
+    } ).then( res_chaincodes => {
+
+        console.info( `**************** =======  all trans is ${txallums}` )
+
+        console.info(` ################  ${res_chaincodes.length}  `)
+
+        var chaincodenums = res_chaincodes.length
+
+        res.render('channels.ejs', {
+            name: 'tinyphp',item_index_active:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
+        });
+
+
+    } ).catch(err=>{
+        console.info(err)
+    })
 });
 
 
 //账本详情
 app.get("/channel_detail", function(req, res) {
-    res.render('channel_detail.ejs', {
-        name: 'tinyphp',item_index_channels:'1'
-    });
+
+    var peers = bcservice.getAllPeerRequest();
+
+
+    var blocks;
+    var txallums = 0;
+
+    query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
+
+        blocks = response_payloads.height.toString();
+        return blocks
+
+    }).then( res_blocks => {
+
+        var blocknum = parseInt(res_blocks)
+        return getTxCount(blocknum);
+
+    } ).then( res_txs => {
+
+        txallums = res_txs
+
+        return query.getInstalledChaincodes('peer1','mychannel','installed','admin','org1')
+
+    } ).then( res_chaincodes => {
+
+        console.info( `**************** =======  all trans is ${txallums}` )
+
+        console.info(` ################  ${res_chaincodes.length}  `)
+
+        var chaincodenums = res_chaincodes.length
+
+        res.render('channel_detail.ejs', {
+            name: 'tinyphp',item_index_active:'1',peers:peers.length,blocks1:blocks,trans:txallums,chaincodenums:chaincodenums
+        });
+
+
+    } ).catch(err=>{
+        console.info(err)
+    })
+
 });
 
 app.get("/orgs/peers", function(req, res) {
