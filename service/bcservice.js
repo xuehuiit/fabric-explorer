@@ -2,14 +2,16 @@
  * Created by fengxiang on 2017/6/9.
  */
 
-var helper=require('./app/helper.js')
+var helper=require('./blockchainService/helper.js')
 var path=require('path')
 
 
 var hfc = require('fabric-client');
-hfc.addConfigFile(path.join(__dirname, '/app/network-config.json'));
+hfc.addConfigFile(path.join(__dirname, '/blockchainService/network-config.json'));
 var ORGS = hfc.getConfigSetting('network-config');
 
+
+var query=require('')
 
 
 
@@ -28,16 +30,6 @@ function getAllOrgs(){
 
 }
 
-
-/**
- * 获取所有的账本
- */
-function getAllChannels(){
-
-
-}
-
-
 /**
  * 获取所有的节点
  */
@@ -54,12 +46,19 @@ function getallPeers () {
 
 }
 
+/**
+ * 获取所有的账本
+ */
+function getAllChannels(){
+
+
+}
 
 /**
  * 根据账本名称获取账本中的区块
  * @param channelname
  */
-function getChain4channel( channelname ){
+function getChainInfo( channelname ){
 
 }
 
@@ -99,4 +98,10 @@ function getChainCode4Channel(channelName) {
 }
 
 module.exports.getAllOrgs=getAllOrgs
+module.exports.getAllChannels=getAllChannels
 module.exports.getallPeers=getallPeers
+module.exports.getChain4channel=getChain4channel
+module.exports.getChainDetail=getChainDetail
+module.exports.getTans4Chain=getTans4Chain
+module.exports.getTansDetail=getTansDetail
+module.exports.getChainCode4Channel=getChainCode4Channel

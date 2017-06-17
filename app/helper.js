@@ -94,7 +94,7 @@ function newRemotes(urls, forPeers, userOnewRemoterg) {
 		let found = false;
 		for (let key in ORGS) {
 			if (key.indexOf('org') === 0) {
-				// if looking for event hubs, an app can only connect to
+				// if looking for event hubs, an blockchainService can only connect to
 				// event hubs in its own org
 				if (!forPeers && key !== userOrg) {
 					continue;
