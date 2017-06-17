@@ -160,9 +160,57 @@ app.get("/peer_detail", function(req, res) {
 
 //区块详情
 app.get("/block_detail", function(req, res) {
-    res.render('block_detail.ejs', {
-        name: 'tinyphp',item_index_peers:'1'
-    });
+    var blocknums = req.query.blocknums
+
+    console.log(` ===========   ${ JSON.stringify(req.query) } `)
+
+    query.getBlockByNumber('peer1','mychannel',blocknums,'admin','org1').then(response_payloads=>{
+
+        console.info("==========================================")
+        // console.info(JSON.stringify(response_payloads.data.data[0]))
+
+        /* var head = response_payloads.header;
+         for( key in head){
+         console.log(` <div class="form-group"><label class="col-sm-2 control-label">${key}:</label>
+         <div class="col-sm-10"><input type="text" class="form-control" value="${head[key]}"></div>
+         </div> `)
+         }*/
+
+        var txs = response_payloads.data.data;
+        //console.info(JSON.stringify(txs))
+
+        var txs = response_payloads.metadata.metadata;
+
+        var data1 = txs[0];
+
+        var signatures = data1['signatures'][0]['signature_header']['creator']
+
+        //console.info(JSON.stringify(signatures))
+
+
+
+        return response_payloads;
+
+
+    }).then( response_payloads =>{
+
+
+        var head = response_payloads.header
+        var metadata = response_payloads.metadata.metadata;
+        var data = response_payloads.data.data;
+
+        console.log( JSON.stringify(metadata) )
+
+
+        res.render('block_detail.ejs', {
+            name: 'tinyphp',item_index_peers:'1',head:head,data:data,metadata:metadata
+        });
+
+    }).catch(err =>{
+
+        console.info(err)
+
+    })
 });
 
 
