@@ -2,16 +2,17 @@
  * Created by fengxiang on 2017/6/9.
  */
 
-var helper=require('./blockchainService/helper.js')
+var helper=require('../app/helper.js')
 var path=require('path')
 
 
 var hfc = require('fabric-client');
-hfc.addConfigFile(path.join(__dirname, '/blockchainService/network-config.json'));
+hfc.addConfigFile(path.join(__dirname, '/app/network-config.json'));
 var ORGS = hfc.getConfigSetting('network-config');
 
+var config = require('../config.json');
 
-var query=require('')
+var query=require('../app/query.js')
 
 
 
@@ -50,7 +51,7 @@ function getallPeers () {
  * 获取所有的账本
  */
 function getAllChannels(){
-
+    return config.channelsList
 
 }
 
@@ -59,49 +60,40 @@ function getAllChannels(){
  * @param channelname
  */
 function getChainInfo( channelname ){
-
+    return query.getChainInfo('peer1',channelname,'admin','org1')
 }
 
 /**
  * 根据区块编号获取区块详细信息
  * @param chainid
  */
-function getChainDetail( chainid ){
-
+function getBlock4Channel( channelName,blockNum ){
+    return query.getBlockByNumber('peer1',blockNum ,'admin','org1')
 
 }
 
 /**
- * 获取区块中的交易
+ * 获取channel中的交易
  * @param chainid
  */
-function getTans4Chain( channelName,blockHash ) {
+function getTans4Chain( channelName,trxnID ) {
+    return query.getTransactionByID('peer1',channelName, trxnID, 'admin', 'org1')
 
 }
 
-/**
- *
- * 根据交易编号获取交易详情
- * @param txid
- *
- */
-function  getTansDetail( channelName,txid ) {
-
-}
 
 /**
  * 获取账本中的chaincode
  */
 function getChainCode4Channel(channelName) {
-
+    return query.getInstalledChaincodes('peer1',channelName, '', 'admin', 'org1')
 
 }
 
 module.exports.getAllOrgs=getAllOrgs
 module.exports.getAllChannels=getAllChannels
 module.exports.getallPeers=getallPeers
-module.exports.getChain4channel=getChain4channel
-module.exports.getChainDetail=getChainDetail
 module.exports.getTans4Chain=getTans4Chain
-module.exports.getTansDetail=getTansDetail
 module.exports.getChainCode4Channel=getChainCode4Channel
+module.exports.getChainInfo=getChainInfo
+module.exports.getBlock4Channel=getBlock4Channel

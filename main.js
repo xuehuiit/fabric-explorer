@@ -3,6 +3,8 @@
  * Created by shouhewu on 6/8/17.
  *
  */
+var bcservice=require('./service/bcservice.js')
+
 var express = require("express");
 var path = require('path');
 var app = express();
@@ -56,9 +58,8 @@ app.get("/index", function(req, res) {
 
 //组织列表
 app.get("/orgs", function(req, res) {
-    res.render('orgs.ejs', {
-        name: 'tinyphp',item_index_orgs:'1'
-    });
+    var orgs=bcservice.getAllOrgs()
+    res.json(orgs)
 });
 
 app.get("/orgs/peers", function(req, res) {
@@ -69,45 +70,61 @@ app.get("/orgs/peers", function(req, res) {
 
 //channel列表
 app.get("/channels", function(req, res) {
-    res.render('channels.ejs', {
-        name: 'tinyphp',item_index_channels:'1'
-    });
+    bcservice.getAllChannels().then(channels=>{
+        res.send(channels)
+    }).catch(err=>{
+        res.send(err)
+    })
 });
 
 //channel详情
 app.get("/channels/:channelName", function(req, res) {
-    res.render('channel_detail.ejs', {
-        name: 'tinyphp',item_index_channels:'1'
-    });
+    var channelName=req.params.channelName
+    bcservice.getChainInfo(channelName).then(chainInfo=>{
+        res.send(chaiinInfo)
+    }).catch(err=>{
+        res.send(err)
+    })
 });
 
 //区块列表
 app.get("/channels/:channelName/block/:blockNum", function(req, res) {
-    res.render('peers.ejs', {
-        name: 'tinyphp',item_index_peers:'1'
-    });
+    var channelName=req.params.channelName
+    var blockNum=req.params.blockNum
+    bcservice.getBlock4Channel(channelName,blockNum).then(block=>{
+        res.send(block)
+    }).catch(err=>{
+        res.send(err)
+    })
 });
 
 //区块详情
-app.get("/channels/:channelName/block/:blockHash", function(req, res) {
+/*app.get("/channels/:channelName/block/:blockHash", function(req, res) {
     res.render('peer_detail.ejs', {
         name: 'tinyphp',item_index_peers:'1'
     });
-});
+});*/
 
 //交易详情
-app.get("/channels/:channelName/block/:blockNum/:txHash", function(req, res) {
-    res.render('block_detail.ejs', {
-        name: 'tinyphp',item_index_peers:'1'
-    });
+app.get("/channels/:channelName/:txHash", function(req, res) {
+    var channelName=req.params.channelName
+    var txHash=req.params.txHash
+    bcservice.getTans4Chain(channelName,txHash).then(tx=>{
+        res.send(tx)
+    }).catch(err=>{
+        res.send(err)
+    })
 });
 
 
 //
 app.get("/channels/:channelName/chaincodes", function(req, res) {
-    res.render('trans_detail.ejs', {
-        name: 'tinyphp',item_index_peers:'1'
-    });
+    var channelName=req.params.channelName
+    bcservice.getChainCode4Channel(channelName).then(chaincode=>{
+        res.send(chaincode)
+    }).catch(err=>{
+        res.send(err)
+    })
 });
 
 
