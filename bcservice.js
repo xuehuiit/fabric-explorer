@@ -28,6 +28,31 @@ function getAllOrgs(){
 
 }
 
+/**
+ * 获取所有的peers的请求地址
+ *
+ * @returns {Array}
+ */
+function getAllPeerRequest() {
+
+    var peerArray = []
+
+    for (let key in ORGS) {
+        if (key.indexOf('org') === 0) {
+            let orgproperty = ORGS[key]
+            for ( let orgkey in orgproperty){
+                if(  orgkey.indexOf('peer') === 0 ){
+                    var peerbean = {'name':orgkey,'org':key}
+                    peerArray.push(peerbean)
+                }
+            }
+        }
+    }
+
+    return peerArray;
+
+
+}
 
 /**
  * 获取所有的账本
@@ -100,3 +125,4 @@ function getChainCode4Channel(channelName) {
 
 module.exports.getAllOrgs=getAllOrgs
 module.exports.getallPeers=getallPeers
+module.exports.getAllPeerRequest = getAllPeerRequest
