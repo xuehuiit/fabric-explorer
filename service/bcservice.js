@@ -14,6 +14,8 @@ var config = require('../config.json');
 
 var query=require('../app/query.js')
 
+var bcserver = require('./bcservice');
+
 
 
 /**
@@ -30,6 +32,7 @@ function getAllOrgs(){
     return OrgArray
 
 }
+
 
 /**
  * 获取所有的peers的请求地址
