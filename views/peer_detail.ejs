@@ -169,7 +169,7 @@
 
                     <% block_array.forEach(function(block){ %>
                     <tr>
-                        <td><a href="javascript:openblockdetail(<%=block.num %>);"><%=block.num %></a></td>
+                        <td><a href="javascript:openblockdetail('<%=block.num %>');"><%=block.num %></a></td>
                         <td> <small><%=block.previous_hash %></small></td>
                         <td><%=block.data_hash %></td>
                     </tr>
