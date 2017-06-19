@@ -19,4 +19,6 @@ git clone https://github.com/onechain/fabric-explorer.git
 http://ks.blockchain001.com/?qa=activity/fabric-%E5%BC%80-%E6%BA%90-%E6%B5%8F-%E8%A7%88-%E5%99%A8
 
 QQ群：634713958
+
 微信群：旺链区块链Q&A
+
