@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body class="fixed-sidebar">
 
     <div id="wrapper">
 
@@ -177,8 +177,20 @@
     nodes: nodes,
     edges: edges
   };
-  var options = {};
+
+  var options = {
+
+      interaction:{
+
+          dragNodes:true,
+          dragView: true,
+
+          zoomView: false
+      }
+  };
+
   var network = new vis.Network(container, data, options);
+
 </script>
     
     
@@ -204,7 +216,17 @@
     nodes: nodes1,
     edges: edges1
   };
-  var options1 = {};
+  var options1 = {
+
+      interaction:{
+
+          dragNodes:true,
+          dragView: true,
+
+          zoomView: false
+      }
+  };
+
   var network1 = new vis.Network(container1, data1, options1);
 </script>    
     

@@ -17,7 +17,7 @@
     
 </head>
 
-<body>
+<body class="fixed-sidebar">
     <div id="wrapper">
        
        <% include nav_menu.ejs %>
@@ -483,7 +483,17 @@
         nodes: nodes,
         edges: edges
       };
-      var options = {};
+      var options = {
+
+          interaction:{
+
+              dragNodes:true,
+              dragView: true,
+
+              zoomView: false
+          }
+      };
+
       var network = new vis.Network(container, data, options);
     </script>
     
