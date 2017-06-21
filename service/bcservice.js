@@ -128,6 +128,7 @@ function getChainCode4Channel(channelName) {
 }
 
 function getBlockRange(from,to){
+
     var parms = [];
     for(var ind = from ; ind < to ; ind++){
         parms.push(query.getBlockByNumber('peer1','mychannel',ind,'admin','org1'));

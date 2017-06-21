@@ -18,6 +18,8 @@
     "fabric-ca-client": ">=1.0.0-beta <1.0.0-beta.10",
     "fabric-client": ">=1.0.0-beta <1.0.0-beta.10",
     "log4js": "^0.6.38",
+    "mysql": "^2.13.0",
+    "q": "^1.5.0",
     "winston": "^2.2.0"
   },
   "license": "Apache-2.0"

@@ -419,6 +419,7 @@ app.get("/channel_detail", function(req, res) {
     var block_array
     var tx_array=[]
     var chaincodes
+
     query.getChainInfo('peer1','mychannel','admin','org1').then(response_payloads=>{
 
         blocks = response_payloads.height.toString();
@@ -543,6 +544,53 @@ app.get("/channels/:channelName/chaincodes", function(req, res) {
 
 
 
+app.get("/testmysql", function(req, res) {
+
+    var parm = res.query.cheenid;
+
+
+    connection.query(' select * from bc_company ', function(err, rows, fields  ) {
+
+        if (err) throw err;
+        // console.log(  `The solution is: ${rows.length }  `  );
+        setfunc( rows.length )
+
+        res.render('orgs.ejs', {
+            name: 'tinyphp',item_index_orgs:'1'
+        });
+
+    });
+
+
+
+});
+
+app.get("/testmysql1", function(req, res) {
+
+    connection.query(' select * from bc_company ', function(err, rows, fields  ) {
+
+        if (err) throw err;
+
+        connection.query(' select * from bc_compan1 ', function(err, rows, fields  ) {
+
+            if (err) throw err;
+
+
+            return rows
+
+        },function (result) {
+
+
+
+        });
+
+
+
+
+    });
+
+
+});
 
 
 
@@ -565,7 +613,6 @@ function getTxCount(blocknums){
     }
 
 
-
     return Promise.all(parms
     ).then(datas=>{
         let txcount=0
@@ -576,6 +623,7 @@ function getTxCount(blocknums){
     }).catch(err=>{
         console.info(err)
     })
+
 }
 
 
