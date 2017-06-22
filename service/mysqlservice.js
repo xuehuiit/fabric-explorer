@@ -330,7 +330,7 @@ function getRowByPkOne(sql){
  * @param String limit      the pagedtion.
  *
  */
-function getRowsByCondition(tablename,columns = "" ,condtion,orderBy,limit){
+function getRowsByCondition(tablename,column ,condtion,orderBy,limit){
 
 
     return new Promise(function (resolve,reject){
