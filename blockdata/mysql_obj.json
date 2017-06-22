@@ -1,6 +1,6 @@
 blocks={
         
-        'codes':`${}`,
+        'blocknum':`${}`,
         'hashcode':`${}`,
         'channels':`${}`,
         'trans':`${}`
@@ -39,10 +39,9 @@ transaction = {
 
                   'channelid':`${}`,
                   'blockid':`${}`,
-                  'trancode':`${}`,
+                  'txhash':`${}`,
                   'createdt':`${}`,
-                  'pretran':`${}`,
-                  'nexttran':`${}`
+
                }
 
 
