@@ -40,7 +40,9 @@ function saveRow( tablename , columnValues  ){
         var  updatesqlcolumn = []
         var  updatesqlflag = []
 
-        Object.keys(columnValues).forEach((k,v)=>{
+        Object.keys(columnValues).forEach((k)=>{
+
+            let v = columnValues[k]
 
             addSqlParams.push(v)
             updatesqlcolumn.push(k)
@@ -98,7 +100,9 @@ function updateRowByPk(tablename,columnAndValue,pkName,pkValue){
 
         var updateparm = " set 1=1 "
 
-        Object.keys(columnAndValue).forEach((k,v)=>{
+        Object.keys(columnAndValue).forEach((k)=>{
+
+            let v = columnAndValue[k]
 
             addSqlParams.push(v)
             //updateparm = updateparm + ` ,${k}=? `
@@ -109,7 +113,9 @@ function updateRowByPk(tablename,columnAndValue,pkName,pkValue){
         var updatewhereparm = " (1=1)  "
         var searchparm = {pkName:pkValue}
 
-        Object.keys(searchparm).forEach((k,v)=>{
+        Object.keys(searchparm).forEach((k)=>{
+
+            let v = searchparm[k]
 
             addSqlParams.push(v)
             updatewhereparm = updatewhereparm+` and ${k}=? `
@@ -164,7 +170,10 @@ function updateRow(tablename,columnAndValue,condition){
 
         var updateparm = " set 1=1 "
 
-        Object.keys(columnAndValue).forEach((k,v)=>{
+
+        Object.keys(columnAndValue).forEach((k)=>{
+
+            let v = columnAndValue[k]
 
             addSqlParams.push(v)
             //updateparm = updateparm + ` ,${k}=? `
@@ -175,7 +184,9 @@ function updateRow(tablename,columnAndValue,condition){
         var updatewhereparm = " (1=1)  "
 
 
-        Object.keys(condition).forEach((k,v)=>{
+        Object.keys(condition).forEach((k)=>{
+
+            let v = condition[k]
 
             addSqlParams.push(v)
             updatewhereparm = updatewhereparm+` and ${k}=? `
@@ -214,7 +225,6 @@ function updateRow(tablename,columnAndValue,condition){
 function updateBySql(updateSql){
 
     return new Promise(function (resolve,reject){
-
 
 
         console.info(`update sql is :  ${updateSql}`)
@@ -283,12 +293,9 @@ function getRowByPk(tablename,column,pkColumn,value){
  * @param unknown_type DB
  * @return unknown
  */
-function getRowByPkOne(sql=''){
+function getRowByPkOne(sql){
 
     return new Promise(function (resolve,reject){
-
-        if( column == '' )
-            column = '*'
 
         //var sql = ` select  ${column} from ${tablename} where ${pkColumn} = ${value} `
 
@@ -313,6 +320,7 @@ function getRowByPkOne(sql=''){
 
 }
 
+
 /**
  * search table
  * @param String tablename  the table name
@@ -334,12 +342,15 @@ function getRowsByCondition(tablename,columns = "" ,condtion,orderBy,limit){
         var searchparm = {pkName:pkValue}
         var addSqlParams = []
 
-        Object.keys( condtion ).forEach((k,v)=>{
+        Object.keys( condtion ).forEach((k)=>{
+
+            let v = condtion[k]
 
             addSqlParams.push(v)
             updatewhereparm = updatewhereparm+` and ${k}=? `
 
         })
+
 
 
         var sql = ` select  ${column} from ${tablename} where ${updatewhereparm} ${orderBy} ${limit}`
@@ -374,20 +385,20 @@ function getRowsByCondition(tablename,columns = "" ,condtion,orderBy,limit){
  * @param datatype limit         the pagedtion.
  *
  */
-function getRowsBySQl(sqlchareter,condition='',limit){
+function getRowsBySQl(sqlchareter,condition,limit){
 
     return new Promise(function (resolve,reject){
 
-        if( column == '' )
-            column = '*'
 
         var updatewhereparm = " (1=1)  "
         var addSqlParams = []
 
-        Object.keys( condition ).forEach((k,v)=>{
+        Object.keys( condition ).forEach((k)=>{
+
+            let v = condition[k]
 
             addSqlParams.push(v)
-            updatewhereparm = updatewhereparm+` and ${k}=? `
+            updatewhereparm = updatewhereparm + ` and ${k}=? `
 
         })
 
@@ -397,15 +408,14 @@ function getRowsBySQl(sqlchareter,condition='',limit){
         console.info(` the search sql is : ${sql} `)
 
 
-        connection.query(sql, function(err, rows, fields  ) {
+        connection.query(sql, addSqlParams ,function(err, rows, fields  ) {
 
             if (err){
                 reject(err)
             }
 
-            // console.log(  `The solution is: ${rows.length }  `  );
-            console.info(' the getRowByPkOne ')
-
+            console.log(  ` The solution is: ${rows.length }  `  );
+            console.info( ' The getRowsBySQl  ')
 
             resolve(rows)
 
@@ -490,7 +500,7 @@ function getRowsBySQlCase(sql){
  * @returns {Promise}
  *
  */
-function getSearchMap(sql,key){
+function getSQL2Map(sql,key){
 
     return new Promise(function (resolve,reject){
 
@@ -500,17 +510,19 @@ function getSearchMap(sql,key){
                 reject(err)
             }
 
-            // console.log(  `The solution is: ${rows.length }  `  );
-            console.info(' the getSearchMap ')
+            console.log(  `The solution is: ${rows.length }  `  );
+
 
             var keymap = new Map();
 
             for( var ind = 0 ; ind<rows.length;ind++ ){
-                keymap.set(rows[ind].key,rows[ind])
+
+                console.log(  `The ind value is: ${ rows[ind].id }  `  );
+                keymap.set(rows[ind][key],rows[ind])
             }
 
-
             resolve(keymap)
+
 
         });
     })
@@ -524,7 +536,7 @@ function getSearchMap(sql,key){
  * @param unknown_type key
  * @return unknown
  */
-function getSqlMap(sql,key){
+function getSQL2Map4Arr(sql,key){
 
     return new Promise(function (resolve,reject){
 
@@ -541,7 +553,7 @@ function getSqlMap(sql,key){
 
             for( var ind = 0 ; ind<rows.length;ind++ ){
 
-                var keyvalue = rows[ind].key
+                var keyvalue = rows[ind][key]
                 var arrvalue  = [];
 
                 if( keymap.has(keyvalue)  ){
@@ -563,9 +575,6 @@ function getSqlMap(sql,key){
 
 
 
-
-
-
 exports.saveRow = saveRow
 exports.updateRowByPk =updateRowByPk
 exports.updateRow = updateRow
@@ -576,10 +585,8 @@ exports.getRowsByCondition =getRowsByCondition
 exports.getRowsBySQl =getRowsBySQl
 exports.getRowsBySQlNoCondtion =getRowsBySQlNoCondtion
 exports.getRowsBySQlCase =getRowsBySQlCase
-exports.getSearchMap =getSearchMap
-exports.getSqlMap =getSqlMap
-
-
+exports.getSQL2Map =getSQL2Map
+exports.getSQL2Map4Arr =getSQL2Map4Arr
 
 
 exports.openconnection = openconnection
