@@ -1,7 +1,7 @@
 'use strict';
 var log4js = require('log4js');
 var logger = log4js.getLogger('Helper');
-logger.setLevel('DEBUG');
+logger.setLevel('ERROR');
 
 var path = require('path');
 var util = require('util');
@@ -315,6 +315,26 @@ var getPeerAddressByName = function(org, peer) {
 	return address.split('grpc://')[1];
 };
 
+var getOrgs=function(){
+	let orgList=[]
+    for (let key in ORGS) {
+        if (key.indexOf('org') === 0) {
+			orgList.push(key)
+        }
+    }
+    return orgList
+}
+
+var getPeersByOrg = function (org) {
+    let peerList = []
+    for (let key in ORGS[org]) {
+        if (key.indexOf('peer') === 0) {
+            peerList.push(key);
+        }
+    }
+    return peerList;
+};
+
 exports.getChannelForOrg = getChannelForOrg;
 exports.getClientForOrg = getClientForOrg;
 exports.getLogger = getLogger;
@@ -327,3 +347,5 @@ exports.getPeerAddressByName = getPeerAddressByName;
 exports.getRegisteredUsers = getRegisteredUsers;
 exports.getOrgAdmin = getOrgAdmin;
 exports.getAdminUser=getAdminUser;
+exports.getOrgs=getOrgs;
+exports.getPeersByOrg=getPeersByOrg;

@@ -50,7 +50,7 @@ app.get("/index", function(req, res) {
 
     // var orgs = orgconfig.getAllOrgs();
     //
-    // test();
+    // test.js();
     // console.log(util.inspect(orgs));
 
     //console.log(util.inspect(bcserver.getAllPeerRequest()));

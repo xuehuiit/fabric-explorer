@@ -139,6 +139,19 @@ var getChainInfo = function(peer,channelName, username, org) {
 		return 'Failed to query with error:' + err.stack ? err.stack : err;
 	});
 };
+
+var getChannelConfig=function(org,channelName){
+    var channel = helper.getChannelForOrg(org,channelName);
+
+    return helper.getOrgAdmin(org).then((member) => {
+        return channel.getChannelConfig()
+    }).then((response) => {
+        return response
+    }).catch((err) => {
+        console.info(err)
+    });
+
+}
 //getInstalledChaincodes
 var getInstalledChaincodes = function(peer,channelName, type, username, org) {
 	var target = buildTarget(peer, org);
@@ -222,6 +235,16 @@ var getChannels = function(peer, username, org) {
 	});
 };
 
+var getChannelHeight=function(peer,channelName,username,org){
+	return getChainInfo(peer,channelName,username,org).then(response=>{
+		if(response){
+			logger.debug('<<<<<<<<<< channel height >>>>>>>>>')
+			logger.debug(response.height.low)
+			return response.height.low.toString()
+		}
+	})
+}
+
 function buildTarget(peer, org) {
 	var target = null;
 	if (typeof peer !== 'undefined') {
@@ -238,3 +261,5 @@ exports.getBlockByHash = getBlockByHash;
 exports.getChainInfo = getChainInfo;
 exports.getInstalledChaincodes = getInstalledChaincodes;
 exports.getChannels = getChannels;
+exports.getChannelHeight=getChannelHeight;
+exports.getChannelConfig=getChannelConfig;

@@ -5,10 +5,10 @@
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-    host: 'localhost',
+    host: '172.16.10.162',
     user: 'root',
     password: '123456',
-    database:'bctrend'
+    database:'fabricexplorer'
 });
 
 //打开连接
@@ -306,7 +306,7 @@ function getRowByPkOne(sql){
             }
 
             // console.log(  `The solution is: ${rows.length }  `  );
-            console.info(' the getRowByPkOne ')
+            console.info(` the getRowByPkOne sql ${sql}`)
 
 
             if( rows.length == 0 )
