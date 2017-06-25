@@ -1,4 +1,4 @@
-var sql=require('./mysqlservice.js')
+var sql=require('../db/mysqlservice.js')
 var query=require('../app/query.js')
 var helper=require('../app/helper.js')
 var co=require('co')

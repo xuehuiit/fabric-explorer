@@ -9,6 +9,11 @@ var express = require("express");
 var path = require('path');
 var app = express();
 
+require('./socket/websocketserver.js').init(app)
+
+var timer=require('./timer/timer.js')
+timer.start()
+
 //app.use(express.static('source'));
 //app.use('/source', express.static('source'));
 app.use('/source', express.static('public'));
