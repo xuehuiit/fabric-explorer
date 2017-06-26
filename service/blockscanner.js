@@ -100,6 +100,8 @@ function* saveChaincodes(channelName){
 function syncChaincodes(channelName){
     co(saveChaincodes,channelName).then(()=>{
         blockListener.emit('syncChaincodes', channelName)
+    }).catch(err=>{
+        console.info(err)
     })
 }
 

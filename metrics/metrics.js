@@ -4,7 +4,6 @@ class Metrics {
     constructor(size=10){
         this.size=size
         this.stats=new Stats()
-        console.info('init')
     }
 
     push(n){
