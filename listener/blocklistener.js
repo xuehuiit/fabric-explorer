@@ -2,6 +2,7 @@ var EventEmitter = require('events').EventEmitter;
 var blockListener = new EventEmitter();
 
 var blockScanner=require('../service/blockscanner.js')
+blockScanner.setBlockListener(blockListener)
 
 var blockMetrics=require('../metrics/metrics').blockMetrics
 var txMetrics=require('../metrics/metrics').txMetrics
@@ -12,11 +13,15 @@ blockListener.on('createBlock',function (block) {
 })
 
 blockListener.on('syncBlock',function (channelName) {
-    blockScanner.syncBlock(channelName)
+    setTimeout(function () {
+        blockScanner.syncBlock(channelName)
+    },1000)
 })
 
 blockListener.on('syncChaincodes',function (channelName) {
-    blockScanner.syncChaincodes(channelName)
+    setTimeout(function () {
+        blockScanner.syncChaincodes(channelName)
+    },1000)
 })
 
 exports.blockListener=blockListener

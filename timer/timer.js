@@ -28,7 +28,7 @@ function start(io) {
 
     //同步区块
     blockListener.emit('syncChaincodes', 'mychannel')
-    blockListener.emit('syncChaincodes', 'mychannel')
+    blockListener.emit('syncBlock', 'mychannel')
 
 }
 

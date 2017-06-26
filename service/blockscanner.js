@@ -2,7 +2,8 @@ var sql=require('../db/mysqlservice.js')
 var query=require('../app/query.js')
 var helper=require('../app/helper.js')
 var co=require('co')
-var blockListener=require('../listener/blocklistener.js')
+var blockListener
+
 
 function  syncBlock(channelName) {
     let maxBlockNum
@@ -11,8 +12,8 @@ function  syncBlock(channelName) {
         getMaxBlockNum(channelName),
         getCurBlockNum(channelName)
     ]).then(datas=>{
-        maxBlockNum=parseInt(datas[0])-1
-        curBlockNum=parseInt(datas[1])
+        maxBlockNum=parseInt(datas[0])
+        curBlockNum=parseInt(datas[1])+1
         co(saveBlockRange,channelName,curBlockNum,maxBlockNum).then(()=>{
             blockListener.emit('syncBlock', channelName)
         })
@@ -24,6 +25,7 @@ function  syncBlock(channelName) {
 }
 
 function* saveBlockRange(channelName,start,end){
+    console.info(`${start} ---------------- ${end}`)
     while(start<end){
         let block=yield query.getBlockByNumber('peer1',channelName,start,'admin','org1')
         blockListener.emit('createBlock',block)
@@ -69,7 +71,7 @@ function getCurBlockNum(channelName){
     let curBlockNum
     return sql.getRowsBySQlCase(`select max(blocknum) as blocknum from blocks  where channelname='${channelName}'`).then(row=>{
         if(row.blocknum==null){
-            curBlockNum=1
+            curBlockNum=0
         }else{
             curBlockNum=parseInt(row.blocknum)
         }
@@ -87,6 +89,10 @@ function getCurBlockNum(channelName){
 function* saveChaincodes(channelName){
     let chaincodes=yield query.getInstalledChaincodes('peer1',channelName,'installed','admin','org1')
     let len=chaincodes.length
+    if(typeof chaincodes ==='string'){
+        console.info(chaincodes)
+        return
+    }
     for(let i=0;i<len;i++){
         let chaincode=chaincodes[i]
         let c= yield sql.getRowByPkOne(`select count(1) as c from chaincodes where name='${chaincode.name}' and version='${chaincode.version}' and path='${chaincode.path}' `)
@@ -109,3 +115,7 @@ function syncChaincodes(channelName){
 
 exports.syncBlock=syncBlock
 exports.syncChaincodes=syncChaincodes
+
+exports.setBlockListener=function(blisten){
+    blockListener=blisten
+}
