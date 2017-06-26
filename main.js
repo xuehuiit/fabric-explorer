@@ -8,11 +8,13 @@ var bcservice=require('./service/bcservice.js')
 var express = require("express");
 var path = require('path');
 var app = express();
+var http= require('http').Server(app);
+var io = require('socket.io')(http);
 
 require('./socket/websocketserver.js').init(app)
 
 var timer=require('./timer/timer.js')
-timer.start()
+timer.start(io)
 
 //app.use(express.static('source'));
 //app.use('/source', express.static('source'));
@@ -601,7 +603,7 @@ app.get("/testmysql1", function(req, res) {
 
 // ============= 启动服务器 =======================
 
-var server = app.listen(8080, function() {
+var server = http.listen(8080, function() {
     console.log("请在浏览器访问：http://localhost:8080/");
     //console.log(path.join(__dirname, 'source'));
 });

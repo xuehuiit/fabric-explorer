@@ -1,13 +1,12 @@
-var Metrics=require('./metrics').Metrics
-var blockListener=require('../listener/blocklistener.js')
+var Metrics=require('../metrics/metrics.js').Metrics
+var blockListener=require('../listener/blocklistener.js').blockListener
 
 var blockPerMinMeter=new Metrics(12)
 var txnPerSecMeter=new Metrics(12)
 var txnPerMinMeter=new Metrics(12)
 
-var io=require('../socket/websocketserver.js')
 
-function start() {
+function start(io) {
 
     //每个1S 统计
     setInterval(function () {
@@ -30,6 +29,7 @@ function start() {
     //同步区块
     blockListener.emit('syncChaincodes', 'mychannel')
     blockListener.emit('syncChaincodes', 'mychannel')
+
 }
 
 
