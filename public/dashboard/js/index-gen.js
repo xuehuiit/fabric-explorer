@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8a3cbf87dbcda3c176e3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "112648d10f9eb3deb214"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -570,7 +570,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/public/dashboard/js/";
+/******/ 	__webpack_require__.p = "/js/";
 
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
@@ -711,11 +711,11 @@
 
 	__webpack_require__(142);
 
-	__webpack_require__(201);
+	__webpack_require__(221);
 
-	__webpack_require__(202);
+	__webpack_require__(222);
 
-	__webpack_require__(203);
+	__webpack_require__(220);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -745,16 +745,16 @@
 
 			Dashboard.preregisterWidgets({
 
-				'chaincodelist': __webpack_require__(204),
-				'metrix_choc_tx': __webpack_require__(205),
-				'metrix_block_min': __webpack_require__(206),
-				'metrix_txn_sec': __webpack_require__(207),
-				'metrix_txn_min': __webpack_require__(208),
-				'peerlist': __webpack_require__(209),
-				'blockview': __webpack_require__(210),
-				'blocklist': __webpack_require__(211),
-				'blockinfo': __webpack_require__(212),
-				'txdetail': __webpack_require__(213)
+				'chaincodelist': __webpack_require__(205),
+				'metrix_choc_tx': __webpack_require__(212),
+				'metrix_block_min': __webpack_require__(211),
+				'metrix_txn_sec': __webpack_require__(214),
+				'metrix_txn_min': __webpack_require__(213),
+				'peerlist': __webpack_require__(216),
+				'blockview': __webpack_require__(204),
+				'blocklist': __webpack_require__(203),
+				'blockinfo': __webpack_require__(202),
+				'txdetail': __webpack_require__(217)
 
 				/*'lab'				: require('./widgets/lab'),
 	    'info'			: require('./widgets/info'),
@@ -818,7 +818,7 @@
 				//iterate over the data, creating a new widget for each item
 				_.each(userlist, function (user, key) {
 					var widget = {};
-					widget[key + '-user'] = __webpack_require__(214);
+					widget[key + '-user'] = __webpack_require__(218);
 					Dashboard.preregisterWidgets(widget);
 
 					widgets = widgets.concat([{
@@ -61749,7 +61749,7 @@
 		registerWidget: function registerWidget(widgetId) {
 			var widget = {};
 			try {
-				widget[widgetId] = !(function webpackMissingModule() { var e = new Error("Cannot find module \"../../js/widgets\""); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+				widget[widgetId] = __webpack_require__(201)("./" + widgetId);
 			} catch (e) {
 				console.log('path does not exist');
 			}
@@ -85937,125 +85937,1108 @@
 /* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {'use strict';
-
-	var Utils = {
-		debug: function debug(message) {
-			var _ref;
-			return typeof window !== 'undefined' && window !== null ? (_ref = window.console) != null ? _ref.log(message) : void 0 : void 0;
-		},
-
-		demoFuzz: function demoFuzz() {
-			return window.demo ? Math.ceil(Math.random() * 10) : 0;
-		},
-
-		emit: function emit(e, quiet) {
-			if (!quiet) {
-				this.debug('Emitting ' + e);
-			}
-
-			if (e) {
-				$(document).trigger('WidgetInternalEvent', [e]);
-			}
-		},
-
-		on: function on(callback) {
-			$(document).on('WidgetInternalEvent', callback);
-		},
-
-		copyToClipboard: function copyToClipboard(e) {
-
-			if (navigator.appName == 'Microsoft Internet Explorer' || !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv 11/))) {
-				//internet explorer
-				window.clipboardData.setData('Text', $('#_clipboard').val());
-			} else {
-				var t = e.target,
-				    c = t.dataset.copytarget,
-				    inp = c ? document.querySelector(c) : null;
-
-				// is element selectable?
-				if (inp && inp.select) {
-					// select text
-					inp.select();
-
-					try {
-						// copy text
-						document.execCommand('copy');
-						inp.blur();
-					} catch (err) {
-						console.log('did not copy');
-						window.prompt("Copy to clipboard: Ctrl+C, Enter", $('#_clipboard').val());
-					}
-				}
-			}
-		},
-
-		selectorEscape: function selectorEscape(id) {
-			return id.replace(/(:|\.|\[|\]|,|=|@)/g, '\\$1');
-		}
+	var map = {
+		"./blockinfo": 202,
+		"./blockinfo.js": 202,
+		"./blocklist": 203,
+		"./blocklist.js": 203,
+		"./blockview": 204,
+		"./blockview.js": 204,
+		"./chaincodelist": 205,
+		"./chaincodelist.js": 205,
+		"./controls": 206,
+		"./controls.js": 206,
+		"./date": 207,
+		"./date.js": 207,
+		"./form": 208,
+		"./form.js": 208,
+		"./info": 209,
+		"./info.js": 209,
+		"./lab": 210,
+		"./lab.js": 210,
+		"./metrix_block_min": 211,
+		"./metrix_block_min.js": 211,
+		"./metrix_choc_tx": 212,
+		"./metrix_choc_tx.js": 212,
+		"./metrix_txn_min": 213,
+		"./metrix_txn_min.js": 213,
+		"./metrix_txn_sec": 214,
+		"./metrix_txn_sec.js": 214,
+		"./misc": 215,
+		"./misc.js": 215,
+		"./peerlist": 216,
+		"./peerlist.js": 216,
+		"./txdetail": 217,
+		"./txdetail.js": 217,
+		"./user": 218,
+		"./user.js": 218,
+		"./weather": 219,
+		"./weather.js": 219,
+		"./widget-root": 220,
+		"./widget-root.js": 220
 	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 201;
 
-	window.Dashboard.Utils = Utils;
-
-	// Adding event for sleep / wake
-	$(document).on('visibilitychange', function (e) {
-		Dashboard.Utils.emit('tower-control|sleep|' + document.hidden);
-	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
 
-	window.Dashboard.TEMPLATES = {
-		_widget: function _widget(opts) {
-			return '<div class="widget-shell col-lg-' + opts.largeColumn + ' col-md-' + opts.mediumColumn + ' col-xs-' + opts.smallColumn + ' ' + opts.name + '" id="widget-shell-' + opts.id + '">\n' + '	<div class="panel panel-default">\n' + '		<div class="panel-heading">\n' + '			<h3 class="panel-title"><span>' + opts.title + '</span></h3>\n' + '			<ul class="panel-action">\n' + (opts.customButtons ? opts.customButtons : '') + (opts.hideLink === true ? '' : '				<li><i title="Copy to clipboard" class="fa fa-link"></i></li>\n') + '				<li><i class="fa fa-chevron-down"></i></li>\n' + (opts.hideRefresh === true ? '' : '				<li><i class="fa fa-rotate-right"></i></li>\n') + '				<li><i class="fa fa-close"></i></li>\n' + '			</ul>\n' + '		</div>\n' + '		<div class="panel-body" id="widget-' + opts.id + '">\n' + '		</div>\n' + '	</div>\n' + '</div>';
-		},
+	module.exports = function (id) {
+		var extended = {
+			name: 'blockinfo',
+			title: 'blockinfo',
+			size: 'medium',
+			widgetId: id, //needed for dashboard
 
-		widget: function widget(o) {
-			var opts = _.extend({
-				id: Math.ceil(Math.random() * 100000000),
+			hideLink: true,
 
-				largeColumn: 3,
-				mediumColumn: 4,
-				smallColumn: 12
-			}, o);
+			customButtons: '<li><i class="add-account fa fa-expand"></i></li><li><i class="add-account fa fa-compress"></i></li>',
 
-			switch (opts.size) {
-				case 'medium':
-					opts.largeColumn = 6;
-					opts.mediumColumn = 12;
-					opts.smallColumn = 12;
+			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
 
-					break;
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
 
-				case 'large':
-					opts.largeColumn = 12;
-					opts.mediumColumn = 6;
-					opts.smallColumn = 12;
+				if (data) {
+					this.setData(data);
+				}
 
-					break;
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
 
-				case 'third':
-					opts.largeColumn = 4;
-					opts.mediumColumn = 6;
-					opts.smallColumn = 12;
+				this.initialized = true;
 
-					break;
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					app: this.data.appName,
+					desc: this.data.description,
+					numUser: this.data.numUser,
+					url: this.data.url
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
 			}
+		};
 
-			return {
-				id: opts.id,
-				tpl: Dashboard.TEMPLATES._widget(opts)
-			};
-		}
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
 /* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'blocklist',
+			title: 'Blocklist',
+			size: 'small',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td>Block</td><td>Age</td><td>TXNs</td></tr></thead>' + '<tbody><tr> <td>#1234</td> <td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td>#1234</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' + '<tr> <td>#1234</td> <td><a href=""><%= url %></a></td><td><%= url %></td> </tr>' + '<tr> <td>#1234</td> <td><%=desc%> </td> <td>App Name</td></tr>' + '</tbody> </table> <div>'),
+
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
+
+				if (data) {
+					this.setData(data);
+				}
+
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
+
+				this.initialized = true;
+
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					app: this.data.appName,
+					desc: this.data.description,
+					numUser: this.data.numUser,
+					url: this.data.url
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 204 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'blockview',
+			title: 'Blockview',
+			size: 'small',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			template: _.template('  <div class="form-group">' + '    <label for="block-id">Identifier [number, hash, tag]</label>' + '    <input type="text" class="form-control" id="block-id">' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="block" checked="checked"/>' + '      Block' + '    </label>' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="txn"/>' + '      Transaction' + '    </label>' + '  </div>' + '  <div class="form-group pull-right">' + '    <button type="button" class="btn btn-primary">Find</button>' + '  </div>' + '  <div id="notification">' + '  </div>'),
+
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
+
+				if (data) {
+					this.setData(data);
+				}
+
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
+
+				this.initialized = true;
+
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					app: this.data.appName,
+					desc: this.data.description,
+					numUser: this.data.numUser,
+					url: this.data.url
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'chaincodelist',
+			title: 'chaincode list',
+			size: 'large',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td>name</td><td>version</td><td>path</td><td>trans</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> <td><%= numUser %></td></tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a><%= url %></a></td><td><a><%= url %></a></td> </tr>' + '</tbody> </table> <div>'),
+
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
+
+				if (data) {
+					this.setData(data);
+				}
+
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
+
+				this.initialized = true;
+
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					app: this.data.appName,
+					desc: this.data.description,
+					numUser: this.data.numUser,
+					url: this.data.url
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			title: 'Control Panel',
+			size: 'third',
+			widgetId: id,
+
+			hideLink: true,
+
+			template: _.template('<div class="controls-container"><ul>' + '<li><button class="btn btn-default"><i class="fa fa-bolt"></i>Button 1</button></li>' + '<li><button class="btn btn-default"><i class="fa fa-times"></i>Button 2</button></li>' + '<li><button class="btn btn-default"><i class="fa fa-trash"></i>Button 3</button></li>' + '</ul></div>'),
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template());
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			title: 'Date',
+			size: 'third',
+			widgetId: id,
+
+			hideLink: true,
+
+			template: _.template('<div class="date-container"><div><%=month%> / <%=day%></div> <div><%=year%></div></div>'),
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+
+				this.fetch();
+
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth() + 1; //January is 0!
+				var yyyy = today.getFullYear();
+
+				if (dd < 10) {
+					dd = '0' + dd;
+				}
+
+				if (mm < 10) {
+					mm = '0' + mm;
+				}
+
+				today = mm + '/' + dd + '/' + yyyy;
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					date: today,
+					month: mm,
+					day: dd,
+					year: yyyy
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 208 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'form',
+			title: 'Form',
+			size: 'medium',
+			widgetId: id,
+
+			hideLink: true,
+
+			template: _.template('<form>' + '<div class="form-group">' + '<label for="exampleInputEmail1">Email address</label>' + '<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">' + '</div>' + '<div class="form-group">' + '<label for="address">Address</label>' + '<input type="text" class="form-control" id="address" placeholder="Address">' + '</div>' + '<div class="form-group">' + '<label for="exampleInputFile">File input</label>' + '<input type="file" id="exampleInputFile">' + '</div>' + '<div class="checkbox">' + '<label>' + '<input type="checkbox"> Check me out' + '</label>' + '</div>' + '<button type="submit" class="btn btn-default">Submit</button>' + '</form>'),
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template());
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'info',
+			title: 'Info',
+			size: 'medium',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			template: _.template('<div class="info-table"> <table class="table table-striped"> <tbody>' + '<tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
+
+				if (data) {
+					this.setData(data);
+				}
+
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
+
+				this.initialized = true;
+
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					app: this.data.appName,
+					desc: this.data.description,
+					numUser: this.data.numUser,
+					url: this.data.url
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 210 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			title: 'Lab',
+			size: 'third',
+			widgetId: id,
+
+			hideLink: true,
+
+			template: _.template('<div class="date-container"><div>test peers </div> <div><%=year%></div></div>'),
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+
+				this.fetch();
+
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth() + 1; //January is 0!
+				var yyyy = today.getFullYear();
+
+				if (dd < 10) {
+					dd = '0' + dd;
+				}
+
+				if (mm < 10) {
+					mm = '0' + mm;
+				}
+
+				today = mm + '/' + dd;
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					date: today,
+					month: mm,
+					day: dd,
+					year: yyyy
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'metrix_block_min',
+			title: 'block min',
+			size: 'medium',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			fetch: function fetch() {
+				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
+
+				widget.chart = $('#' + widget.name).epoch({
+					type: 'time.area',
+
+					data: [
+					// The first layer
+					{
+						label: "Layer 1",
+						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
+					},
+
+					// The second layer
+					{
+						label: "Layer 2",
+						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
+					}],
+					axes: ['left', 'right', 'bottom']
+				});
+			},
+
+			onData: function onData(data) {}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'metrix_choc_tx',
+			title: 'chaincode transtion',
+			size: 'large',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			fetch: function fetch() {
+				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
+
+				widget.chart = $('#' + widget.name).epoch({
+
+					type: 'bar',
+
+					data: [
+					// First bar series
+					{
+						label: 'Series 1',
+						values: [{ x: 'chaincode1', y: 30 }, { x: 'chaincode2', y: 10 }, { x: 'chaincode3', y: 12 }, { x: 'chaincode4', y: 12 }]
+					}]
+
+				});
+			},
+
+			onData: function onData(data) {}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'metrix_txn_min',
+			title: 'transtion min',
+			size: 'medium',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			fetch: function fetch() {
+				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
+
+				widget.chart = $('#' + widget.name).epoch({
+					type: 'time.area',
+
+					data: [
+					// The first layer
+					{
+						label: "Layer 1",
+						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
+					},
+
+					// The second layer
+					{
+						label: "Layer 2",
+						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
+					}],
+					axes: ['left', 'right', 'bottom']
+				});
+			},
+
+			onData: function onData(data) {}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
+
+/***/ }),
+/* 214 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'metrix_txn_sec',
+			title: 'transtion sec',
+			size: 'large',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			fetch: function fetch() {
+				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
+
+				widget.chart = $('#' + widget.name).epoch({
+					type: 'time.area',
+
+					data: [
+					// The first layer
+					{
+						label: "Layer 1",
+						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
+					},
+
+					// The second layer
+					{
+						label: "Layer 2",
+						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
+					}],
+					axes: ['left', 'right', 'bottom']
+				});
+			},
+
+			onData: function onData(data) {}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
+
+/***/ }),
+/* 215 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'misc',
+			title: 'Misc',
+			size: 'large',
+			widgetId: id,
+
+			template: _.template('its empty'),
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template());
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 216 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'peerlist',
+			title: 'peerlist',
+			size: 'medium',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td style="width:60px;">Block</td><td>Age</td><td style="width:45px;">TXNs</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
+
+				if (data) {
+					this.setData(data);
+				}
+
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
+
+				this.initialized = true;
+
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					app: this.data.appName,
+					desc: this.data.description,
+					numUser: this.data.numUser,
+					url: this.data.url
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 217 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			name: 'txdetail',
+			title: 'Txdetail',
+			size: 'medium',
+			widgetId: id, //needed for dashboard
+
+			hideLink: true,
+
+			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
+
+				if (data) {
+					this.setData(data);
+				}
+
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
+
+				this.initialized = true;
+
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					app: this.data.appName,
+					desc: this.data.description,
+					numUser: this.data.numUser,
+					url: this.data.url
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			title: 'Users',
+			size: 'small',
+			widgetId: id,
+
+			hideLink: true,
+
+			template: _.template('<div class="users"> <table class="table"> <tbody>' + '<tr> <td>Name</td> <td><%= name %></td> </tr>' + '<tr> <td>Role</td> <td><%= role %></td> </tr>' + '<tr> <td>ID</td> <td><%=id%> </td> </tr>' + '</tbody> </table> <div>'),
+
+			init: function init(data) {
+				Dashboard.Utils.emit('widget|init|' + this.name);
+
+				if (data) {
+					this.setData(data);
+				}
+
+				this.shell = Dashboard.TEMPLATES.widget({
+					name: this.name,
+					title: this.title,
+					size: this.size,
+					hideLink: this.hideLink,
+					hideRefresh: this.hideRefresh,
+					customButtons: this.customButtons,
+					details: true
+				});
+
+				this.initialized = true;
+
+				Dashboard.Utils.emit('widget|ready|' + this.name);
+
+				this.ready();
+
+				Dashboard.Utils.emit('widget|render|' + this.name);
+
+				this.subscribe();
+			},
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template({
+					name: this.data.name,
+					role: this.data.role,
+					id: this.data.id
+				}));
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+
+	module.exports = function (id) {
+		var extended = {
+			title: 'Weather',
+			size: 'third',
+			widgetId: id,
+
+			hideLink: true,
+
+			template: _.template('<i class="fa fa-sun-o fa-5x slow-spin weather-container" aria-hidden="true"></i>'),
+
+			render: function render() {
+				Dashboard.render.widget(this.name, this.shell.tpl);
+
+				this.fetch();
+
+				$('#widget-' + this.shell.id).css({
+					'height': '240px',
+					'margin-bottom': '10px',
+					'overflow-x': 'hidden',
+					'width': '100%'
+				}).html(this.template());
+
+				this.postRender();
+				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			}
+		};
+
+		var widget = _.extend({}, widgetRoot, extended);
+
+		// register presence with screen manager
+		Dashboard.addWidget(widget);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -86149,699 +87132,125 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 204 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
-	module.exports = function (id) {
-		var extended = {
-			name: 'chaincodelist',
-			title: 'chaincode list',
-			size: 'large',
-			widgetId: id, //needed for dashboard
+	var Utils = {
+		debug: function debug(message) {
+			var _ref;
+			return typeof window !== 'undefined' && window !== null ? (_ref = window.console) != null ? _ref.log(message) : void 0 : void 0;
+		},
 
-			hideLink: true,
+		demoFuzz: function demoFuzz() {
+			return window.demo ? Math.ceil(Math.random() * 10) : 0;
+		},
 
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td>name</td><td>version</td><td>path</td><td>trans</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> <td><%= numUser %></td></tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a><%= url %></a></td><td><a><%= url %></a></td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+		emit: function emit(e, quiet) {
+			if (!quiet) {
+				this.debug('Emitting ' + e);
 			}
-		};
 
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 205 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'metrix_choc_tx',
-			title: 'chaincode transtion',
-			size: 'large',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			fetch: function fetch() {
-				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
-
-				widget.chart = $('#' + widget.name).epoch({
-
-					type: 'bar',
-
-					data: [
-					// First bar series
-					{
-						label: 'Series 1',
-						values: [{ x: 'chaincode1', y: 30 }, { x: 'chaincode2', y: 10 }, { x: 'chaincode3', y: 12 }, { x: 'chaincode4', y: 12 }]
-					}]
-
-				});
-			},
-
-			onData: function onData(data) {}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
-
-/***/ }),
-/* 206 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'metrix_block_min',
-			title: 'block min',
-			size: 'medium',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			fetch: function fetch() {
-				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
-
-				widget.chart = $('#' + widget.name).epoch({
-					type: 'time.area',
-
-					data: [
-					// The first layer
-					{
-						label: "Layer 1",
-						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
-					},
-
-					// The second layer
-					{
-						label: "Layer 2",
-						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
-					}],
-					axes: ['left', 'right', 'bottom']
-				});
-			},
-
-			onData: function onData(data) {}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
-
-/***/ }),
-/* 207 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'metrix_txn_sec',
-			title: 'transtion sec',
-			size: 'large',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			fetch: function fetch() {
-				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
-
-				widget.chart = $('#' + widget.name).epoch({
-					type: 'time.area',
-
-					data: [
-					// The first layer
-					{
-						label: "Layer 1",
-						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
-					},
-
-					// The second layer
-					{
-						label: "Layer 2",
-						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
-					}],
-					axes: ['left', 'right', 'bottom']
-				});
-			},
-
-			onData: function onData(data) {}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
-
-/***/ }),
-/* 208 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'metrix_txn_min',
-			title: 'transtion min',
-			size: 'medium',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			fetch: function fetch() {
-				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
-
-				widget.chart = $('#' + widget.name).epoch({
-					type: 'time.area',
-
-					data: [
-					// The first layer
-					{
-						label: "Layer 1",
-						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
-					},
-
-					// The second layer
-					{
-						label: "Layer 2",
-						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
-					}],
-					axes: ['left', 'right', 'bottom']
-				});
-			},
-
-			onData: function onData(data) {}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
-
-/***/ }),
-/* 209 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'peerlist',
-			title: 'peerlist',
-			size: 'medium',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td style="width:60px;">Block</td><td>Age</td><td style="width:45px;">TXNs</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			if (e) {
+				$(document).trigger('WidgetInternalEvent', [e]);
 			}
-		};
+		},
 
-		var widget = _.extend({}, widgetRoot, extended);
+		on: function on(callback) {
+			$(document).on('WidgetInternalEvent', callback);
+		},
 
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
+		copyToClipboard: function copyToClipboard(e) {
+
+			if (navigator.appName == 'Microsoft Internet Explorer' || !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv 11/))) {
+				//internet explorer
+				window.clipboardData.setData('Text', $('#_clipboard').val());
+			} else {
+				var t = e.target,
+				    c = t.dataset.copytarget,
+				    inp = c ? document.querySelector(c) : null;
+
+				// is element selectable?
+				if (inp && inp.select) {
+					// select text
+					inp.select();
+
+					try {
+						// copy text
+						document.execCommand('copy');
+						inp.blur();
+					} catch (err) {
+						console.log('did not copy');
+						window.prompt("Copy to clipboard: Ctrl+C, Enter", $('#_clipboard').val());
+					}
+				}
+			}
+		},
+
+		selectorEscape: function selectorEscape(id) {
+			return id.replace(/(:|\.|\[|\]|,|=|@)/g, '\\$1');
+		}
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+	window.Dashboard.Utils = Utils;
+
+	// Adding event for sleep / wake
+	$(document).on('visibilitychange', function (e) {
+		Dashboard.Utils.emit('tower-control|sleep|' + document.hidden);
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 210 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
-	module.exports = function (id) {
-		var extended = {
-			name: 'blockview',
-			title: 'Blockview',
-			size: 'small',
-			widgetId: id, //needed for dashboard
+	window.Dashboard.TEMPLATES = {
+		_widget: function _widget(opts) {
+			return '<div class="widget-shell col-lg-' + opts.largeColumn + ' col-md-' + opts.mediumColumn + ' col-xs-' + opts.smallColumn + ' ' + opts.name + '" id="widget-shell-' + opts.id + '">\n' + '	<div class="panel panel-default">\n' + '		<div class="panel-heading">\n' + '			<h3 class="panel-title"><span>' + opts.title + '</span></h3>\n' + '			<ul class="panel-action">\n' + (opts.customButtons ? opts.customButtons : '') + (opts.hideLink === true ? '' : '				<li><i title="Copy to clipboard" class="fa fa-link"></i></li>\n') + '				<li><i class="fa fa-chevron-down"></i></li>\n' + (opts.hideRefresh === true ? '' : '				<li><i class="fa fa-rotate-right"></i></li>\n') + '				<li><i class="fa fa-close"></i></li>\n' + '			</ul>\n' + '		</div>\n' + '		<div class="panel-body" id="widget-' + opts.id + '">\n' + '		</div>\n' + '	</div>\n' + '</div>';
+		},
 
-			hideLink: true,
+		widget: function widget(o) {
+			var opts = _.extend({
+				id: Math.ceil(Math.random() * 100000000),
 
-			template: _.template('  <div class="form-group">' + '    <label for="block-id">Identifier [number, hash, tag]</label>' + '    <input type="text" class="form-control" id="block-id">' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="block" checked="checked"/>' + '      Block' + '    </label>' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="txn"/>' + '      Transaction' + '    </label>' + '  </div>' + '  <div class="form-group pull-right">' + '    <button type="button" class="btn btn-primary">Find</button>' + '  </div>' + '  <div id="notification">' + '  </div>'),
+				largeColumn: 3,
+				mediumColumn: 4,
+				smallColumn: 12
+			}, o);
 
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
+			switch (opts.size) {
+				case 'medium':
+					opts.largeColumn = 6;
+					opts.mediumColumn = 12;
+					opts.smallColumn = 12;
 
-				if (data) {
-					this.setData(data);
-				}
+					break;
 
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
+				case 'large':
+					opts.largeColumn = 12;
+					opts.mediumColumn = 6;
+					opts.smallColumn = 12;
 
-				this.initialized = true;
+					break;
 
-				Dashboard.Utils.emit('widget|ready|' + this.name);
+				case 'third':
+					opts.largeColumn = 4;
+					opts.mediumColumn = 6;
+					opts.smallColumn = 12;
 
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+					break;
 			}
-		};
 
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
+			return {
+				id: opts.id,
+				tpl: Dashboard.TEMPLATES._widget(opts)
+			};
+		}
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 211 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'blocklist',
-			title: 'Blocklist',
-			size: 'small',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td style="width:60px;">Block</td><td>Age</td><td style="width:45px;">TXNs</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 212 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'blockinfo',
-			title: 'blockinfo',
-			size: 'medium',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			customButtons: '<li><i class="add-account fa fa-expand"></i></li><li><i class="add-account fa fa-compress"></i></li>',
-
-			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 213 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'txdetail',
-			title: 'Txdetail',
-			size: 'medium',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 214 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			title: 'Users',
-			size: 'small',
-			widgetId: id,
-
-			hideLink: true,
-
-			template: _.template('<div class="users"> <table class="table"> <tbody>' + '<tr> <td>Name</td> <td><%= name %></td> </tr>' + '<tr> <td>Role</td> <td><%= role %></td> </tr>' + '<tr> <td>ID</td> <td><%=id%> </td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					name: this.data.name,
-					role: this.data.role,
-					id: this.data.id
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ })
 /******/ ]);

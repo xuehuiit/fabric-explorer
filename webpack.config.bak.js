@@ -3,22 +3,22 @@ var webpack = require('webpack');
 
 
 module.exports = {
-  entry: ["webpack/hot/dev-server", "./js/index.js"],
+  entry: ["webpack/hot/dev-server", "./public/dashboard/js/index.js"],
   output: {
     path: path.join(__dirname, 'public/dashboard/js'),
     filename: "index-gen.js",
-    publicPath: '/js/'
+    publicPath: '/public/dashboard/js/'
   },
   watchOptions: {
-    aggregateTimeout: 300,
-    poll: 1000
+	  aggregateTimeout: 300,
+	  poll: 1000
   },
   devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    stats: 'errors-only',
-    port: 8081
+	  historyApiFallback: true,
+	  hot: true,
+	  inline: true,
+	  stats: 'errors-only',
+	  port: 8081
   },
   plugins: [
     new webpack.ProvidePlugin({
@@ -32,7 +32,7 @@ module.exports = {
       moment: "moment",
     }),
     new webpack.HotModuleReplacementPlugin({
-      multiStep: true
+    	multiStep: true
     })
   ],
   module: {
@@ -40,7 +40,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
-          path.resolve(__dirname, "js"),
+          path.resolve(__dirname, "public/dashboard/js"),
           path.resolve(__dirname, "node_modules/jif-dashboard"),
         ],
         loader: 'babel',
