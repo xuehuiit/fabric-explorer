@@ -2,6 +2,8 @@ var sql=require('../db/mysqlservice.js')
 var query=require('../app/query.js')
 var helper=require('../app/helper.js')
 var co=require('co')
+var stomp=require('../socket/websocketserver.js').stomp()
+
 var blockListener
 
 
@@ -36,7 +38,8 @@ function* saveBlockRange(channelName,start,end){
                 'prehash':block.header.previous_hash,
                 'datahash':block.header.data_hash
             })
-
+        //push last block
+        stomp.send('/topic/block/all',{},start)
         start++
         console.info(block.header.number.toString())
         console.info(block.header.previous_hash)

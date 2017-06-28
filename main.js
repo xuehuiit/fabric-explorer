@@ -9,12 +9,11 @@ var express = require("express");
 var path = require('path');
 var app = express();
 var http= require('http').Server(app);
-var io = require('socket.io')(http);
 
-require('./socket/websocketserver.js').init(io)
+require('./socket/websocketserver.js')(http)
 
 var timer=require('./timer/timer.js')
-timer.start(io)
+timer.start()
 
 //app.use(express.static('source'));
 //app.use('/source', express.static('source'));

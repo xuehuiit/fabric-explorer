@@ -1,12 +1,13 @@
 var Metrics=require('../metrics/metrics.js').Metrics
-var blockListener=require('../listener/blocklistener.js').blockListener
+var blockListener=require('../listener/blocklistener.js').blockListener()
 
 var blockPerMinMeter=new Metrics(12)
 var txnPerSecMeter=new Metrics(12)
 var txnPerMinMeter=new Metrics(12)
 
+var stomp=require('../socket/websocketserver.js').stomp()
 
-function start(io) {
+function start() {
 
     //每个1S 统计
     setInterval(function () {
@@ -22,8 +23,9 @@ function start(io) {
     */
     //每个1S 推送 pushTxnPerMin pushBlockPerMin /topic/metrics/
     setInterval(function () {
-        io.emit('blockPerMinMeter',blockPerMinMeter.sum())
-        io.emit('txnPerMinMeter',txnPerMinMeter.sum())
+        console.info('time topic .....................')
+        stomp.send('/topic/metrics/blockPerMinMeter',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:blockPerMinMeter.sum()}))
+        stomp.send('/topic/metrics/txnPerMinMeter',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:txnPerMinMeter.sum()}))
     },1000)
 
     //同步区块

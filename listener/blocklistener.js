@@ -24,4 +24,6 @@ blockListener.on('syncChaincodes',function (channelName) {
     },1000)
 })
 
-exports.blockListener=blockListener
+exports.blockListener=function () {
+    return blockListener
+}

@@ -1,16 +1,14 @@
-var app = require('express')();
+var StompServer=require('stomp-broker-js')
 
-var io
+var stompServer
 
-var openedSessions=0
-
-function init(io){
-    io.on('connection', function(socket){
-        openedSessions++
-    })
-
+function init(http){
+    stompServer=new StompServer({server:http})
 }
 
 
-exports.init=init
-exports.io=io
+module.exports=exports=init
+
+exports.stomp=function () {
+    return stompServer
+}
