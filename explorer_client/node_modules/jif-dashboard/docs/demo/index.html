@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Sample // Dashboard</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<script type="text/javascript" src="js/index-gen.js"></script>
+</head>
+
+<body>
+	<section>
+		<header>
+			<nav class="tower-navigation">
+				<div class="tower-logo-container">
+					<a href="#" class="tower-logo">Sample // Dashboard</a>
+					<!-- <a href="#" class="tower-toggle-btn pull-right"><i class="fa fa-bars"></i></a> -->
+				</div>
+				<a href="#" class="tower-logo-hidden">Tower Control</a>
+				<div class="dropdown settings">
+					<i class="fa fa-cog dropdown-toggle"  data-toggle="dropdown" aria-hidden="true" aria-haspopup="true" aria-expanded="false"></i>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+						<div class="dropdown-arrow"><div class="arrow-up"></div></div>
+						<ul>
+							<li class="dropdown-item" href="#"><h4>Settings</li></h4>
+							<hr />
+							<li id="reset" class="dropdown-item" href="#">Reset Layouts</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+	</section>
+
+	<aside>
+		<nav class="tower-sidebar">
+			<ul>
+				<li id="console">
+					<a href="#" class="inbox">
+						<i class="fa fa-dashboard"><span class="icon-bg"></span></i>
+						<span class="tower-sidebar-item">Console</span>
+					</a>
+				</li>
+				<li id="users">
+					<a href="#" class="done">
+						<i class="fa fa-users"><span class="icon-bg"></span></i>
+						<span class="tower-sidebar-item">Users</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</aside>
+
+	<main>
+		<section>
+			<div class="tower-body-wrapper">
+				<div class="container-fluid">
+					<header class="tower-page-title">
+						<span>Console</span>
+					</header>
+
+					<div class="row" id="grounds">
+						<div class="widget-sizer col-lg-1 col-md-1 col-xs-12" style="height: 250px;"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>

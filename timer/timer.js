@@ -34,7 +34,6 @@ function start() {
     */
     //每个1S 推送 pushTxnPerMin pushBlockPerMin /topic/metrics/
     setInterval(function () {
-        console.info('time topic .....................')
         stomp.send('/topic/metrics/blockPerMinMeter',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:blockPerMinMeter.sum()}))
         stomp.send('/topic/metrics/txnPerMinMeter',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:txnPerMinMeter.sum()}))
     },1000)

@@ -1,0 +1,99 @@
+/*
+ * Core Epoch Styles
+ */
+
+/**
+ * Generates the styles needed to define a fill color for a given class name.
+ * @param $name Name of the class to use (sans the leading .)
+ * @param $color Fill color to associate with the class name.
+ */
+@mixin epoch-color($name, $color) {
+  div.ref.#{$name} {
+    background-color: $color;
+  }
+  .#{$name} {
+    .line { stroke: $color; }
+    .area, .dot { fill: $color; }
+  }
+  .arc.#{$name} path {
+    fill: $color;
+  }
+  .bar.#{$name} { 
+    fill: $color;
+  }
+  .#{$name} {
+    .bucket { fill: $color; }
+  }
+}
+
+/**
+ * Produces categorical color classes for plots (excluding heatmaps).
+ * @param $list List of colors to use for each category.
+ * @param $entries Size of the input list.
+ */
+@mixin epoch-category-colors($list, $entries) {
+  @for $i from 1 through $entries {
+    div.ref.category#{$i} {
+      background-color: nth($list, $i);
+    }
+    .category#{$i} {
+      .line { stroke: nth($list, $i); }
+      .area, .dot { fill: nth($list, $i); stroke: rgba(0,0,0,0); }
+    }
+    .arc.category#{$i} path {
+      fill: nth($list, $i);
+    }
+    .bar.category#{$i} { 
+      fill: nth($list, $i);
+    }
+  }
+}
+
+/**
+ * Produces categorical colors for heatmaps.
+ * @param $list List of colors to use for categories.
+ * @param $entries Size of the input list.
+ */
+@mixin epoch-heatmap-colors($list, $entries) {
+  @for $i from 1 through $entries {
+    .category#{$i} {
+      .bucket { fill: nth($list, $i); }
+    }
+  }
+}
+
+// Axis and Tick Shape Rendering
+.epoch {
+  .axis path, .axis line {
+    shape-rendering: crispEdges;
+  }
+
+  .axis.canvas .tick line {
+    shape-rendering: geometricPrecision;
+  }
+}
+
+/*
+ * Canvas Styles Reference Container
+ *
+ * The reference container is an SVG that is automatically created when Epoch is loaded. It is used
+ * by the canvas based plots to obtain color information from the page styles by creating reference
+ * elements and then reading their computed styles.
+ * 
+ * Note: don't mess with this ;)
+ */
+div#_canvas_css_reference {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+  svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -1000px;
+    left: -1000px;
+  }
+}
+

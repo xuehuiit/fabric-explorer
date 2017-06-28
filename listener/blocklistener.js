@@ -14,6 +14,8 @@ blockListener.on('createBlock',function (block) {
     txMetrics.push(block.data.data.length)
 
     stomp.send('/topic/block',{},JSON.stringify({'number':block.header.number.toString(),'txCount':block.data.data.length}))
+
+    stomp.send('/topic/metrics/txnPerSec',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:block.data.data.length/10}))
 })
 
 blockListener.on('syncBlock',function (channelName) {

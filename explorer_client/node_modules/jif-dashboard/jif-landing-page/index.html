@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="JPMorgan Chase">
+
+	<title>JIF Dashboard</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Prism CSS -->
+	<link href="css/prism.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+	<link href="css/stylesheet.css" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<!-- Navigation -->
+	<nav class="navbar-inverse navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<!-- <a class="navbar-brand" href="#">Brand</a> -->
+				<img class="logo" src="img/jlogo.png">
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#quickstart">Quickstart</a></li>
+					<li><a href="#portfolio">Examples</a></li>
+					<li><a href="#links">Links</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<!-- Header -->
+	<header id="top" class="header">
+		<div class="text-vertical-center">
+			<h1>JIF Dashboard</h1>
+			<h3>JPMorgan Interface Framework</h3>
+			<br>
+			<a href="#about" class="btn btn-dark btn-lg">Learn more</a>
+		</div>
+	</header>
+
+	<!-- About -->
+	<section id="about" class="about">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2>JIF is a dashboard framework to quickly build widget-based dashboards.</h2>
+					<br>
+					<p class="lead">It supports sections built out of widgets using a packery grid.</p>
+				</div>
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container -->
+	</section>
+
+	<!-- Quickstart-->
+	<section id="quickstart" class="info-section">
+		<div class="text-vertical-center">
+			<h1>Quickstart</h1>
+			<p class="lead">It's easy to get started with JIF through npm.</p>
+			<hr>
+			<p>Add dashboard-framework to your project's <code>package.json</code> file: </p>
+			<div class="center-code"><pre>
+				<code class="language-markup">
+					"dependencies": {
+						...
+						"jif-dashboard": "^1.0.0",
+						...
+					}
+				</code>
+			</pre></div><br>
+
+			<p>Then <code>import</code> or <code>require</code> the JIF Dashboard files. For example, in <code>index.js</code>,</p>
+			<div class="center-code"><pre>
+				<code class="language-javascript">
+					import 'jif-dashboard/dashboard-core'
+					import 'jif-dashboard/dashboard-util'
+					import 'jif-dashboard/dashboard-template'
+				</code>
+			</pre></div><br>
+		</div>
+	</section>
+
+	<!-- Portfolio -->
+	<section id="portfolio" class="portfolio">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 col-lg-offset-1 text-center">
+					<h1>Built with JIF Dashboard</h1>
+					<hr class="small">
+					<div class="row">
+						<div>
+							<div class="portfolio-item">
+								<img class="img-portfolio img-responsive" src="img/cakeshop.png">
+							</div>
+						</div>
+						<div>
+							<div class="portfolio-item">
+								<img class="img-portfolio img-responsive" src="img/holi.png">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.col-lg-10 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container -->
+	</section>
+
+	<!-- Services -->
+	<!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+	<section id="links" class="services bg-primary">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-lg-10 col-lg-offset-1">
+					<h1>Links</h1>
+					<hr class="small">
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="service-item">
+								<a href="https://github.com/jpmorganchase/jif-dashboard#jif-dashboard"><span class="fa-stack fa-4x">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-book fa-stack-1x text-primary"></i>
+								</span></a>
+								<h4>
+									<a href="https://github.com/jpmorganchase/jif-dashboard#jif-dashboard"><strong>Documentation</strong></a>
+								</h4>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="service-item">
+								<a href="demo"><span class="fa-stack fa-4x">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-asterisk fa-stack-1x text-primary"></i>
+								</span></a>
+								<h4>
+									<a href="demo"><strong>Example Dashboard</strong></a>
+								</h4>
+							</div>
+						</div>
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.col-lg-10 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container -->
+	</section>
+
+	<!-- Footer -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 col-lg-offset-1 text-center">
+					<h4><strong>JIF Dashboard</strong>
+					</h4>
+					<h4>Emerging Technologies</h4>
+					<br>
+					<ul class="list-inline">
+						<li>
+							<a href="https://github.com/jpmorganchase/jif-dashboard"><i class="fa fa-github fa-fw fa-3x"></i></a>
+						</li>
+					</ul>
+					<hr class="small">
+					<p class="text-muted">Copyright &copy; JPMorgan Chase 2016</p>
+				</div>
+			</div>
+		</div>
+		<a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+	</footer>
+
+
+	<!-- SCRIPTS -->
+
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Prism -->
+	<script src="js/prism.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script>
+	// Scrolls to the selected menu item on the page
+	$(function() {
+		$('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
+			if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+				var target = $(this.hash);
+				target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+				if (target.length) {
+					$('html,body').animate({
+						scrollTop: target.offset().top
+					}, 1000);
+					return false;
+				}
+			}
+		});
+	});
+	//#to-top button appears after scrolling
+	var fixed = false;
+	$(document).scroll(function() {
+		if ($(this).scrollTop() > 250) {
+			if (!fixed) {
+				fixed = true;
+				// $('#to-top').css({position:'fixed', display:'block'});
+				$('#to-top').show("slow", function() {
+					$('#to-top').css({
+						position: 'fixed',
+						display: 'block'
+					});
+				});
+			}
+		} else {
+			if (fixed) {
+				fixed = false;
+				$('#to-top').hide("slow", function() {
+					$('#to-top').css({
+						display: 'none'
+					});
+				});
+			}
+		}
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+/*!
+ * Start Bootstrap - Stylish Portfolio (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+/* Global Styles */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+p {
+	font-size: 20px;
+}
+
+hr {
+	width: 100px;
+}
+
+.text-vertical-center {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.text-vertical-center h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 9.5em;
+    font-weight: 600;
+}
+
+.text-center h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 4.5em;
+	font-weight: 600;
+}
+
+.docs-container h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 3.5em;
+	font-weight: 500;
+	margin-bottom: 15px;
+}
+
+.info-section {
+	display: table;
+    width: 100%;
+    height: 400px;
+    color: #fff;
+    /*background: url(../img/callout.jpg) no-repeat center center scroll;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+.info-section h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 4.5em;
+	font-weight: 600;
+}
+
+/* Custom Button Styles */
+
+.btn-dark {
+    border-radius: 0;
+    color: #fff;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+    color: #fff;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.btn-light {
+    border-radius: 0;
+    color: #333;
+    background-color: rgb(255,255,255);
+}
+
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active {
+    color: #333;
+    background-color: rgba(255,255,255,0.8);
+}
+
+/* Custom Horizontal Rule */
+
+hr.small {
+    max-width: 100px;
+}
+
+.toggle {
+    margin: 5px 5px 0 0;
+}
+
+/* Header */
+
+.header {
+    display: table;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*background: url(../img/bg.jpg) no-repeat center center scroll;*/
+	background-color: #1b435b;
+	color: white;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+/* About */
+
+.about {
+    padding: 50px 0;
+}
+
+/* Services */
+
+.services {
+    padding: 50px 0;
+}
+
+.service-item {
+    margin-bottom: 30px;
+}
+
+/* Callout */
+
+#quickstart {
+    display: table;
+    width: 100%;
+    height: 400px;
+    color: #fff;
+	background-color: #7d6969;
+    /*background: url(../img/callout.jpg) no-repeat center center scroll;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+/* Portfolio */
+
+#portfolio {
+	background-color: #c6ccc7;
+}
+
+.portfolio {
+    padding: 50px 0;
+}
+
+.portfolio-item {
+    margin-bottom: 30px;
+}
+
+.img-portfolio {
+    margin: 0 auto;
+}
+
+.img-portfolio:hover {
+    opacity: 0.8;
+}
+
+/* Call to Action */
+
+.call-to-action {
+    padding: 50px 0;
+}
+
+.call-to-action .btn {
+    margin: 10px;
+}
+
+/* Footer */
+
+footer {
+    padding: 100px 0;
+}
+
+#to-top {
+  	display: none;
+  	position: fixed;
+  	bottom: 5px;
+  	right: 5px;
+	border-radius: 25px;
+}
+
+/* Code blocks */
+pre {
+	width: 100%;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+	tab-size: 1;
+}
+
+.center-code {
+	margin: 0px 28%;
+}
+
+#getting-started {
+	display: table;
+	width: 100%;
+	height: 400px;
+	color: #fff;
+	background: url(../img/callout.jpg) no-repeat center center scroll;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	-o-background-size: cover;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+.docs-container {
+	padding-left: 15%;
+	padding-right: 15%;
+}
+
+.docs-container .center-code {
+	margin: 0px 18%;
+}
+
+#docs-label {
+	display: table;
+	width: 100%;
+	height: 200px;
+	color: black;
+	background-color: #fff;
+}
+
+.navbar-default {
+	opacity: .5;
+	transition: opacity .3s ease;
+}
+
+.navbar-default:hover {
+	opacity: .8;
+	transition: opacity .3s ease;
+}
+
+.navbar-inverse {
+	background-color: #321b0f;
+}
+
+p code {
+	background-color: rgba(249, 242, 244, 0.64);
+}
+#html-docs {
+	background-color: #9898ce
+}
+
+#widget {
+	background-color: #b7475b;
+}
+
+#section-docs {
+	background-color: #8c9e87;
+}
+
+#options {
+	background-color: #e8aeae;
+}
+
+#utils {
+	background-color: #479889;
+}
+
+#links a {
+	color: white;
+}
+
+.logo {
+	height: 50px;
+}

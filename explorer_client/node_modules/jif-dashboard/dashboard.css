@@ -1,0 +1,127 @@
+/*@import url('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');*/
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+.panel {
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+	border-radius: 0 !important;
+	position: relative;
+	/*-webkit-transition: all .2s linear;*/
+}
+
+.panel-close {
+	-webkit-transform: scale3d(0, 0, 0);
+	transform: scale3d(0, 0, 0);
+}
+
+.panel-body {
+	position: relative;
+	height: 250px;
+}
+
+.panel-heading {
+	background: white !important;
+	border-radius: 0;
+	padding: 15px;
+	border-bottom: 0 !important;
+}
+
+.panel-heading .panel-title {
+	font-family: 'Roboto Condensed', "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 13px;
+	color: #515d6e;
+
+	width: 85%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1001;
+	background: rgba(255, 255, 255, 0.75);
+	text-align: center;
+}
+
+.overlay:before {
+	content: "";
+	height: 100%;
+	vertical-align: middle;
+	width: 1px;
+	display: inline-block;
+	margin-left: -5px;
+}
+
+.overlay .overlay-content {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.overlay i {
+	display: block;
+	position: inline-block;
+	vertical-align: middle;
+	color: black;
+}
+
+.panel-action {
+	list-style: none;
+	display: inline-block;
+	float: right;
+	font-size: 13px;
+	margin-top: -15px;
+}
+
+.panel-action li {
+	display: inline-block;
+	color: #515d6e;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.is-dragging, .is-positioning-post-drag {
+	z-index: 200; /* keep dragged item on top */
+}
+
+.packery-drop-placeholder {
+	z-index: 0;
+	outline: 3px dashed #CCC;
+	outline-offset: -15px;
+	transition: transform 0.2s;
+}
+
+.ui-draggable-dragging {
+	z-index: 2;
+}
+
+
+.ui-resizable-handle {
+	right: 12px;
+	z-index: 90;
+	bottom: 17px;
+	opacity: 0.1;
+}
+
+.ui-resizable-handle:hover {
+	opacity: 1;
+}
+
+.widget-collapse {
+	height: 45px !important;
+	margin-bottom: 18px;
+}
+
+.back-panel-collapse {
+	height: 45px !important;
+	margin-bottom: 18px;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
+	overflow: hidden;
+}
