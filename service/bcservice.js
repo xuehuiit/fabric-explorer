@@ -14,7 +14,7 @@ var config = require('../config.json');
 
 var query=require('../app/query.js')
 
-var bcserver = require('./bcservice');
+// var bcserver = require('./bcservice');
 
 
 
@@ -170,7 +170,6 @@ function getTx(channelName,tx_array){
 
 
 module.exports.getAllOrgs=getAllOrgs
-module.exports.getallPeers=getallPeers
 module.exports.getAllPeerRequest = getAllPeerRequest
 module.exports.getAllChannels=getAllChannels
 module.exports.getallPeers=getallPeers

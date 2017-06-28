@@ -36,7 +36,8 @@ function* saveBlockRange(channelName,start,end){
                 'blocknum':start,
                 'channelname':channelName,
                 'prehash':block.header.previous_hash,
-                'datahash':block.header.data_hash
+                'datahash':block.header.data_hash,
+                'txcount':block.data.data.length
             })
         //push last block
         stomp.send('/topic/block/all',{},start)
@@ -98,7 +99,8 @@ function* saveChaincodes(channelName){
     }
     for(let i=0;i<len;i++){
         let chaincode=chaincodes[i]
-        let c= yield sql.getRowByPkOne(`select count(1) as c from chaincodes where name='${chaincode.name}' and version='${chaincode.version}' and path='${chaincode.path}' `)
+        chaincode.channelname=channelName
+        let c= yield sql.getRowByPkOne(`select count(1) as c from chaincodes where name='${chaincode.name}' and version='${chaincode.version}' and path='${chaincode.path}' and channelname='${channelName}' `)
         if(c.c==0){
             yield sql.saveRow('chaincodes',chaincode)
         }

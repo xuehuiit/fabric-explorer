@@ -17,6 +17,10 @@ class Metrics {
         console.info(this.stats.range())
         return this.stats.sum
     }
+
+    clean(){
+        this.stats.clean()
+    }
 }
 
 var txMetrics=new Metrics(12)

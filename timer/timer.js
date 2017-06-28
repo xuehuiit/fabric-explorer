@@ -7,6 +7,17 @@ var txnPerMinMeter=new Metrics(12)
 
 var stomp=require('../socket/websocketserver.js').stomp()
 
+var statusMertics=require('../service/metricservice.js')
+
+var ledgerMgr=require('../utils/ledgerMgr.js')
+
+var ledgerEvent=ledgerMgr.ledgerEvent
+ledgerEvent.on('channgelLedger',function(){
+    blockPerMinMeter.clean()
+    txnPerSecMeter.clean()
+    txnPerMinMeter.clean()
+})
+
 function start() {
 
     //每个1S 统计
@@ -28,9 +39,23 @@ function start() {
         stomp.send('/topic/metrics/txnPerMinMeter',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:txnPerMinMeter.sum()}))
     },1000)
 
+    //push status
+    setInterval(function () {
+        statusMertics.getStatus(ledgerMgr.getCurrChannel(),function (status) {
+            stomp.send('/topic/metrics/status',{},JSON.stringify(status))
+        })
+    },1000)
+
+    //push chaincode per tx
+ /*   setInterval(function(){
+        statusMertics.getTxPerChaincode(ledgerMgr.getCurrChannel(),function(txArray){
+            stomp.send('/topic/metrics/txPerChaincode',{},JSON.stringify(txArray))
+        })
+    },1000)*/
+
     //同步区块
-    blockListener.emit('syncChaincodes', 'mychannel')
-    blockListener.emit('syncBlock', 'mychannel')
+    blockListener.emit('syncChaincodes', ledgerMgr.getCurrChannel())
+    blockListener.emit('syncBlock', ledgerMgr.getCurrChannel())
 
 }
 
