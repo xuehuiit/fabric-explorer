@@ -52,13 +52,17 @@ app.post('/chaincodelist',function(req,res){
     })
 })
 
-app.post('/changeLedger',function(req,res){
+app.post('/changeChannel',function(req,res){
     let channelName=req.body.channelName
     ledgerMgr.changeChannel(channelName)
 })
 
-app.post('/curLedger',function(req,res){
+app.post('/curChannel',function(req,res){
     res.send(ledgerMgr.getCurrChannel())
+})
+
+app.post('/channellist',function(req,res){
+    res.send(ledgerMgr.getChannellist())
 })
 
 // ============= 启动服务器 =======================

@@ -5,7 +5,7 @@
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-    host: '172.16.10.162',
+    host: '192.168.23.228',
     user: 'root',
     password: '123456',
     database:'fabricexplorer'
