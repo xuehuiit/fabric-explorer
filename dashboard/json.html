@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>原生json格式化及高亮</title>
+    <meta name="description" content="json,格式化,高亮">
+    <meta name="keywords" content="json,格式化,高亮">
+    <script src="json/c.js" type="text/javascript"></script>
+    <link href="json/s.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="HeadersRow">
+    <textarea id="RawJson" style="display: none;" >
+        {"header":{"number":{"low":4,"high":0,"unsigned":true},"previous_hash":"5df169cda5f9cd6182edb02fd9394461e7188e7dc3fa2f4fdec457bca22deebe","data_hash":"2e0ce07cfffc6ce5c312f3c1e32dca1408263594cc9bfa655340434f8766c941"},"data":{"data":[{"signature":{"type":"Buffer","data":[48,69,2,33,0,178,242,226,113,194,52,164,122,181,223,116,227,199,89,236,191,107,53,161,150,12,175,120,32,252,31,13,85,185,68,162,0,2,32,60,76,129,92,29,29,56,238,171,83,81,245,25,180,209,248,118,58,44,217,9,137,51,53,113,105,128,235,60,215,54,20]},"payload":{"header":{"channel_header":{"type":"ENDORSER_TRANSACTION","version":3,"timestamp":"Tue Jun 20 2017 13:04:23 GMT+0800 (CST)","channel_id":"mychannel","tx_id":"c96a8652344c9da62ce49016abb1a30f3bf5c843826166437519d6c67fcc2991","epoch":0,"extension":{"type":"Buffer","data":[18,6,18,4,109,121,99,99]}},"signature_header":{"creator":{"Mspid":"Org1MSP","IdBytes":"-----BEGIN -----\nMIICLzCCAdWgAwIBAgIRAPSxIcbwSrTBIHgvxyYZ9sowCgYIKoZIzj0EAwIwczEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMTE2Nh\nLm9yZzEuZXhhbXBsZS5jb20wHhcNMTcwNjIwMDUwMjUxWhcNMjcwNjE4MDUwMjUx\nWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN\nU2FuIEZyYW5jaXNjbzEfMB0GA1UEAwwWQWRtaW5Ab3JnMS5leGFtcGxlLmNvbTBZ\nMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNCP63fdFXZT8/UJZZ7qw/n3TrnHQqPd\nuobYmnBMPkSnszHXQs3UcUTRYigSpgIUrPy5UeAhSsOlr8BxkRNfw6ijYjBgMA4G\nA1UdDwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAA\nMCsGA1UdIwQkMCKAIEW4ZwnnYDLxxkaslZs8EgYaEwVzXEBqS25JsfEsF7exMAoG\nCCqGSM49BAMCA0gAMEUCIQCG0UQcfLDzsaqf+N8opghT2kjEC/26Oh8ZQgpF/PDU\nRgIgcnJ+rf0q2Gbtkq6V3SuJO8FuSf75EE5t4hxvHZnYorU=\n-----END -----\n"},"nonce":{"type":"Buffer","data":[89,173,230,133,84,36,73,141,255,175,208,88,118,216,22,223,174,160,106,163,165,152,142,209]}}},"data":{"actions":[{"header":{"creator":{"Mspid":"Org1MSP","IdBytes":"-----BEGIN -----\nMIICLzCCAdWgAwIBAgIRAPSxIcbwSrTBIHgvxyYZ9sowCgYIKoZIzj0EAwIwczEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMTE2Nh\nLm9yZzEuZXhhbXBsZS5jb20wHhcNMTcwNjIwMDUwMjUxWhcNMjcwNjE4MDUwMjUx\nWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN\nU2FuIEZyYW5jaXNjbzEfMB0GA1UEAwwWQWRtaW5Ab3JnMS5leGFtcGxlLmNvbTBZ\nMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNCP63fdFXZT8/UJZZ7qw/n3TrnHQqPd\nuobYmnBMPkSnszHXQs3UcUTRYigSpgIUrPy5UeAhSsOlr8BxkRNfw6ijYjBgMA4G\nA1UdDwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAA\nMCsGA1UdIwQkMCKAIEW4ZwnnYDLxxkaslZs8EgYaEwVzXEBqS25JsfEsF7exMAoG\nCCqGSM49BAMCA0gAMEUCIQCG0UQcfLDzsaqf+N8opghT2kjEC/26Oh8ZQgpF/PDU\nRgIgcnJ+rf0q2Gbtkq6V3SuJO8FuSf75EE5t4hxvHZnYorU=\n-----END -----\n"},"nonce":{"type":"Buffer","data":[89,173,230,133,84,36,73,141,255,175,208,88,118,216,22,223,174,160,106,163,165,152,142,209]}},"payload":{"chaincode_proposal_payload":{"input":{"type":"Buffer","data":[10,30,8,1,18,6,18,4,109,121,99,99,26,18,10,6,105,110,118,111,107,101,10,1,97,10,1,98,10,2,49,48]}},"action":{"proposal_response_payload":{"proposal_hash":"1217137976597e93af597110df105c16e58c8511a349b9bf0020e9f25839adf1","extension":{"results":{"data_model":0,"ns_rwset":[{"namespace":"lscc","rwset":{"reads":[{"key":"mycc","version":{"block_num":{"low":3,"high":0,"unsigned":true},"tx_num":{"low":0,"high":0,"unsigned":true}}}],"range_queries_info":[],"writes":[]}},{"namespace":"mycc","rwset":{"reads":[{"key":"a","version":{"block_num":{"low":3,"high":0,"unsigned":true},"tx_num":{"low":0,"high":0,"unsigned":true}}},{"key":"b","version":{"block_num":{"low":3,"high":0,"unsigned":true},"tx_num":{"low":0,"high":0,"unsigned":true}}}],"range_queries_info":[],"writes":[{"key":"a","is_delete":false,"value":"90"},{"key":"b","is_delete":false,"value":"210"}]}}]},"events":{"chaincode_id":"","tx_id":"","event_name":"","payload":{"type":"Buffer","data":[]}},"response":{"status":200,"message":"","payload":""}}},"endorsements":[{"endorser":{"Mspid":"Org1MSP","IdBytes":"-----BEGIN -----\nMIICWzCCAgGgAwIBAgIRALJR8WLWwPshGgLoSDl57qAwCgYIKoZIzj0EAwIwczEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMTE2Nh\nLm9yZzEuZXhhbXBsZS5jb20wHhcNMTcwNjIwMDUwMjUxWhcNMjcwNjE4MDUwMjUx\nWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN\nU2FuIEZyYW5jaXNjbzEfMB0GA1UEAxMWcGVlcjAub3JnMS5leGFtcGxlLmNvbTBZ\nMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNWF32tE+7Q72ZZJctWhzY8pAAYAhzoh\nAigxId3WgUXlE/coNlXUkqW/J3TMcjcTyqS2PSQzd98skqIXu4rVhc6jgY0wgYow\nDgYDVR0PAQH/BAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQC\nMAAwKwYDVR0jBCQwIoAgRbhnCedgMvHGRqyVmzwSBhoTBXNcQGpLbkmx8SwXt7Ew\nKAYDVR0RBCEwH4IWcGVlcjAub3JnMS5leGFtcGxlLmNvbYIFcGVlcjAwCgYIKoZI\nzj0EAwIDSAAwRQIhAIxG0IqBO6H7G+PWFO3x78dhLPovHR7b9yNEIRggBO3/AiBy\nw4xPPvwjFTeiaAioCaDOka/u+ghz1YG/3Lb827uKAQ==\n-----END -----\n"},"signature":{"type":"Buffer","data":[48,69,2,33,0,245,201,32,77,114,88,123,6,232,4,21,90,56,70,1,112,244,246,120,207,28,131,4,171,166,46,138,166,142,133,188,237,2,32,68,233,25,7,235,112,54,197,152,8,235,115,221,46,192,87,157,52,209,28,161,10,21,152,210,250,33,113,72,156,8,177]}}]}}}]}}}]},"metadata":{"metadata":[{"value":"","signatures":[{"signature_header":{"creator":{"Mspid":"OrdererMSP","IdBytes":"-----BEGIN -----\nMIICUDCCAfagAwIBAgIRAMRqUEnq+3iehuD9bpJLsG8wCgYIKoZIzj0EAwIwaTEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xFDASBgNVBAoTC2V4YW1wbGUuY29tMRcwFQYDVQQDEw5jYS5leGFt\ncGxlLmNvbTAeFw0xNzA2MjAwNTAyNTFaFw0yNzA2MTgwNTAyNTFaMFkxCzAJBgNV\nBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNp\nc2NvMR0wGwYDVQQDExRvcmRlcmVyMi5leGFtcGxlLmNvbTBZMBMGByqGSM49AgEG\nCCqGSM49AwEHA0IABOAoHO7TjFLiF8xZEQUF112spgypOpjxNwl4j7pRXDSCDEvg\nFqeSHqgU+GeTXm/h22MyIKKOkiPw0hIUEePywxmjgY4wgYswDgYDVR0PAQH/BAQD\nAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQw\nIoAgIFw/f0jLdrR+QEybiK1D3amyDgqd8HVnTRwFDwuSYowwKQYDVR0RBCIwIIIU\nb3JkZXJlcjIuZXhhbXBsZS5jb22CCG9yZGVyZXIyMAoGCCqGSM49BAMCA0gAMEUC\nIQCsKxcwCSDoRDbeiOl1GgiWSYZCx+84NKeRxS64uxCuuAIgA2piaVK3q4VE6TGl\nwFoyMIkXOIRerHZV6q/xKrhb88Q=\n-----END -----\n"},"nonce":{"type":"Buffer","data":[218,14,228,84,67,143,154,196,145,26,130,8,160,12,165,121,212,79,80,107,200,166,220,94]}},"signature":{"type":"Buffer","data":[48,69,2,33,0,239,37,189,86,50,213,150,85,20,132,239,90,48,7,45,83,104,186,87,37,67,143,251,241,179,88,168,244,81,6,5,25,2,32,40,77,72,126,184,221,87,32,190,105,151,240,157,222,89,114,201,39,40,220,233,137,233,63,65,137,86,247,50,141,231,97]}}]},{"value":{"index":{"low":2,"high":0,"unsigned":true}},"signatures":[{"signature_header":{"creator":{"Mspid":"OrdererMSP","IdBytes":"-----BEGIN -----\nMIICUDCCAfagAwIBAgIRAMRqUEnq+3iehuD9bpJLsG8wCgYIKoZIzj0EAwIwaTEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xFDASBgNVBAoTC2V4YW1wbGUuY29tMRcwFQYDVQQDEw5jYS5leGFt\ncGxlLmNvbTAeFw0xNzA2MjAwNTAyNTFaFw0yNzA2MTgwNTAyNTFaMFkxCzAJBgNV\nBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNp\nc2NvMR0wGwYDVQQDExRvcmRlcmVyMi5leGFtcGxlLmNvbTBZMBMGByqGSM49AgEG\nCCqGSM49AwEHA0IABOAoHO7TjFLiF8xZEQUF112spgypOpjxNwl4j7pRXDSCDEvg\nFqeSHqgU+GeTXm/h22MyIKKOkiPw0hIUEePywxmjgY4wgYswDgYDVR0PAQH/BAQD\nAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQw\nIoAgIFw/f0jLdrR+QEybiK1D3amyDgqd8HVnTRwFDwuSYowwKQYDVR0RBCIwIIIU\nb3JkZXJlcjIuZXhhbXBsZS5jb22CCG9yZGVyZXIyMAoGCCqGSM49BAMCA0gAMEUC\nIQCsKxcwCSDoRDbeiOl1GgiWSYZCx+84NKeRxS64uxCuuAIgA2piaVK3q4VE6TGl\nwFoyMIkXOIRerHZV6q/xKrhb88Q=\n-----END -----\n"},"nonce":{"type":"Buffer","data":[159,248,206,126,199,96,5,26,211,236,200,118,217,150,231,74,164,95,62,56,42,135,16,155]}},"signature":{"type":"Buffer","data":[48,69,2,33,0,183,181,124,11,35,208,83,79,216,204,125,65,31,228,248,112,63,240,173,122,245,42,126,48,32,216,67,147,179,36,45,68,2,32,37,77,25,168,148,105,231,59,9,191,162,190,99,244,47,38,200,113,226,186,242,37,127,82,155,250,249,4,69,224,190,19]}}]},[]]}}
+  </textarea>
+</div>
+<div id="ControlsRow">
+    <input type="Button" value="格式化" onclick="Process()"/>
+    <span id="TabSizeHolder">
+    缩进量
+    <select id="TabSize" onchange="TabSizeChanged()">
+      <option value="1">1</option>
+      <option value="2" selected="true">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select>
+  </span>
+    <label for="QuoteKeys">
+        <input type="checkbox" id="QuoteKeys" onclick="QuoteKeysClicked()" checked="true" />
+        引号
+    </label>&nbsp;
+    <a href="javascript:void(0);" onclick="SelectAllClicked()">全选</a>
+    &nbsp;
+    <span id="CollapsibleViewHolder" >
+      <label for="CollapsibleView">
+        <input type="checkbox" id="CollapsibleView" onclick="CollapsibleViewClicked()" checked="true" />
+        显示控制
+      </label>
+  </span>
+    <span id="CollapsibleViewDetail">
+    <a href="javascript:void(0);" onclick="ExpandAllClicked()">展开</a>
+    <a href="javascript:void(0);" onclick="CollapseAllClicked()">叠起</a>
+    <a href="javascript:void(0);" onclick="CollapseLevel(3)">2级</a>
+    <a href="javascript:void(0);" onclick="CollapseLevel(4)">3级</a>
+    <a href="javascript:void(0);" onclick="CollapseLevel(5)">4级</a>
+    <a href="javascript:void(0);" onclick="CollapseLevel(6)">5级</a>
+    <a href="javascript:void(0);" onclick="CollapseLevel(7)">6级</a>
+    <a href="javascript:void(0);" onclick="CollapseLevel(8)">7级</a>
+    <a href="javascript:void(0);" onclick="CollapseLevel(9)">8级</a>
+  </span>
+</div>
+<div id="Canvas" class="Canvas"></div>
+
+<script type="text/javascript" src="json/m.js"></script>
+<script type="text/javascript">
+    var jsonstr = '' ;
+    Process();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>fabricexplorer</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/epoch.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/index-gen.js"></script>
+
+	<script type="text/javascript" src="http://112.124.115.82:8080/source/inspinia/js/jquery-3.1.1.min.js"></script>
+
+	<script type="text/javascript" src="layer/layer.min.js"></script>
+
+
+</head>
+
+<body>
+
+	<section>
+		<header>
+			<nav class="tower-navigation">
+				<div class="tower-logo-container">
+					<a href="#" class="tower-logo">ONECHAIN // FABRICEXPLORER </a>
+					<!-- <a href="#" class="tower-toggle-btn pull-right"><i class="fa fa-bars"></i></a> -->
+				</div>
+				<a href="#" class="tower-logo-hidden">Tower Control</a>
+				<div class="dropdown settings">
+					<i class="fa fa-cog dropdown-toggle"  data-toggle="dropdown" aria-hidden="true" aria-haspopup="true" aria-expanded="false"></i>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+						<div class="dropdown-arrow"><div class="arrow-up"></div></div>
+						<ul>
+							<li class="dropdown-item" href="#"><h4>CHANNELS</h4></li>
+							<hr />
+							<li id="reset" class="dropdown-item" href="#" channeldata="CHANNEL1">CHANNEL1</li>
+							<li id="reset2" class="dropdown-item" href="#" channeldata="CHANNEL2">CHANNEL2</li>
+							<li id="reset3" class="dropdown-item" href="#" channeldata="CHANNEL3">CHANNEL3</li>
+							<li id="reset4" class="dropdown-item" href="#" channeldata="CHANNEL4">CHANNEL4</li>
+							<li id="reset5" class="dropdown-item" href="#" channeldata="CHANNEL5">CHANNEL5</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+	</section>
+
+	<aside>
+		<nav class="tower-sidebar">
+			<ul>
+
+				<li id="channel">
+					<a href="#" class="done">
+						<i class="fa fa-users"><span class="icon-bg"></span></i>
+						<span class="tower-sidebar-item">Channel</span>
+					</a>
+				</li>
+
+			</ul>
+		</nav>
+	</aside>
+
+	<main>
+		<section>
+			<div class="tower-body-wrapper">
+				<div class="container-fluid">
+					<header class="tower-page-title">
+						<span>Console</span>
+					</header>
+
+					<div class="row" id="heads-up">
+						<div class="col-lg-3 col-xs-6">
+							<div class="tower-nugget tower-txt-success">
+								<i class="fa fa-play"></i>
+								<span class="heading">peer</span>
+								<span class="value default" id="default-node-status">
+									<span>2</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-xs-6">
+							<div class="tower-nugget">
+								<i class="fa fa-users"></i>
+								<span class="heading">block</span>
+								<span class="value default" id="default-peers">
+									<span>12</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-xs-6">
+							<div class="tower-nugget tower-txt-primary">
+								<i class="fa fa-cubes"></i>
+								<span class="heading">tx</span>
+								<span class="value default" id="default-blocks">
+									<span>123</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-xs-6">
+							<div class="tower-nugget tower-txt-danger">
+								<i class="fa fa-exchange"></i>
+								<span class="heading">chaincode</span>
+								<span class="value default" id="default-txn">
+									<span>2</span>
+								</span>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row" id="grounds">
+						<div class="widget-sizer col-lg-1 col-md-1 col-xs-12" style="height: 250px;"></div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+	</main>
+
+
+
+	<p style="width: 1px; height: 1px;">
+		<input type="text" id="_clipboard"/>
+		<button id="_clipboard_button" data-copytarget="#_clipboard">copy</button>
+	</p>
+
+</body>
+<script type="text/javascript">
+
+	function openblockdetail(blockid){
+
+		var titleinfo = " #["+blockid+"]";
+
+		$.layer({
+
+			type:2,
+			border: [0],
+			area : ['850px' , '700px'],
+			offset : ['10px',''],
+
+			title:titleinfo,
+			iframe:{src: 'json.html'}
+
+		});
+
+	}
+
+</script>
+</html>
