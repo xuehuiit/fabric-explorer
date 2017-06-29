@@ -60,6 +60,7 @@ function* saveBlockRange(channelName,start,end){
         }
 
     }
+    stomp.send('/topic/metrics/txnPerSec',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:0}))
 }
 
 

@@ -1,3 +1,4 @@
+import utils from '../utils';
 
 module.exports = function(id) {
 	var extended = {
@@ -22,11 +23,12 @@ module.exports = function(id) {
 
 				data: [
 					// The first layer
-					{
-						label: "Layer 1",
-						values: [ {time: 1370044800, y: 100}, {time: 1370044801, y: 1000}, ]
-					}
-				],
+                    {
+                        label: 'TXs per Sec',
+                        values: [ { time: (new Date()).getTime() / 1000, y: 0 } ]
+                    }
+
+                ],
 				axes: ['left', 'right', 'bottom']
 			});
 		},
