@@ -178,15 +178,15 @@ window.Tower = {
 
 			var widgets = [
 
-				{ widgetId: 'blockinfo',data: {a:'ddd',b:'bbb'}},
+				{ widgetId: 'blockinfo',data: {bocknum: Tower.status.latestBlock}},
 				{ widgetId: 'blocklist' ,data: Tower.status.latestBlock},
 				{ widgetId: 'blockview' ,data: data},
-				{ widgetId: 'txdetail'  ,data: data},
+				{ widgetId: 'txdetail'  ,data: {txid:'0'} },
 				{ widgetId: 'peerlist'  ,data: data},
 				{ widgetId: 'metrix_txn_sec' ,data: data},
 				{ widgetId: 'metrix_txn_min' ,data: data},
 				{ widgetId: 'metrix_block_min' ,data: data},
-				// { widgetId: 'metrix_choc_tx' ,data: data},
+				//{ widgetId: 'metrix_choc_tx' ,data: data},
 				{ widgetId: 'chaincodelist' ,data: data},
 
 				/*{ widgetId: 'misc' },

@@ -86,6 +86,20 @@ module.exports = function(id) {
 
                 _this.postFetch();
             });
+
+
+
+        },
+
+
+        postRender: function() {
+            $('#widget-' + this.shell.id).on('click', 'a', this.showBlock);
+        },
+
+        showBlock: function(e) {
+            e.preventDefault();
+
+            Dashboard.show({ widgetId: 'blockinfo', section: 'channel', data: {bocknum:$(this).text()}, refetch: true });
         }
 
     };

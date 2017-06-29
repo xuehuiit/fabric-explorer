@@ -11,8 +11,11 @@ module.exports = function(id) {
         url: 'chaincodelist',
 
 		template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' +
-			'<thead style="font-weight: bold;"><tr><td>name</td><td>version</td><td>path</td><td>trans</td></tr></thead>'+
+			'<thead style="font-weight: bold;">'+
+			'<tr><td width="20%">name</td><td width="10%">version</td><td width="60%">path</td><td width="10%">trans</td></tr>'+
+			'</thead>'+
 			'<tbody><%= rows %></tbody> </table> <div>'),
+
 		templateRow: _.template('<tr> <td><%= channelName %></td> <td><%= version %></td><td><%= path %></td> <td><%= txCount %></td></tr>'),
 
 
