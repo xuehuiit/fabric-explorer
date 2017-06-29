@@ -45,30 +45,28 @@ window.Tower = {
 			'appName': 'onechain fabricexplorer'
 		});
 
+        Dashboard.preregisterWidgets({
+
+            'chaincodelist'		: require('./widgets/chaincodelist'),
+            // 'metrix_choc_tx'	: require('./widgets/metrix_choc_tx'),
+            'metrix_block_min'	: require('./widgets/metrix_block_min'),
+            'metrix_txn_sec'	: require('./widgets/metrix_txn_sec'),
+            'metrix_txn_min'	: require('./widgets/metrix_txn_min'),
+            'peerlist'			: require('./widgets/peerlist'),
+            'blockview'			: require('./widgets/blockview'),
+            'blocklist'			: require('./widgets/blocklist'),
+            'blockinfo'			: require('./widgets/blockinfo'),
+            'txdetail'			: require('./widgets/txdetail'),
+
+        });
+
 		//initialize the Dashboard, set up widget container
 		Dashboard.init()
 
-	    Dashboard.preregisterWidgets({
+        // Adding event for hash changes
+        $(window).on('hashchange', this.processHash);
 
-	    	'chaincodelist'		: require('./widgets/chaincodelist'),
-			// 'metrix_choc_tx'	: require('./widgets/metrix_choc_tx'),
-			'metrix_block_min'	: require('./widgets/metrix_block_min'),
-			'metrix_txn_sec'	: require('./widgets/metrix_txn_sec'),
-			'metrix_txn_min'	: require('./widgets/metrix_txn_min'),
-			'peerlist'			: require('./widgets/peerlist'),
-			'blockview'			: require('./widgets/blockview'),
-			'blocklist'			: require('./widgets/blocklist'),
-			'blockinfo'			: require('./widgets/blockinfo'),
-			'txdetail'			: require('./widgets/txdetail'),
-
-			/*'lab'				: require('./widgets/lab'),
-		  'info'			: require('./widgets/info'),
-	      'form'            : require('./widgets/form'),
-	      'misc'            : require('./widgets/misc'),
-		  'date'			: require('./widgets/date'),
-		  'controls'		: require('./widgets/controls'),
-		  'weather'			: require('./widgets/weather')*/
-		});
+        this.processHash();
 
         // Reusing socket from cakeshop.js
         Tower.stomp = Client.stomp;
@@ -77,6 +75,49 @@ window.Tower = {
 		//open first section - channel
 		Tower.section['default']();
 	},
+
+    processHash: function() {
+        if (window.location.hash) {
+            const params = {};
+            const hash = window.location.hash.substring(1, window.location.hash.length);
+
+            _.each(hash.split('&'), function(pair) {
+                pair = pair.split('=');
+                params[pair[0]] = decodeURIComponent(pair[1]);
+            });
+
+            var werk = function() {
+                if (params.section) {
+                    $('#' + params.section).click();
+                }
+
+                if (params.data) {
+                    try {
+                        params.data = JSON.parse(params.data);
+                    } catch (err) {}
+                }
+
+                if (params.widgetId) {
+                    Dashboard.show({
+                        widgetId: params.widgetId,
+                        section: params.section ? params.section : Tower.current,
+                        data: params.data, refetch: true,
+                    });
+                }
+            };
+
+            // do when ready
+            if (!Tower.ready) {
+                Dashboard.Utils.on(function(ev, action) {
+                    if (action.indexOf('tower-control|ready|') === 0) {
+                        werk();
+                    }
+                });
+            } else {
+                werk();
+            }
+        }
+    },
 
 	//define the sections
 	section: {
@@ -100,19 +141,25 @@ window.Tower = {
                 Dashboard.Utils.emit('node-status|announce');
             };
 
-            $.when(
-                utils.load({ url: 'api/status/get' })
-            ).done(function(response) {
-                statusUpdate(response);
-            }).fail(function() {
-                statusUpdate({
-                    peerCount: 'n/a',
-                    latestBlock: 'n/a',
-                    txCount: 'n/a',
-                    chaincodeCount: 'n/a'
-                });
-            });
+            $.ajax({
+                type: "post",
+                url: "api/status/get",
+                cache:false,
+                async:false,
+                dataType: "json",
+                success: function(response){
+                    statusUpdate(response);
+                },
+				error:function(err){
+                    statusUpdate({
+                        peerCount: 'n/a',
+                        latestBlock: 'n/a',
+                        txCount: 'n/a',
+                        chaincodeCount: 'n/a'
+                    });
+				}
 
+            });
             utils.subscribe('/topic/metrics/status', statusUpdate);
 
 		},

@@ -5,7 +5,7 @@ export default {
             url: opts.url,
             contentType: opts.type ? opts.type : 'application/json',
             cache: false,
-            async: true
+            async: opts.async ? opts.async : true
         };
 
         if (opts.data) {

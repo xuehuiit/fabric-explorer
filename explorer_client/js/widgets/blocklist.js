@@ -24,7 +24,6 @@ module.exports = function(id) {
 
         setData: function(data) {
             this.data = data;
-
             this.lastBlockNum = data;
         },
 
@@ -67,8 +66,8 @@ module.exports = function(id) {
                             data: { number: _this.lastBlockNum - n },
                             complete: function(res) {
                                 rows.push( {
-                                    num: res.number,
-                                    txCount: res.txCount,
+                                    num: res.responseJSON.number,
+                                    txCount: res.responseJSON.txCount,
                                 } );
                             }
                         })

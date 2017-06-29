@@ -32,9 +32,9 @@ var query=require('./app/query.js')
 app.post("/api/block/get", function(req, res) {
     let number=req.body.number
     query.getBlockByNumber('peer1',ledgerMgr.getCurrChannel(),parseInt(number),'admin','org1').then(block=>{
-        res.json({
-            'num':number,
-            'txcount':block.data.data.length
+        res.send({
+            'number':number,
+            'txCount':block.data.data.length
         })
     })
 });
@@ -42,13 +42,13 @@ app.post("/api/block/get", function(req, res) {
 //return latest status
 app.post("/api/status/get", function(req, res) {
     statusMertics.getStatus(ledgerMgr.getCurrChannel(),function(status){
-        res.json(status)
+        res.send(status)
     })
 });
 
 app.post('/chaincodelist',function(req,res){
     statusMertics.getTxPerChaincode(ledgerMgr.getCurrChannel(),function (data) {
-        res.json(data)
+        res.send(data)
     })
 })
 
