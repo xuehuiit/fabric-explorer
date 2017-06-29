@@ -18,6 +18,8 @@ function  syncBlock(channelName) {
         curBlockNum=parseInt(datas[1])+1
         co(saveBlockRange,channelName,curBlockNum,maxBlockNum).then(()=>{
             blockListener.emit('syncBlock', channelName)
+        }).catch(err=>{
+            console.info(err)
         })
     }).catch(err=>{
         console.info(err)
@@ -50,12 +52,19 @@ function* saveBlockRange(channelName,start,end){
         let txLen=block.data.data.length
         for(let i=0;i<txLen;i++){
             let tx=block.data.data[i]
+            let chaincode
+            try{
+                chaincode=tx.payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[1].namespace
+            }catch(err) {
+                chaincode=""
+            }
             yield sql.saveRow('transaction',
                 {
                     'channelname':channelName,
                     'blockid':block.header.number.toString(),
                     'txhash':tx.payload.header.channel_header.tx_id,
-                    'createdt':new Date(tx.payload.header.channel_header.timestamp)
+                    'createdt':new Date(tx.payload.header.channel_header.timestamp),
+                    'chaincodename':chaincode
                 })
         }
 
