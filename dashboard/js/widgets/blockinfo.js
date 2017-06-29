@@ -1,23 +1,28 @@
+import common from '../common';
 
 module.exports = function(id) {
 	var extended = {
-		name: 'blocklist',
-		title: 'Blocklist',
-		size: 'small',
+		name: 'blockinfo',
+		title: 'blockinfo',
+		size: 'medium',
 		widgetId: id, //needed for dashboard
 
 		hideLink: true,
 
+		customButtons: '<li><i class="add-account fa fa-expand"></i></li>',
 
-		template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' +
-			'<thead style="font-weight: bold;"><tr><td>Block</td><td>Age</td><td>TXNs</td></tr></thead>'+
-			'<tbody><tr> <td>#1234</td> <td><%= app %></td><td><%= app %></td> </tr>' +
-			'<tr> <td>#1234</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' +
-			'<tr> <td>#1234</td> <td><a href=""><%= url %></a></td><td><%= url %></td> </tr>' +
-			'<tr> <td>#1234</td> <td><%=desc%> </td> <td>App Name</td></tr>' +
+		template: _.template('<div class="info-table"> <table class="table table-striped"> ' +
+			''+
+			'<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' +
+			'<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' +
+			'<tr> <td>URL</td> <td><a href="">11111</a></td> </tr>' +
+			'<tr> <td>Description</td> <td><%=desc%> </td> </tr>' +
 			'</tbody> </table> <div>'),
 
+
 		init: function(data) {
+
+
 			Dashboard.Utils.emit('widget|init|' + this.name);
 
 			if (data) {
@@ -43,6 +48,9 @@ module.exports = function(id) {
 			Dashboard.Utils.emit('widget|render|' + this.name);
 
 			this.subscribe();
+
+
+
 		},
 
 
@@ -56,14 +64,25 @@ module.exports = function(id) {
 				'overflow-x': 'hidden',
 				'width': '100%'
 			}).html( this.template({
-				app: this.data.appName,
-				desc: this.data.description,
-				numUser: this.data.numUser,
-				url: this.data.url
+				app: 'test1',
+				desc: 'testdata1',
+				numUser: 'dddd'
 			}) );
+
+			var _this = this;
+			$('#widget-shell-' + _this.shell.id + ' i.add-account').click(function(e) {
+				$.when(
+
+				).done(function() {
+					openblockdetail('12');
+				});
+
+			});
 
 			this.postRender();
 			$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+
+
 		},
 	};
 

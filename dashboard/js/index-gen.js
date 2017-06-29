@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "112648d10f9eb3deb214"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5bd82df37a3d4eb4c65e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -711,14 +711,23 @@
 
 	__webpack_require__(142);
 
-	__webpack_require__(221);
+	__webpack_require__(223);
+
+	__webpack_require__(224);
 
 	__webpack_require__(222);
 
-	__webpack_require__(220);
+	var _common = __webpack_require__(203);
+
+	var _common2 = _interopRequireDefault(_common);
+
+	__webpack_require__(225);
+
+	__webpack_require__(213);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// import this first because it sets a global all the rest of the widgets need
 	window.Tower = {
 		ready: false,
 		current: null,
@@ -745,16 +754,16 @@
 
 			Dashboard.preregisterWidgets({
 
-				'chaincodelist': __webpack_require__(205),
-				'metrix_choc_tx': __webpack_require__(212),
-				'metrix_block_min': __webpack_require__(211),
-				'metrix_txn_sec': __webpack_require__(214),
-				'metrix_txn_min': __webpack_require__(213),
-				'peerlist': __webpack_require__(216),
-				'blockview': __webpack_require__(204),
-				'blocklist': __webpack_require__(203),
+				'chaincodelist': __webpack_require__(206),
+				'metrix_choc_tx': __webpack_require__(214),
+				'metrix_block_min': __webpack_require__(212),
+				'metrix_txn_sec': __webpack_require__(216),
+				'metrix_txn_min': __webpack_require__(215),
+				'peerlist': __webpack_require__(218),
+				'blockview': __webpack_require__(205),
+				'blocklist': __webpack_require__(204),
 				'blockinfo': __webpack_require__(202),
-				'txdetail': __webpack_require__(217)
+				'txdetail': __webpack_require__(219)
 
 				/*'lab'				: require('./widgets/lab'),
 	    'info'			: require('./widgets/info'),
@@ -765,12 +774,38 @@
 	    'weather'			: require('./widgets/weather')*/
 			});
 
-			//open first section - console
+			// Reusing socket from cakeshop.js
+			Tower.stomp = Client.stomp;
+			Tower.stomp_subscriptions = Client._stomp_subscriptions;
+
+			//open first section - channel
 			Tower.section['channel']();
 		},
 
 		//define the sections
 		section: {
+
+			'default': function _default() {
+
+				var statusUpdate = function statusUpdate(response) {
+
+					Tower._currentchannel = response.data.currchannel;
+				};
+
+				_jquery2.default.when(_common2.default.load({ url: 'monitordata/default.json' })).done(function (response) {
+					statusUpdate(response);
+				}).fail(function () {
+					statusUpdate({
+						status: 'DOWN',
+						peerCount: 'n/a',
+						latestBlock: 'n/a',
+						pendingTxn: 'n/a'
+					});
+				});
+
+				alert('I am frist !!!!!');
+			},
+
 			'channel': function channel() {
 				// data that the widgets will use
 				var data = {
@@ -781,7 +816,8 @@
 
 					// the array of widgets that belong to the section,
 					// these were preregistered in init() because they are unique
-				};var widgets = [{ widgetId: 'blockinfo', data: data }, { widgetId: 'blocklist', data: data }, { widgetId: 'blockview', data: data }, { widgetId: 'txdetail', data: data }, { widgetId: 'peerlist', data: data }, { widgetId: 'metrix_txn_sec', data: data }, { widgetId: 'metrix_txn_min', data: data }, { widgetId: 'metrix_block_min', data: data }, { widgetId: 'metrix_choc_tx', data: data }, { widgetId: 'chaincodelist', data: data }];
+
+				};var widgets = [{ widgetId: 'blockinfo' }, { widgetId: 'blocklist', data: data }, { widgetId: 'blockview', data: data }, { widgetId: 'txdetail', data: data }, { widgetId: 'peerlist', data: data }, { widgetId: 'metrix_txn_sec', data: data }, { widgetId: 'metrix_txn_min', data: data }, { widgetId: 'metrix_block_min', data: data }, { widgetId: 'metrix_choc_tx', data: data }, { widgetId: 'chaincodelist', data: data }];
 
 				// opens the section and pass in the widgets that it needs
 				Dashboard.showSection('peers', widgets);
@@ -818,7 +854,7 @@
 				//iterate over the data, creating a new widget for each item
 				_.each(userlist, function (user, key) {
 					var widget = {};
-					widget[key + '-user'] = __webpack_require__(218);
+					widget[key + '-user'] = __webpack_require__(220);
 					Dashboard.preregisterWidgets(widget);
 
 					widgets = widgets.concat([{
@@ -837,9 +873,6 @@
 		}
 	};
 
-	// import this first because it sets a global all the rest of the widgets need
-
-
 	(0, _jquery2.default)(function () {
 		(0, _jquery2.default)(window).on('scroll', function (e) {
 			if ((0, _jquery2.default)(window).scrollTop() > 50) {
@@ -852,7 +885,7 @@
 		// logo handler
 		(0, _jquery2.default)("a.tower-logo").click(function (e) {
 			e.preventDefault();
-			(0, _jquery2.default)("#console").click();
+			(0, _jquery2.default)("#channel").click();
 		});
 
 		// Menu (burger) handler
@@ -85940,42 +85973,42 @@
 	var map = {
 		"./blockinfo": 202,
 		"./blockinfo.js": 202,
-		"./blocklist": 203,
-		"./blocklist.js": 203,
-		"./blockview": 204,
-		"./blockview.js": 204,
-		"./chaincodelist": 205,
-		"./chaincodelist.js": 205,
-		"./controls": 206,
-		"./controls.js": 206,
-		"./date": 207,
-		"./date.js": 207,
-		"./form": 208,
-		"./form.js": 208,
-		"./info": 209,
-		"./info.js": 209,
-		"./lab": 210,
-		"./lab.js": 210,
-		"./metrix_block_min": 211,
-		"./metrix_block_min.js": 211,
-		"./metrix_choc_tx": 212,
-		"./metrix_choc_tx.js": 212,
-		"./metrix_txn_min": 213,
-		"./metrix_txn_min.js": 213,
-		"./metrix_txn_sec": 214,
-		"./metrix_txn_sec.js": 214,
-		"./misc": 215,
-		"./misc.js": 215,
-		"./peerlist": 216,
-		"./peerlist.js": 216,
-		"./txdetail": 217,
-		"./txdetail.js": 217,
-		"./user": 218,
-		"./user.js": 218,
-		"./weather": 219,
-		"./weather.js": 219,
-		"./widget-root": 220,
-		"./widget-root.js": 220
+		"./blocklist": 204,
+		"./blocklist.js": 204,
+		"./blockview": 205,
+		"./blockview.js": 205,
+		"./chaincodelist": 206,
+		"./chaincodelist.js": 206,
+		"./controls": 207,
+		"./controls.js": 207,
+		"./date": 208,
+		"./date.js": 208,
+		"./form": 209,
+		"./form.js": 209,
+		"./info": 210,
+		"./info.js": 210,
+		"./lab": 211,
+		"./lab.js": 211,
+		"./metrix_block_min": 212,
+		"./metrix_block_min.js": 212,
+		"./metrix_choc_tx": 214,
+		"./metrix_choc_tx.js": 214,
+		"./metrix_txn_min": 215,
+		"./metrix_txn_min.js": 215,
+		"./metrix_txn_sec": 216,
+		"./metrix_txn_sec.js": 216,
+		"./misc": 217,
+		"./misc.js": 217,
+		"./peerlist": 218,
+		"./peerlist.js": 218,
+		"./txdetail": 219,
+		"./txdetail.js": 219,
+		"./user": 220,
+		"./user.js": 220,
+		"./weather": 221,
+		"./weather.js": 221,
+		"./widget-root": 222,
+		"./widget-root.js": 222
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -85997,6 +86030,12 @@
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
 
+	var _common = __webpack_require__(203);
+
+	var _common2 = _interopRequireDefault(_common);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	module.exports = function (id) {
 		var extended = {
 			name: 'blockinfo',
@@ -86006,11 +86045,12 @@
 
 			hideLink: true,
 
-			customButtons: '<li><i class="add-account fa fa-expand"></i></li><li><i class="add-account fa fa-compress"></i></li>',
+			customButtons: '<li><i class="add-account fa fa-expand"></i></li>',
 
-			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href="">11111</a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
 
 			init: function init(data) {
+
 				Dashboard.Utils.emit('widget|init|' + this.name);
 
 				if (data) {
@@ -86048,11 +86088,17 @@
 					'overflow-x': 'hidden',
 					'width': '100%'
 				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
+					app: 'test1',
+					desc: 'testdata1',
+					numUser: 'dddd'
 				}));
+
+				var _this = this;
+				$('#widget-shell-' + _this.shell.id + ' i.add-account').click(function (e) {
+					$.when().done(function () {
+						openblockdetail('12');
+					});
+				});
 
 				this.postRender();
 				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
@@ -86070,6 +86116,164 @@
 /* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function($, _, jQuery) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _stringify = __webpack_require__(178);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+		load: function load(opts) {
+			var config = {
+				headers: {
+					'janus_user': 'V442113'
+				},
+				type: opts.method ? opts.method : 'POST',
+				url: opts.url,
+				contentType: opts.type ? opts.type : 'application/json',
+				cache: false,
+				async: true
+			};
+
+			if (opts.data) {
+				config.data = (0, _stringify2.default)(opts.data);
+			}
+
+			if (opts.complete) {
+				config.complete = opts.complete;
+			}
+
+			return $.ajax(config);
+		},
+
+		prettyUpdate: function prettyUpdate(oldValue, newValue, el) {
+			if (oldValue !== newValue) {
+				el.css({
+					'opacity': 0
+				});
+
+				setTimeout(function () {
+					el.html($('<span>', {
+						html: newValue
+					}));
+
+					el.css({
+						'opacity': 1
+					});
+				}, 500);
+			}
+		},
+
+		prettyMoneyPrint: function prettyMoneyPrint(val) {
+			if (val) {
+				var sign = '';
+
+				if (val < 0) {
+					sign = '-';
+				}
+
+				return sign + '$' + Math.abs(val).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+			}
+		},
+
+		capitalize: function capitalize(str) {
+			return str.charAt(0).toUpperCase() + str.slice(1);
+		},
+
+		camelToRegularForm: function camelToRegularForm(t) {
+			var ret = t.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3').replace(/^./, function (str) {
+				return str.toUpperCase();
+			});
+
+			if (ret.toLowerCase() === 'id' || ret.toLowerCase() === 'url' || ret.toLowerCase() === 'txn' || ret.toLowerCase() === 'abi') {
+				ret = ret.toUpperCase();
+			} else if (ret.toLowerCase().indexOf(' url') >= 0) {
+				ret = ret.substring(0, ret.indexOf(' Url')) + ' URL' + ret.substring(ret.indexOf(' Url') + 4, ret.indexOf(' Url').length);
+			} else if (ret.toLowerCase().indexOf(' txn') >= 0) {
+				ret = ret.substring(0, ret.indexOf(' Txn')) + ' TXN' + ret.substring(ret.indexOf(' Txn') + 4, ret.indexOf(' Txn').length);
+			} else if (ret.toLowerCase().indexOf(' id') >= 0) {
+				ret = ret.substring(0, ret.indexOf(' Id')) + ' ID' + ret.substring(ret.indexOf(' Id') + 4, ret.indexOf(' Id').length);
+			}
+
+			return ret;
+		},
+
+		idAlwaysFirst: function idAlwaysFirst(arr) {
+			// remove ID from wherever it is, and make it first
+			arr = _.without(arr, 'id');
+
+			// insert ID as first element
+			arr.splice(0, 0, 'id');
+
+			return arr;
+		},
+
+		makeAreaEditable: function makeAreaEditable(selector) {
+			$(selector).click(function (e) {
+				var isEditable = !!$(this).prop('contentEditable');
+				$(this).prop('contentEditable', isEditable);
+
+				$(this).focus();
+
+				$(this).selectText();
+			});
+		},
+
+		copyToClipboard: function copyToClipboard(e) {
+			var t = e.target,
+			    c = t.dataset.copytarget,
+			    inp = c ? document.querySelector(c) : null;
+
+			// is element selectable?
+			if (inp && inp.select) {
+				// select text
+				inp.select();
+
+				try {
+					// copy text
+					document.execCommand('copy');
+					inp.blur();
+				} catch (err) {}
+			}
+		},
+
+		truncAddress: function truncAddress(addr) {
+			var len = addr.startsWith('0x') ? 10 : 8;
+
+			return addr.substring(0, len);
+		}
+	};
+
+
+	jQuery.fn.selectText = function () {
+		var doc = document,
+		    element = this[0];
+
+		if (doc.body.createTextRange) {
+			var range = document.body.createTextRange();
+			range.moveToElementText(element);
+			range.select();
+		} else if (window.getSelection) {
+			var selection = window.getSelection(),
+			    range = document.createRange();
+
+			range.selectNodeContents(element);
+			selection.removeAllRanges();
+			selection.addRange(range);
+		}
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 204 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
 
 	module.exports = function (id) {
@@ -86081,7 +86285,7 @@
 
 			hideLink: true,
 
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td>Block</td><td>Age</td><td>TXNs</td></tr></thead>' + '<tbody><tr> <td>#1234</td> <td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td>#1234</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' + '<tr> <td>#1234</td> <td><a href=""><%= url %></a></td><td><%= url %></td> </tr>' + '<tr> <td>#1234</td> <td><%=desc%> </td> <td>App Name</td></tr>' + '</tbody> </table> <div>'),
+			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td>Block</td><td>TXNs</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td></tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td></tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
 
 			init: function init(data) {
 				Dashboard.Utils.emit('widget|init|' + this.name);
@@ -86140,7 +86344,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86213,7 +86417,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86286,7 +86490,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86326,7 +86530,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86386,7 +86590,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86426,7 +86630,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86499,7 +86703,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86559,43 +86763,56 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
 
+	var _client = __webpack_require__(213);
+
+	var _client2 = _interopRequireDefault(_client);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	module.exports = function (id) {
 		var extended = {
 			name: 'metrix_block_min',
-			title: 'block min',
+			title: 'Blocks/min',
 			size: 'medium',
 			widgetId: id, //needed for dashboard
 
 			hideLink: true,
+			topic: '/topic/metrics/blocksPerMin',
+
+			subscribe: function subscribe() {
+				Client.subscribe(this.topic, this.onData);
+			},
 
 			fetch: function fetch() {
 				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
 
 				widget.chart = $('#' + widget.name).epoch({
 					type: 'time.area',
-
-					data: [
-					// The first layer
-					{
-						label: "Layer 1",
-						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
-					},
-
-					// The second layer
-					{
-						label: "Layer 2",
-						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
+					data: [{
+						label: 'Blocks per MIN',
+						values: [{ time: new Date().getTime() / 1000, y: 0 }]
 					}],
 					axes: ['left', 'right', 'bottom']
 				});
 			},
 
-			onData: function onData(data) {}
+			onData: function onData(data) {
+				console.info(data);
+				/*data = data.data.attributes;
+	    if (!data || !data.result) {
+	       return;
+	   }
+	    var b = {
+	       time: data.result.timestamp,
+	       y: data.result.value
+	   };
+	   widget.chart.push([ b ]);*/
+			}
 		};
 
 		var widget = _.extend({}, widgetRoot, extended);
@@ -86606,7 +86823,93 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 212 */
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {"use strict";
+
+	var _stringify = __webpack_require__(178);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	(function () {
+	    var Client = window.Client = {};
+
+	    Client.post = function (url, data) {
+	        if (!_.isString(data)) {
+	            data = (0, _stringify2.default)(data);
+	        }
+
+	        return $.ajax({
+	            url: url,
+	            method: "POST",
+	            dataType: "json",
+	            contentType: "application/json",
+	            data: data
+	        });
+	    };
+
+	    Client._stomp_subscriptions = {};
+	    Client.subscribe = function (topic, handler) {
+	        Client._stomp_subscriptions[topic] = { topic: topic, handler: handler };
+	        if (Client.stomp && Client.stomp.connected === true) {
+	            console.log('STOMP subscribing to ' + topic);
+
+	            var sub = Client.stomp.subscribe(topic, function (res) {
+	                handler(JSON.parse(res.body));
+	            });
+	            Client._stomp_subscriptions[topic].fh = sub;
+	            return sub;
+	        }
+	        return false;
+	    };
+
+	    /*$(window).on("beforeunload", function() {
+	    	if (!(Client.stomp && Client.stomp.connected === true)) {
+	    		return;
+	    	}
+	    	_.values(Client._stomp_subscriptions).forEach(function(sub) {
+	    		if (sub && sub.fh) {
+	    			sub.fh.unsubscribe();
+	    		}
+	    	});
+	    	Client.stomp.disconnect();
+	    });*/
+
+	    Client.connected = false;
+	    Client.connect = function () {
+
+	        // try to derive the websocket location from the current location
+	        var pathname = window.location.pathname;
+	        // var wsUrl='ws://'+window.location.host+'/stomp';
+	        var wsUrl = 'ws://localhost:8080/stomp';
+
+	        var stomp = Client.stomp = Stomp.client(wsUrl);
+
+	        stomp.debug = null;
+	        stomp.connect({}, function (frame) {
+	            Client.connected = true;
+	            console.log("Connected via STOMP!");
+	            // reconnect all topic subscriptions
+	            _.each(Client._stomp_subscriptions, function (sub, topic) {
+	                Client.subscribe(topic, sub.handler);
+	            });
+	        }, function (err) {
+	            if (Client.connected) {
+	                console.log("Lost STOMP connection", err);
+	            }
+	            // setTimeout(Client.connect, 1000); // always reconnect
+	        });
+	    };
+
+	    Client.connect();
+	})();
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+
+/***/ }),
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
@@ -86648,7 +86951,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 213 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
@@ -86695,7 +86998,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 214 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
@@ -86742,7 +87045,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 215 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86780,7 +87083,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 216 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86853,7 +87156,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 217 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86926,7 +87229,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 218 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -86998,7 +87301,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 219 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -87038,7 +87341,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 220 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -87132,7 +87435,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 221 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -87202,7 +87505,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 222 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
@@ -87251,6 +87554,247 @@
 		}
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	// Generated by CoffeeScript 1.7.1
+	/*
+	   Stomp Over WebSocket http://www.jmesnil.net/stomp-websocket/doc/ | Apache License V2.0
+
+	   Copyright (C) 2010-2013 [Jeff Mesnil](http://jmesnil.net/)
+	   Copyright (C) 2012 [FuseSource, Inc.](http://fusesource.com)
+	 */
+	(function () {
+	   var t,
+	       e,
+	       n,
+	       i,
+	       r = {}.hasOwnProperty,
+	       o = [].slice;t = { LF: "\n", NULL: "\x00" };n = function () {
+	      var e;function n(t, e, n) {
+	         this.command = t;this.headers = e != null ? e : {};this.body = n != null ? n : "";
+	      }n.prototype.toString = function () {
+	         var e, i, o, s, u;e = [this.command];o = this.headers["content-length"] === false ? true : false;if (o) {
+	            delete this.headers["content-length"];
+	         }u = this.headers;for (i in u) {
+	            if (!r.call(u, i)) continue;s = u[i];e.push("" + i + ":" + s);
+	         }if (this.body && !o) {
+	            e.push("content-length:" + n.sizeOfUTF8(this.body));
+	         }e.push(t.LF + this.body);return e.join(t.LF);
+	      };n.sizeOfUTF8 = function (t) {
+	         if (t) {
+	            return encodeURI(t).match(/%..|./g).length;
+	         } else {
+	            return 0;
+	         }
+	      };e = function e(_e) {
+	         var i, r, o, s, u, a, c, f, h, l, p, d, g, b, m, v, y;s = _e.search(RegExp("" + t.LF + t.LF));u = _e.substring(0, s).split(t.LF);o = u.shift();a = {};d = function d(t) {
+	            return t.replace(/^\s+|\s+$/g, "");
+	         };v = u.reverse();for (g = 0, m = v.length; g < m; g++) {
+	            l = v[g];f = l.indexOf(":");a[d(l.substring(0, f))] = d(l.substring(f + 1));
+	         }i = "";p = s + 2;if (a["content-length"]) {
+	            h = parseInt(a["content-length"]);i = ("" + _e).substring(p, p + h);
+	         } else {
+	            r = null;for (c = b = p, y = _e.length; p <= y ? b < y : b > y; c = p <= y ? ++b : --b) {
+	               r = _e.charAt(c);if (r === t.NULL) {
+	                  break;
+	               }i += r;
+	            }
+	         }return new n(o, a, i);
+	      };n.unmarshall = function (n) {
+	         var i, r, o, s;r = n.split(RegExp("" + t.NULL + t.LF + "*"));s = { frames: [], partial: "" };s.frames = function () {
+	            var t, n, o, s;o = r.slice(0, -1);s = [];for (t = 0, n = o.length; t < n; t++) {
+	               i = o[t];s.push(e(i));
+	            }return s;
+	         }();o = r.slice(-1)[0];if (o === t.LF || o.search(RegExp("" + t.NULL + t.LF + "*$")) !== -1) {
+	            s.frames.push(e(o));
+	         } else {
+	            s.partial = o;
+	         }return s;
+	      };n.marshall = function (e, i, r) {
+	         var o;o = new n(e, i, r);return o.toString() + t.NULL;
+	      };return n;
+	   }();e = function () {
+	      var e;function r(t) {
+	         this.ws = t;this.ws.binaryType = "arraybuffer";this.counter = 0;this.connected = false;this.heartbeat = { outgoing: 1e4, incoming: 1e4 };this.maxWebSocketFrameSize = 16 * 1024;this.subscriptions = {};this.partialData = "";
+	      }r.prototype.debug = function (t) {
+	         var e;return typeof window !== "undefined" && window !== null ? (e = window.console) != null ? e.log(t) : void 0 : void 0;
+	      };e = function e() {
+	         if (Date.now) {
+	            return Date.now();
+	         } else {
+	            return new Date().valueOf;
+	         }
+	      };r.prototype._transmit = function (t, e, i) {
+	         var r;r = n.marshall(t, e, i);if (typeof this.debug === "function") {
+	            this.debug(">>> " + r);
+	         }while (true) {
+	            if (r.length > this.maxWebSocketFrameSize) {
+	               this.ws.send(r.substring(0, this.maxWebSocketFrameSize));r = r.substring(this.maxWebSocketFrameSize);if (typeof this.debug === "function") {
+	                  this.debug("remaining = " + r.length);
+	               }
+	            } else {
+	               return this.ws.send(r);
+	            }
+	         }
+	      };r.prototype._setupHeartbeat = function (n) {
+	         var r, o, s, u, a, c;if ((a = n.version) !== i.VERSIONS.V1_1 && a !== i.VERSIONS.V1_2) {
+	            return;
+	         }c = function () {
+	            var t, e, i, r;i = n["heart-beat"].split(",");r = [];for (t = 0, e = i.length; t < e; t++) {
+	               u = i[t];r.push(parseInt(u));
+	            }return r;
+	         }(), o = c[0], r = c[1];if (!(this.heartbeat.outgoing === 0 || r === 0)) {
+	            s = Math.max(this.heartbeat.outgoing, r);if (typeof this.debug === "function") {
+	               this.debug("send PING every " + s + "ms");
+	            }this.pinger = i.setInterval(s, function (e) {
+	               return function () {
+	                  e.ws.send(t.LF);return typeof e.debug === "function" ? e.debug(">>> PING") : void 0;
+	               };
+	            }(this));
+	         }if (!(this.heartbeat.incoming === 0 || o === 0)) {
+	            s = Math.max(this.heartbeat.incoming, o);if (typeof this.debug === "function") {
+	               this.debug("check PONG every " + s + "ms");
+	            }return this.ponger = i.setInterval(s, function (t) {
+	               return function () {
+	                  var n;n = e() - t.serverActivity;if (n > s * 2) {
+	                     if (typeof t.debug === "function") {
+	                        t.debug("did not receive server activity for the last " + n + "ms");
+	                     }return t.ws.close();
+	                  }
+	               };
+	            }(this));
+	         }
+	      };r.prototype._parseConnect = function () {
+	         var t, e, n, i;t = 1 <= arguments.length ? o.call(arguments, 0) : [];i = {};switch (t.length) {case 2:
+	               i = t[0], e = t[1];break;case 3:
+	               if (t[1] instanceof Function) {
+	                  i = t[0], e = t[1], n = t[2];
+	               } else {
+	                  i.login = t[0], i.passcode = t[1], e = t[2];
+	               }break;case 4:
+	               i.login = t[0], i.passcode = t[1], e = t[2], n = t[3];break;default:
+	               i.login = t[0], i.passcode = t[1], e = t[2], n = t[3], i.host = t[4];}return [i, e, n];
+	      };r.prototype.connect = function () {
+	         var r, s, u, a;r = 1 <= arguments.length ? o.call(arguments, 0) : [];a = this._parseConnect.apply(this, r);u = a[0], this.connectCallback = a[1], s = a[2];if (typeof this.debug === "function") {
+	            this.debug("Opening Web Socket...");
+	         }this.ws.onmessage = function (i) {
+	            return function (r) {
+	               var o, u, a, c, f, h, l, p, d, g, b, m, v;c = typeof ArrayBuffer !== "undefined" && r.data instanceof ArrayBuffer ? (o = new Uint8Array(r.data), typeof i.debug === "function" ? i.debug("--- got data length: " + o.length) : void 0, function () {
+	                  var t, e, n;n = [];for (t = 0, e = o.length; t < e; t++) {
+	                     u = o[t];n.push(String.fromCharCode(u));
+	                  }return n;
+	               }().join("")) : r.data;i.serverActivity = e();if (c === t.LF) {
+	                  if (typeof i.debug === "function") {
+	                     i.debug("<<< PONG");
+	                  }return;
+	               }if (typeof i.debug === "function") {
+	                  i.debug("<<< " + c);
+	               }d = n.unmarshall(i.partialData + c);i.partialData = d.partial;m = d.frames;v = [];for (g = 0, b = m.length; g < b; g++) {
+	                  f = m[g];switch (f.command) {case "CONNECTED":
+	                        if (typeof i.debug === "function") {
+	                           i.debug("connected to server " + f.headers.server);
+	                        }i.connected = true;i._setupHeartbeat(f.headers);v.push(typeof i.connectCallback === "function" ? i.connectCallback(f) : void 0);break;case "MESSAGE":
+	                        p = f.headers.subscription;l = i.subscriptions[p] || i.onreceive;if (l) {
+	                           a = i;h = f.headers["message-id"];f.ack = function (t) {
+	                              if (t == null) {
+	                                 t = {};
+	                              }return a.ack(h, p, t);
+	                           };f.nack = function (t) {
+	                              if (t == null) {
+	                                 t = {};
+	                              }return a.nack(h, p, t);
+	                           };v.push(l(f));
+	                        } else {
+	                           v.push(typeof i.debug === "function" ? i.debug("Unhandled received MESSAGE: " + f) : void 0);
+	                        }break;case "RECEIPT":
+	                        v.push(typeof i.onreceipt === "function" ? i.onreceipt(f) : void 0);break;case "ERROR":
+	                        v.push(typeof s === "function" ? s(f) : void 0);break;default:
+	                        v.push(typeof i.debug === "function" ? i.debug("Unhandled frame: " + f) : void 0);}
+	               }return v;
+	            };
+	         }(this);this.ws.onclose = function (t) {
+	            return function () {
+	               var e;e = "Whoops! Lost connection to " + t.ws.url;if (typeof t.debug === "function") {
+	                  t.debug(e);
+	               }t._cleanUp();return typeof s === "function" ? s(e) : void 0;
+	            };
+	         }(this);return this.ws.onopen = function (t) {
+	            return function () {
+	               if (typeof t.debug === "function") {
+	                  t.debug("Web Socket Opened...");
+	               }u["accept-version"] = i.VERSIONS.supportedVersions();u["heart-beat"] = [t.heartbeat.outgoing, t.heartbeat.incoming].join(",");return t._transmit("CONNECT", u);
+	            };
+	         }(this);
+	      };r.prototype.disconnect = function (t, e) {
+	         if (e == null) {
+	            e = {};
+	         }this._transmit("DISCONNECT", e);this.ws.onclose = null;this.ws.close();this._cleanUp();return typeof t === "function" ? t() : void 0;
+	      };r.prototype._cleanUp = function () {
+	         this.connected = false;if (this.pinger) {
+	            i.clearInterval(this.pinger);
+	         }if (this.ponger) {
+	            return i.clearInterval(this.ponger);
+	         }
+	      };r.prototype.send = function (t, e, n) {
+	         if (e == null) {
+	            e = {};
+	         }if (n == null) {
+	            n = "";
+	         }e.destination = t;return this._transmit("SEND", e, n);
+	      };r.prototype.subscribe = function (t, e, n) {
+	         var i;if (n == null) {
+	            n = {};
+	         }if (!n.id) {
+	            n.id = "sub-" + this.counter++;
+	         }n.destination = t;this.subscriptions[n.id] = e;this._transmit("SUBSCRIBE", n);i = this;return { id: n.id, unsubscribe: function unsubscribe() {
+	               return i.unsubscribe(n.id);
+	            } };
+	      };r.prototype.unsubscribe = function (t) {
+	         delete this.subscriptions[t];return this._transmit("UNSUBSCRIBE", { id: t });
+	      };r.prototype.begin = function (t) {
+	         var e, n;n = t || "tx-" + this.counter++;this._transmit("BEGIN", { transaction: n });e = this;return { id: n, commit: function commit() {
+	               return e.commit(n);
+	            }, abort: function abort() {
+	               return e.abort(n);
+	            } };
+	      };r.prototype.commit = function (t) {
+	         return this._transmit("COMMIT", { transaction: t });
+	      };r.prototype.abort = function (t) {
+	         return this._transmit("ABORT", { transaction: t });
+	      };r.prototype.ack = function (t, e, n) {
+	         if (n == null) {
+	            n = {};
+	         }n["message-id"] = t;n.subscription = e;return this._transmit("ACK", n);
+	      };r.prototype.nack = function (t, e, n) {
+	         if (n == null) {
+	            n = {};
+	         }n["message-id"] = t;n.subscription = e;return this._transmit("NACK", n);
+	      };return r;
+	   }();i = { VERSIONS: { V1_0: "1.0", V1_1: "1.1", V1_2: "1.2", supportedVersions: function supportedVersions() {
+	            return "1.1,1.0";
+	         } }, client: function client(t, n) {
+	         var r, o;if (n == null) {
+	            n = ["v10.stomp", "v11.stomp"];
+	         }r = i.WebSocketClass || WebSocket;o = new r(t, n);return new e(o);
+	      }, over: function over(t) {
+	         return new e(t);
+	      }, Frame: n };if (typeof exports !== "undefined" && exports !== null) {
+	      exports.Stomp = i;
+	   }if (typeof window !== "undefined" && window !== null) {
+	      i.setInterval = function (t, e) {
+	         return window.setInterval(e, t);
+	      };i.clearInterval = function (t) {
+	         return window.clearInterval(t);
+	      };window.Stomp = i;
+	   } else if (!exports) {
+	      self.Stomp = i;
+	   }
+	}).call(undefined);
 
 /***/ })
 /******/ ]);
