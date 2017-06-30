@@ -88,7 +88,11 @@
 
             var responsestr=JSON.stringify(response);
             $("#RawJson").text(responsestr);
+
+            window.QuoteKeys = false;
+
             Process();
+
         },
         error:function(err){
         }

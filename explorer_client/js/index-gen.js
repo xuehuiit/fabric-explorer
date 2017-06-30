@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "11276a47cb7828c0dfa0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "51a4c94d958e629f4698"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -92751,34 +92751,6 @@
 
 			template: _.template('  <div class="form-group">' + '    <label for="block-id">Identifier [number, hash, tag]</label>' + '    <input type="text" class="form-control" id="block-id">' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="block" checked="checked"/>' + '      Block' + '    </label>' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="txn"/>' + '      Transaction' + '    </label>' + '  </div>' + '  <div class="form-group pull-right">' + '    <button type="button" class="btn btn-primary">Find</button>' + '  </div>' + '  <div id="notification">' + '  </div>'),
 
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
 			render: function render() {
 				Dashboard.render.widget(this.name, this.shell.tpl);
 				this.fetch();
@@ -92788,16 +92760,34 @@
 					'margin-bottom': '10px',
 					'overflow-x': 'hidden',
 					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
+				}).html(this.template());
+
+				$('#widget-' + this.shell.id + ' button').click(this._handler);
 
 				this.postRender();
 				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			},
+
+			_handler: function _handler(ev) {
+				var _this = widget,
+				    id = $('#widget-' + _this.shell.id + ' #block-id'),
+				    type = $('#widget-' + _this.shell.id + ' #searchType:checked');
+
+				if (id.val()) {
+
+					if (type.val() == 'block') {
+
+						Dashboard.show({ widgetId: 'blockinfo', section: 'channel', data: { bocknum: id.val() }, refetch: true });
+					} else if (type.val() == 'txn') {
+
+						Dashboard.show({ widgetId: 'txdetail', section: 'channel', data: { txid: id.val() }, refetch: true });
+					}
+
+					//Dashboard.show({ widgetId: type.val() + '-detail', section: 'explorer', data: id.val(), refetch: true });
+
+				}
 			}
+
 		};
 
 		var widget = _.extend({}, widgetRoot, extended);
@@ -93484,7 +93474,7 @@
 
 			hideLink: true,
 
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td style="width:60px;">Block</td><td>Age</td><td style="width:45px;">TXNs</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+			template: _.template('<div class="info-table"> ' + '<table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;">' + '<tr><td width="20%">name</td><td  width="20%">org</td><td  width="20%">mspid</td><td width="40%">request</td></tr></thead>' + '<tbody>' + '<tr> <td>peer1</td> <td>peerOrg1</td><td>Org1MSP</td><td>grpc://112.124.115.82:7051</td></tr>' + '</tbody>' + ' </table> <div>'),
 
 			init: function init(data) {
 				Dashboard.Utils.emit('widget|init|' + this.name);
