@@ -8,46 +8,40 @@ module.exports = function(id) {
 
 		hideLink: true,
 
-		template: _.template('<div class="info-table"> <table class="table table-striped"> ' +
+        customButtons: '<li><i id="button_showtxjson" class="show_tx_detailorgin1 fa fa-expand"></i></li>',
+
+
+		template: _.template('<div class="info-table"><table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' +
 			''+
-			'<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' +
-			'<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' +
-			'<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' +
-			'<tr> <td>Description</td> <td><%=desc%> </td> </tr>' +
+			'<tbody>'+
+            '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.tx_id %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.timestamp %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.channel_id %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.type %> </td> </tr>' +
 			'</tbody> </table> <div>'),
 
-		init: function(data) {
-			Dashboard.Utils.emit('widget|init|' + this.name);
 
-			if (data) {
-				this.setData(data);
-			}
 
-			this.shell = Dashboard.TEMPLATES.widget({
-				name: this.name,
-				title: this.title,
-				size: this.size,
-				hideLink: this.hideLink,
-				hideRefresh: this.hideRefresh,
-				customButtons: this.customButtons,
-				details: true
-			});
+        setData: function(data) {
 
-			this.initialized = true;
+		    this.data = data;
 
-			Dashboard.Utils.emit('widget|ready|' + this.name);
+            if( this.data.txid != '0' )
+                this.title = 'Transaction #' + this.data.txid;
+            else
+                this.title = 'No Transaction ';
 
-			this.ready();
-
-			Dashboard.Utils.emit('widget|render|' + this.name);
-
-			this.subscribe();
 		},
 
 
+
+        /*
+
 		render: function() {
-			Dashboard.render.widget(this.name, this.shell.tpl);
-			this.fetch();
+
+			//Dashboard.render.widget(this.name, this.shell.tpl);
+
+            this.fetch();
 
 			$('#widget-' + this.shell.id).css({
 				'height': '240px',
@@ -55,16 +49,105 @@ module.exports = function(id) {
 				'overflow-x': 'hidden',
 				'width': '100%'
 			}).html( this.template({
-				app: this.data.appName,
-				desc: this.data.description,
-				numUser: this.data.numUser,
-				url: this.data.url
+				app: "",
+				desc: "",
+				numUser: "",
+				url: ""
 			}) );
-
 			this.postRender();
 			$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
 		},
-	};
+
+        */
+
+
+        fetch: function() {
+
+
+            var _this = this;
+
+
+            //alert( bocknum );
+
+            $.when(
+
+                utils.load({ url: '/api/tx/getinfo' , data:{ txid:this.data.txid } } )
+
+            ).fail(function (res) {
+
+
+
+
+            }).done(function (res) {
+
+                //Dashboard.render.widget(_this.name, _this.shell.tpl);
+                //alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
+
+                _this.title = 'Transaction #' + _this.data.txid;
+
+                if( _this.data.txid != '0' )
+                    _this.title = 'Transaction #' + _this.data.txid;
+                else
+                    _this.title = 'No Transaction ';
+
+
+
+                /*var transtions = res.transactions;
+                var transtions_str = '';
+
+                if(transtions != null ){
+
+                    var txnHtml = [];
+
+                    _.each(transtions, function(txn) {
+                        txnHtml.push('<a href="#">' + txn.payload.header.channel_header.tx_id  + '</a>')
+                    });
+
+                    transtions_str = txnHtml.join('<br/>');
+
+
+
+                }else{
+                    transtions_str = " ";
+                }*/
+
+                if( _this.data.txid != '0' ){
+
+
+                    $('#widget-' + _this.shell.id).css({
+                        'height': '240px',
+                        'margin-bottom': '10px',
+                        'overflow-x': 'hidden',
+                        'width': '100%'
+                    }).html( _this.template({
+                        res: res,test:'ddd'
+                        //transtions:transtions_str
+                    }) );
+
+                }
+
+
+
+                $('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
+
+                $('#button_showtxjson').unbind("click");
+                $('#button_showtxjson').click(function(e) {
+                    e.preventDefault();
+                    opentxdetail(_this.data.txid);
+                });
+
+                _this.postRender();
+                $(document).trigger("WidgetInternalEvent", ["widget|rendered|" + _this.name]);
+
+
+            })
+
+
+        },
+
+
+
+    };
 
 
 	var widget = _.extend({}, widgetRoot, extended);

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b8493ebded6e50f31485"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "51a4c94d958e629f4698"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -758,9 +758,6 @@
 				'appName': 'onechain fabricexplorer'
 			});
 
-			//initialize the Dashboard, set up widget container
-			Dashboard.init();
-
 			Dashboard.preregisterWidgets({
 
 				'chaincodelist': __webpack_require__(246),
@@ -774,14 +771,15 @@
 				'blockinfo': __webpack_require__(202),
 				'txdetail': __webpack_require__(259)
 
-				/*'lab'				: require('./widgets/lab'),
-	    'info'			: require('./widgets/info'),
-	       'form'            : require('./widgets/form'),
-	       'misc'            : require('./widgets/misc'),
-	    'date'			: require('./widgets/date'),
-	    'controls'		: require('./widgets/controls'),
-	    'weather'			: require('./widgets/weather')*/
 			});
+
+			//initialize the Dashboard, set up widget container
+			Dashboard.init();
+
+			// Adding event for hash changes
+			(0, _jquery2.default)(window).on('hashchange', this.processHash);
+
+			this.processHash();
 
 			// Reusing socket from cakeshop.js
 			Tower.stomp = Client.stomp;
@@ -791,28 +789,53 @@
 			Tower.section['default']();
 		},
 
+		processHash: function processHash() {
+			if (window.location.hash) {
+				var params = {};
+				var hash = window.location.hash.substring(1, window.location.hash.length);
+
+				_.each(hash.split('&'), function (pair) {
+					pair = pair.split('=');
+					params[pair[0]] = decodeURIComponent(pair[1]);
+				});
+
+				var werk = function werk() {
+					if (params.section) {
+						(0, _jquery2.default)('#' + params.section).click();
+					}
+
+					if (params.data) {
+						try {
+							params.data = JSON.parse(params.data);
+						} catch (err) {}
+					}
+
+					if (params.widgetId) {
+						Dashboard.show({
+							widgetId: params.widgetId,
+							section: params.section ? params.section : Tower.current,
+							data: params.data, refetch: true
+						});
+					}
+				};
+
+				// do when ready
+				if (!Tower.ready) {
+					Dashboard.Utils.on(function (ev, action) {
+						if (action.indexOf('tower-control|ready|') === 0) {
+							werk();
+						}
+					});
+				} else {
+					werk();
+				}
+			}
+		},
+
 		//define the sections
 		section: {
 
 			'default': function _default() {
-
-				var statusUpdate = function statusUpdate(response) {
-
-					Tower._currentchannel = response.data.currchannel;
-				};
-
-				_jquery2.default.when(_common2.default.load({ url: 'default.json' })).done(function (response) {
-					alert(' I am default');
-					statusUpdate(response);
-				}).fail(function () {
-					statusUpdate({
-						status: 'DOWN',
-						peerCount: 'n/a',
-						latestBlock: 'n/a',
-						pendingTxn: 'n/a'
-					});
-				});
-
 				var statusUpdate = function statusUpdate(response) {
 					var status = response;
 
@@ -831,6 +854,25 @@
 					Dashboard.Utils.emit('node-status|announce');
 				};
 
+				_jquery2.default.ajax({
+					type: "post",
+					url: "api/status/get",
+					cache: false,
+					async: false,
+					dataType: "json",
+					success: function success(response) {
+						statusUpdate(response);
+					},
+					error: function error(err) {
+						statusUpdate({
+							peerCount: 'n/a',
+							latestBlock: 'n/a',
+							txCount: 'n/a',
+							chaincodeCount: 'n/a'
+						});
+					}
+
+				});
 				_utils2.default.subscribe('/topic/metrics/status', statusUpdate);
 			},
 
@@ -845,8 +887,8 @@
 					// the array of widgets that belong to the section,
 					// these were preregistered in init() because they are unique
 
-				};var widgets = [{ widgetId: 'blockinfo', data: { a: 'ddd', b: 'bbb' } }, { widgetId: 'blocklist', data: data }, { widgetId: 'blockview', data: data }, { widgetId: 'txdetail', data: data }, { widgetId: 'peerlist', data: data }, { widgetId: 'metrix_txn_sec', data: data }, { widgetId: 'metrix_txn_min', data: data }, { widgetId: 'metrix_block_min', data: data },
-				// { widgetId: 'metrix_choc_tx' ,data: data},
+				};var widgets = [{ widgetId: 'blockinfo', data: { bocknum: Tower.status.latestBlock } }, { widgetId: 'blocklist', data: Tower.status.latestBlock }, { widgetId: 'blockview', data: data }, { widgetId: 'txdetail', data: { txid: '0' } }, { widgetId: 'peerlist', data: data }, { widgetId: 'metrix_txn_sec', data: data }, { widgetId: 'metrix_txn_min', data: data }, { widgetId: 'metrix_block_min', data: data },
+				//{ widgetId: 'metrix_choc_tx' ,data: data},
 				{ widgetId: 'chaincodelist', data: data }];
 
 				// opens the section and pass in the widgets that it needs
@@ -86077,25 +86119,48 @@
 
 			hideLink: true,
 
-			customButtons: '<li><i class="show_detail fa fa-expand"></i></li>',
+			customButtons: '<li><i class="show_bock_detailorgin fa fa-expand"></i></li>',
 
-			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href="">11111</a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' + '<tbody><tr> <td  style="width: 120px;">number</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.number %></td> </tr>' + '<tr> <td  style="width: 120px;">previous_hash</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.previous_hash %></td> </tr>' + '<tr> <td  style="width: 120px;">data_hash</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.data_hash %></td> </tr>' + '<tr><td style="width: 100px;">Transactions</td><td style="text-overflow: ellipsis; overflow: hidden;"><%= transtions %></td></tr>' + '</tbody> </table> <div>'),
+
+			templateTxnRow: _.template('<tr><td style="width: 100px;">Transactions</td><td style="text-overflow: ellipsis; overflow: hidden;"><%= value %></td></tr>'),
 
 			setData: function setData(data) {
 				this.data = data;
-
 				this.title = 'Block #' + this.data.a;
 			},
 
 			fetch: function fetch() {
 
 				var _this = this;
+				var bocknum = _this.data.bocknum;
 
-				$.when().fail(function (res) {}).done(function (res) {
+				//alert( bocknum );
+
+				$.when(utils.load({ url: '/api/block/getinfo', data: { number: bocknum } }) //channellist
+
+				).fail(function (res) {}).done(function (res) {
 
 					//Dashboard.render.widget(_this.name, _this.shell.tpl);
 					//alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
-					_this.title = 'Block #' + _this.data.a;
+
+					_this.title = 'Block #' + _this.data.bocknum;
+
+					var transtions = res.transactions;
+					var transtions_str = '';
+
+					if (transtions != null) {
+
+						var txnHtml = [];
+
+						_.each(transtions, function (txn) {
+							txnHtml.push('<a href="#">' + txn.payload.header.channel_header.tx_id + '</a>');
+						});
+
+						transtions_str = txnHtml.join('<br/>');
+					} else {
+						transtions_str = " ";
+					}
 
 					$('#widget-' + _this.shell.id).css({
 						'height': '240px',
@@ -86103,17 +86168,22 @@
 						'overflow-x': 'hidden',
 						'width': '100%'
 					}).html(_this.template({
-						app: 'test1',
-						desc: 'testdata1',
-						numUser: 'dddd'
+						res: res,
+						transtions: transtions_str
 					}));
+
 					$('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
 
-					$('#widget-shell-' + _this.shell.id + ' i.add-account').click(function (e) {
+					$('#widget-shell-' + _this.shell.id + ' i.show_bock_detailorgin').unbind("click");
+					$('#widget-shell-' + _this.shell.id + ' i.show_bock_detailorgin').click(function (e) {
 
-						$.when().done(function () {
-							openblockdetail('12');
-						});
+						openblockdetail(_this.data.bocknum);
+					});
+
+					$('#widget-' + _this.shell.id + ' a').click(function (e) {
+
+						e.preventDefault();
+						Dashboard.show({ widgetId: 'txdetail', section: 'channel', data: { txid: $(this).text() }, refetch: true });
 					});
 
 					_this.postRender();
@@ -86317,7 +86387,6 @@
 
 	        setData: function setData(data) {
 	            this.data = data;
-
 	            this.lastBlockNum = data;
 	        },
 
@@ -86361,8 +86430,8 @@
 	                    data: { number: _this.lastBlockNum - n },
 	                    complete: function complete(res) {
 	                        rows.push({
-	                            num: res.number,
-	                            txCount: res.txCount
+	                            num: res.responseJSON.number,
+	                            txCount: res.responseJSON.txCount
 	                        });
 	                    }
 	                }));
@@ -86382,6 +86451,16 @@
 
 	                _this.postFetch();
 	            });
+	        },
+
+	        postRender: function postRender() {
+	            $('#widget-' + this.shell.id).on('click', 'a', this.showBlock);
+	        },
+
+	        showBlock: function showBlock(e) {
+	            e.preventDefault();
+
+	            Dashboard.show({ widgetId: 'blockinfo', section: 'channel', data: { bocknum: $(this).text() }, refetch: true });
 	        }
 
 	    };
@@ -92672,34 +92751,6 @@
 
 			template: _.template('  <div class="form-group">' + '    <label for="block-id">Identifier [number, hash, tag]</label>' + '    <input type="text" class="form-control" id="block-id">' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="block" checked="checked"/>' + '      Block' + '    </label>' + '  </div>' + '  <div class="radio">' + '    <label>' + '      <input type="radio" id="searchType" name="searchType" value="txn"/>' + '      Transaction' + '    </label>' + '  </div>' + '  <div class="form-group pull-right">' + '    <button type="button" class="btn btn-primary">Find</button>' + '  </div>' + '  <div id="notification">' + '  </div>'),
 
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
 			render: function render() {
 				Dashboard.render.widget(this.name, this.shell.tpl);
 				this.fetch();
@@ -92709,16 +92760,34 @@
 					'margin-bottom': '10px',
 					'overflow-x': 'hidden',
 					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
+				}).html(this.template());
+
+				$('#widget-' + this.shell.id + ' button').click(this._handler);
 
 				this.postRender();
 				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+			},
+
+			_handler: function _handler(ev) {
+				var _this = widget,
+				    id = $('#widget-' + _this.shell.id + ' #block-id'),
+				    type = $('#widget-' + _this.shell.id + ' #searchType:checked');
+
+				if (id.val()) {
+
+					if (type.val() == 'block') {
+
+						Dashboard.show({ widgetId: 'blockinfo', section: 'channel', data: { bocknum: id.val() }, refetch: true });
+					} else if (type.val() == 'txn') {
+
+						Dashboard.show({ widgetId: 'txdetail', section: 'channel', data: { txid: id.val() }, refetch: true });
+					}
+
+					//Dashboard.show({ widgetId: type.val() + '-detail', section: 'explorer', data: id.val(), refetch: true });
+
+				}
 			}
+
 		};
 
 		var widget = _.extend({}, widgetRoot, extended);
@@ -92743,55 +92812,27 @@
 
 			hideLink: true,
 
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td>name</td><td>version</td><td>path</td><td>trans</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> <td><%= numUser %></td></tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a><%= url %></a></td><td><a><%= url %></a></td> </tr>' + '</tbody> </table> <div>'),
+			url: 'chaincodelist',
 
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
+			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;">' + '<tr><td width="20%">name</td><td width="10%">version</td><td width="60%">path</td><td width="10%">trans</td></tr>' + '</thead>' + '<tbody><%= rows %></tbody> </table> <div>'),
 
-				if (data) {
-					this.setData(data);
-				}
+			templateRow: _.template('<tr> <td><%= channelName %></td> <td><%= version %></td><td><%= path %></td> <td><%= txCount %></td></tr>'),
 
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
+			fetch: function fetch() {
+				var _this = this;
+				var rows = [];
+
+				$.when(utils.load({ url: this.url })).done(function (data) {
+					data.forEach(function (item, index) {
+						rows.push(_this.templateRow(item));
+					});
+
+					console.info(rows.join(''));
+					$('#widget-' + _this.shell.id).html(_this.template({ rows: rows.join('') }));
+					_this.postFetch();
 				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
 			}
+
 		};
 
 		var widget = _.extend({}, widgetRoot, extended);
@@ -93157,7 +93198,7 @@
 	            url: opts.url,
 	            contentType: opts.type ? opts.type : 'application/json',
 	            cache: false,
-	            async: true
+	            async: opts.async ? opts.async : true
 	        };
 
 	        if (opts.data) {
@@ -93324,6 +93365,12 @@
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
 
+	var _utils = __webpack_require__(253);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	module.exports = function (id) {
 		var extended = {
 			name: 'metrix_txn_sec',
@@ -93332,6 +93379,11 @@
 			widgetId: id, //needed for dashboard
 
 			hideLink: true,
+			topic: '/topic/metrics/txnPerSec',
+
+			subscribe: function subscribe() {
+				_utils2.default.subscribe(this.topic, this.onData);
+			},
 
 			fetch: function fetch() {
 				$('#widget-' + widget.shell.id).html('<div id="' + widget.name + '" class="epoch category10" style="width:100%; height: 210px;"></div>');
@@ -93342,20 +93394,24 @@
 					data: [
 					// The first layer
 					{
-						label: "Layer 1",
-						values: [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }]
-					},
-
-					// The second layer
-					{
-						label: "Layer 2",
-						values: [{ time: 1370044800, y: 78 }, { time: 1370044801, y: 98 }]
+						label: 'TXs per Sec',
+						values: [{ time: new Date().getTime() / 1000, y: 0 }]
 					}],
 					axes: ['left', 'right', 'bottom']
 				});
 			},
 
-			onData: function onData(data) {}
+			onData: function onData(data) {
+				if (!data) {
+					return;
+				}
+
+				var b = {
+					time: data.timestamp,
+					y: data.value
+				};
+				widget.chart.push([b]);
+			}
 		};
 
 		var widget = _.extend({}, widgetRoot, extended);
@@ -93418,7 +93474,7 @@
 
 			hideLink: true,
 
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td style="width:60px;">Block</td><td>Age</td><td style="width:45px;">TXNs</td></tr></thead>' + '<tbody><tr> <td>App Name</td> <td><%= app %></td><td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td><td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td><td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+			template: _.template('<div class="info-table"> ' + '<table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;">' + '<tr><td width="20%">name</td><td  width="20%">org</td><td  width="20%">mspid</td><td width="40%">request</td></tr></thead>' + '<tbody>' + '<tr> <td>peer1</td> <td>peerOrg1</td><td>Org1MSP</td><td>grpc://112.124.115.82:7051</td></tr>' + '</tbody>' + ' </table> <div>'),
 
 			init: function init(data) {
 				Dashboard.Utils.emit('widget|init|' + this.name);
@@ -93483,69 +93539,104 @@
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
 
 	module.exports = function (id) {
-		var extended = {
-			name: 'txdetail',
-			title: 'Txdetail',
-			size: 'medium',
-			widgetId: id, //needed for dashboard
+	    var extended = {
+	        name: 'txdetail',
+	        title: 'Txdetail',
+	        size: 'medium',
+	        widgetId: id, //needed for dashboard
 
-			hideLink: true,
+	        hideLink: true,
 
-			template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
+	        customButtons: '<li><i id="button_showtxjson" class="show_tx_detailorgin1 fa fa-expand"></i></li>',
 
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
+	        template: _.template('<div class="info-table"><table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' + '' + '<tbody>' + '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.tx_id %></td> </tr>' + '<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.timestamp %></td> </tr>' + '<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.channel_id %></td> </tr>' + '<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.type %> </td> </tr>' + '</tbody> </table> <div>'),
 
-				if (data) {
-					this.setData(data);
-				}
+	        setData: function setData(data) {
 
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
+	            this.data = data;
 
-				this.initialized = true;
+	            if (this.data.txid != '0') this.title = 'Transaction #' + this.data.txid;else this.title = 'No Transaction ';
+	        },
 
-				Dashboard.Utils.emit('widget|ready|' + this.name);
+	        /*
+	        render: function() {
+	        //Dashboard.render.widget(this.name, this.shell.tpl);
+	             this.fetch();
+	        $('#widget-' + this.shell.id).css({
+	        'height': '240px',
+	        'margin-bottom': '10px',
+	        'overflow-x': 'hidden',
+	        'width': '100%'
+	        }).html( this.template({
+	        app: "",
+	        desc: "",
+	        numUser: "",
+	        url: ""
+	        }) );
+	        this.postRender();
+	        $(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+	        },
+	         */
 
-				this.ready();
+	        fetch: function fetch() {
 
-				Dashboard.Utils.emit('widget|render|' + this.name);
+	            var _this = this;
 
-				this.subscribe();
-			},
+	            //alert( bocknum );
 
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
+	            $.when(utils.load({ url: '/api/tx/getinfo', data: { txid: this.data.txid } })).fail(function (res) {}).done(function (res) {
 
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
+	                //Dashboard.render.widget(_this.name, _this.shell.tpl);
+	                //alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
 
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
+	                _this.title = 'Transaction #' + _this.data.txid;
 
-		var widget = _.extend({}, widgetRoot, extended);
+	                if (_this.data.txid != '0') _this.title = 'Transaction #' + _this.data.txid;else _this.title = 'No Transaction ';
 
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
+	                /*var transtions = res.transactions;
+	                var transtions_str = '';
+	                 if(transtions != null ){
+	                     var txnHtml = [];
+	                     _.each(transtions, function(txn) {
+	                        txnHtml.push('<a href="#">' + txn.payload.header.channel_header.tx_id  + '</a>')
+	                    });
+	                     transtions_str = txnHtml.join('<br/>');
+	                   }else{
+	                    transtions_str = " ";
+	                }*/
+
+	                if (_this.data.txid != '0') {
+
+	                    $('#widget-' + _this.shell.id).css({
+	                        'height': '240px',
+	                        'margin-bottom': '10px',
+	                        'overflow-x': 'hidden',
+	                        'width': '100%'
+	                    }).html(_this.template({
+	                        res: res, test: 'ddd'
+	                        //transtions:transtions_str
+	                    }));
+	                }
+
+	                $('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
+
+	                $('#button_showtxjson').unbind("click");
+	                $('#button_showtxjson').click(function (e) {
+	                    e.preventDefault();
+	                    opentxdetail(_this.data.txid);
+	                });
+
+	                _this.postRender();
+	                $(document).trigger("WidgetInternalEvent", ["widget|rendered|" + _this.name]);
+	            });
+	        }
+
+	    };
+
+	    var widget = _.extend({}, widgetRoot, extended);
+
+	    // register presence with screen manager
+	    Dashboard.addWidget(widget);
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 

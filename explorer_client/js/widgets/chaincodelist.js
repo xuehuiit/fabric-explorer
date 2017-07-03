@@ -13,6 +13,7 @@ module.exports = function(id) {
 		template: _.template('<div class="info-table"> <table style="width: 100%; " class="table table-striped">' +
 			'<thead style="font-weight: bold;"><tr><td>name</td><td>version</td><td>path</td><td>trans</td></tr></thead>'+
 			'<tbody><%= rows %></tbody> </table> <div>'),
+
 		templateRow: _.template('<tr> <td><%= channelName %></td> <td><%= version %></td><td><%= path %></td> <td><%= txCount %></td></tr>'),
 
 

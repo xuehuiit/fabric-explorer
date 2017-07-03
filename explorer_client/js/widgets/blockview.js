@@ -32,33 +32,7 @@ module.exports = function(id) {
 			'  <div id="notification">' +
 			'  </div>'),
 
-		init: function(data) {
-			Dashboard.Utils.emit('widget|init|' + this.name);
 
-			if (data) {
-				this.setData(data);
-			}
-
-			this.shell = Dashboard.TEMPLATES.widget({
-				name: this.name,
-				title: this.title,
-				size: this.size,
-				hideLink: this.hideLink,
-				hideRefresh: this.hideRefresh,
-				customButtons: this.customButtons,
-				details: true
-			});
-
-			this.initialized = true;
-
-			Dashboard.Utils.emit('widget|ready|' + this.name);
-
-			this.ready();
-
-			Dashboard.Utils.emit('widget|render|' + this.name);
-
-			this.subscribe();
-		},
 
 
 		render: function() {
@@ -70,16 +44,43 @@ module.exports = function(id) {
 				'margin-bottom': '10px',
 				'overflow-x': 'hidden',
 				'width': '100%'
-			}).html( this.template({
-				app: this.data.appName,
-				desc: this.data.description,
-				numUser: this.data.numUser,
-				url: this.data.url
-			}) );
+			}).html( this.template() );
+
+
+			$('#widget-' + this.shell.id + ' button').click(this._handler);
+
 
 			this.postRender();
 			$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
+
+
 		},
+
+		_handler: function(ev) {
+			var _this = widget,
+				id = $('#widget-' + _this.shell.id + ' #block-id'),
+				type = $('#widget-' + _this.shell.id + ' #searchType:checked');
+
+			if (id.val() ) {
+
+				if( type.val() == 'block' ){
+
+					Dashboard.show({ widgetId: 'blockinfo', section: 'channel', data: {bocknum:id.val()}, refetch: true });
+
+				}else if( type.val() == 'txn'){
+
+					Dashboard.show({ widgetId: 'txdetail', section: 'channel', data: {txid:id.val()}, refetch: true });
+
+
+				}
+
+				//Dashboard.show({ widgetId: type.val() + '-detail', section: 'explorer', data: id.val(), refetch: true });
+
+
+			}
+
+		}
+
 	};
 
 

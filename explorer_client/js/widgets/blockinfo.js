@@ -9,20 +9,21 @@ module.exports = function(id) {
 
 		hideLink: true,
 
-		customButtons: '<li><i class="show_detail fa fa-expand"></i></li>',
+		customButtons: '<li><i class="show_bock_detailorgin fa fa-expand"></i></li>',
 
-		template: _.template('<div class="info-table"> <table class="table table-striped"> ' +
-			''+
-			'<tbody><tr> <td>App Name</td> <td><%= app %></td> </tr>' +
-			'<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' +
-			'<tr> <td>URL</td> <td><a href="">11111</a></td> </tr>' +
-			'<tr> <td>Description</td> <td><%=desc%> </td> </tr>' +
+		template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' +
+			'<tbody><tr> <td  style="width: 120px;">number</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.number %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">previous_hash</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.previous_hash %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">data_hash</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.data_hash %></td> </tr>' +
+			'<tr><td style="width: 100px;">Transactions</td><td style="text-overflow: ellipsis; overflow: hidden;"><%= transtions %></td></tr>'+
 			'</tbody> </table> <div>'),
+
+		templateTxnRow: _.template('<tr><td style="width: 100px;">Transactions</td><td style="text-overflow: ellipsis; overflow: hidden;"><%= value %></td></tr>'),
+
+
 
 		setData: function(data) {
 			this.data = data;
-
-
 			this.title = 'Block #' + this.data.a;
 		},
 
@@ -32,22 +33,46 @@ module.exports = function(id) {
 
 
 			var _this = this;
+			var bocknum = _this.data.bocknum;
+
+			//alert( bocknum );
 
 			$.when(
 
-
-
+				utils.load({ url: '/api/block/getinfo' , data:{number:bocknum} }),//channellist
 
 			).fail(function (res) {
 
 
 
-			}).done(function (res) {
 
+			}).done(function (res) {
 
 				//Dashboard.render.widget(_this.name, _this.shell.tpl);
 				//alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
-				_this.title = 'Block #' + _this.data.a;
+
+				_this.title = 'Block #' + _this.data.bocknum;
+
+				var transtions = res.transactions;
+				var transtions_str = '';
+
+				if(transtions != null ){
+
+					var txnHtml = [];
+
+					_.each(transtions, function(txn) {
+						txnHtml.push('<a href="#">' + txn.payload.header.channel_header.tx_id  + '</a>')
+					});
+
+					transtions_str = txnHtml.join('<br/>');
+
+
+
+				}else{
+					transtions_str = " ";
+				}
+
+
 
 				$('#widget-' + _this.shell.id).css({
 					'height': '240px',
@@ -55,19 +80,25 @@ module.exports = function(id) {
 					'overflow-x': 'hidden',
 					'width': '100%'
 				}).html( _this.template({
-					app: 'test1',
-					desc: 'testdata1',
-					numUser: 'dddd'
+					res: res,
+					transtions:transtions_str
 				}) );
+
+
+
 				$('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
 
-				$('#widget-shell-' + _this.shell.id + ' i.add-account').click(function(e) {
+				$('#widget-shell-' + _this.shell.id + ' i.show_bock_detailorgin').unbind("click");
+				$('#widget-shell-' + _this.shell.id + ' i.show_bock_detailorgin').click(function(e) {
 
-					$.when(
+					openblockdetail(_this.data.bocknum);
+				});
 
-					).done(function() {
-						openblockdetail('12');
-					});
+
+				$('#widget-' + _this.shell.id + ' a').click(function(e) {
+
+					e.preventDefault();
+					Dashboard.show({ widgetId: 'txdetail', section: 'channel', data: {txid:$(this).text()}, refetch: true });
 
 				});
 

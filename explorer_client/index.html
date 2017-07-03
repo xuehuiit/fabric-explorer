@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/javascript" src="js/index-gen.js"></script>
 
-	<script type="text/javascript" src="http://112.124.115.82:8080/source/inspinia/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 
 	<script type="text/javascript" src="layer/layer.min.js"></script>
 
@@ -76,7 +76,7 @@
 					<div class="row" id="heads-up">
 						<div class="col-lg-3 col-xs-6">
 							<div class="tower-nugget tower-txt-success">
-								<i class="fa fa-play"></i>
+								<i class="fa fa-book"></i>
 								<span class="heading">peer</span>
 								<span class="value default" id="default-peers">
 									<span>0</span>
@@ -86,7 +86,7 @@
 
 						<div class="col-lg-3 col-xs-6">
 							<div class="tower-nugget">
-								<i class="fa fa-users"></i>
+								<i class="fa fa-chain"></i>
 								<span class="heading">block</span>
 								<span class="value default" id="default-blocks">
 									<span>0</span>
@@ -96,7 +96,7 @@
 
 						<div class="col-lg-3 col-xs-6">
 							<div class="tower-nugget tower-txt-primary">
-								<i class="fa fa-cubes"></i>
+								<i class="fa fa-exchange"></i>
 								<span class="heading">tx</span>
 								<span class="value default" id="default-txn">
 									<span>0</span>
@@ -106,7 +106,7 @@
 
 						<div class="col-lg-3 col-xs-6">
 							<div class="tower-nugget tower-txt-danger">
-								<i class="fa fa-exchange"></i>
+								<i class="fa fa-file-o"></i>
 								<span class="heading">chaincode</span>
 								<span class="value default" id="default-chaincode">
 									<span>0</span>
@@ -143,15 +143,36 @@
 
 			type:2,
 			border: [0],
-			area : ['850px' , '700px'],
+			area : ['950px' , '700px'],
 			offset : ['10px',''],
 
 			title:titleinfo,
-			iframe:{src: 'json.html'}
+			iframe:{src: 'json.html?bocknum='+blockid+'&type=block'}
 
 		});
 
 	}
+
+	function opentxdetail(txid){
+
+		var titleinfo = " #["+txid+"]";
+
+		$.layer({
+
+			type:2,
+			border: [0],
+			area : ['950px' , '700px'],
+			offset : ['10px',''],
+
+			title:titleinfo,
+			iframe:{src: 'json.html?txid='+txid+'&type=tx'}
+
+		});
+
+	}
+
+
+
 
 </script>
 </html>
