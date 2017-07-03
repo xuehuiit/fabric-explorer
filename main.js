@@ -25,6 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var query=require('./app/query.js')
+var sql=require('./db/mysqlservice.js')
 
 // =======================   控制器绑定  ===================
 
@@ -108,7 +109,7 @@ app.post("/api/block/getinfo", function(req, res) {
     })
 });
 
-app.post("/api/block/get", function(req, res) {
+/*app.post("/api/block/get", function(req, res) {
     let number=req.body.number
     query.getBlockByNumber('peer1',ledgerMgr.getCurrChannel(),parseInt(number),'admin','org1').then(block=>{
         res.send({
@@ -116,6 +117,18 @@ app.post("/api/block/get", function(req, res) {
             'txCount':block.data.data.length
         })
     })
+});*/
+app.post("/api/block/get", function(req, res) {
+    let number=req.body.number
+    sql.getRowByPkOne(`select blocknum ,txcount from blocks where channelname='${ledgerMgr.getCurrChannel()}' and blocknum='${number}'`).then(row=>{
+        if(row){
+            res.send({
+                'number':row.blocknum,
+                'txCount':row.txcount
+            })
+        }
+    })
+
 });
 
 //return latest status
