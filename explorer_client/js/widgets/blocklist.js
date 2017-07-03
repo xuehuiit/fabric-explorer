@@ -93,7 +93,10 @@ module.exports = function(id) {
 
 
         postRender: function() {
-            $('#widget-' + this.shell.id).on('click', 'a', this.showBlock);
+
+            $( '#widget-' + this.shell.id ).unbind("click");
+            $( '#widget-' + this.shell.id ).on('click', 'a', this.showBlock);
+
         },
 
         showBlock: function(e) {

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f95085d25b17f54825e9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fa4d8f9ba99e41a58706"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -86454,6 +86454,8 @@
 	        },
 
 	        postRender: function postRender() {
+
+	            $('#widget-' + this.shell.id).unbind("click");
 	            $('#widget-' + this.shell.id).on('click', 'a', this.showBlock);
 	        },
 
@@ -93549,7 +93551,7 @@
 
 	        customButtons: '<li><i id="button_showtxjson" class="show_tx_detailorgin1 fa fa-expand"></i></li>',
 
-	        template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody>' + '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= tx_id %></td> </tr>' + '<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= timestamp %></td> </tr>' + '<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= channel_id %></td> </tr>' + '<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=test %> </td> </tr>' + '</tbody> </table> <div>'),
+	        template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' + '' + '<tbody>' + '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.tx_id %></td> </tr>' + '<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.timestamp %></td> </tr>' + '<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.channel_id %></td> </tr>' + '<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.test %> </td> </tr>' + '</tbody> </table> <div>'),
 
 	        setData: function setData(data) {
 
@@ -93589,9 +93591,9 @@
 	                //Dashboard.render.widget(_this.name, _this.shell.tpl);
 	                //alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
 
-	                _this.title = 'Transaction #' + _this.data.txid;
+	                _this.title = 'Transaction';
 
-	                if (_this.data.txid != '0') _this.title = 'Transaction #' + _this.data.txid;else _this.title = 'No Transaction ';
+	                if (_this.data.txid != '0') _this.title = 'Transaction';else _this.title = 'No Transaction ';
 
 	                /*var transtions = res.transactions;
 	                var transtions_str = '';
@@ -93614,15 +93616,17 @@
 	                        'width': '100%'
 	                    }).html(_this.template({
 	                        res: res, test: 'ddd'
-	                        //transtions:transtions_str
+
 	                    }));
 	                }
 
 	                $('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
 
+	                $('#button_showtxjson').unbind("click");
+
 	                $('#button_showtxjson').click(function (e) {
 	                    e.preventDefault();
-	                    opentxdetail(_this.data.bocknum);
+	                    opentxdetail(_this.data.txid);
 	                });
 
 	                _this.postRender();
@@ -94268,8 +94272,8 @@
 
 	        // try to derive the websocket location from the current location
 	        var pathname = window.location.pathname;
-	        // var wsUrl='ws://'+window.location.host+'/stomp';
-	        var wsUrl = 'ws://localhost:8080/stomp';
+	        var wsUrl = 'ws://' + window.location.host + '/stomp';
+	        // var wsUrl='ws://localhost:8080/stomp';
 
 	        var stomp = Client.stomp = Stomp.client(wsUrl);
 

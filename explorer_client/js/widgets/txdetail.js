@@ -11,13 +11,13 @@ module.exports = function(id) {
         customButtons: '<li><i id="button_showtxjson" class="show_tx_detailorgin1 fa fa-expand"></i></li>',
 
 
-		template: _.template('<div class="info-table"> <table class="table table-striped"> ' +
+		template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' +
 			''+
 			'<tbody>'+
-            '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= tx_id %></td> </tr>' +
-			'<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= timestamp %></td> </tr>' +
-			'<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= channel_id %></td> </tr>' +
-			'<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=test %> </td> </tr>' +
+            '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.tx_id %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.timestamp %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.channel_id %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.type %> </td> </tr>' +
 			'</tbody> </table> <div>'),
 
 
@@ -83,10 +83,10 @@ module.exports = function(id) {
                 //Dashboard.render.widget(_this.name, _this.shell.tpl);
                 //alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
 
-                _this.title = 'Transaction #' + _this.data.txid;
+                _this.title = 'Transaction' ;
 
                 if( _this.data.txid != '0' )
-                    _this.title = 'Transaction #' + _this.data.txid;
+                    _this.title = 'Transaction' ;
                 else
                     _this.title = 'No Transaction ';
 
@@ -121,7 +121,7 @@ module.exports = function(id) {
                         'width': '100%'
                     }).html( _this.template({
                         res: res,test:'ddd'
-                        //transtions:transtions_str
+
                     }) );
 
                 }
@@ -130,9 +130,11 @@ module.exports = function(id) {
 
                 $('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
 
+                $('#button_showtxjson').unbind("click");
+
                 $('#button_showtxjson').click(function(e) {
                     e.preventDefault();
-                    opentxdetail(_this.data.bocknum);
+                    opentxdetail(_this.data.txid);
                 });
 
                 _this.postRender();
