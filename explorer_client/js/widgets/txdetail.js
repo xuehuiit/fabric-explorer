@@ -11,13 +11,13 @@ module.exports = function(id) {
         customButtons: '<li><i id="button_showtxjson" class="show_tx_detailorgin1 fa fa-expand"></i></li>',
 
 
-		template: _.template('<div class="info-table"><table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' +
+		template: _.template('<div class="info-table"> <table class="table table-striped"> ' +
 			''+
 			'<tbody>'+
-            '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.tx_id %></td> </tr>' +
-			'<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.timestamp %></td> </tr>' +
-			'<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.channel_id %></td> </tr>' +
-			'<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.type %> </td> </tr>' +
+            '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= tx_id %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= timestamp %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= channel_id %></td> </tr>' +
+			'<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=test %> </td> </tr>' +
 			'</tbody> </table> <div>'),
 
 
@@ -130,10 +130,9 @@ module.exports = function(id) {
 
                 $('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
 
-                $('#button_showtxjson').unbind("click");
                 $('#button_showtxjson').click(function(e) {
                     e.preventDefault();
-                    opentxdetail(_this.data.txid);
+                    opentxdetail(_this.data.bocknum);
                 });
 
                 _this.postRender();

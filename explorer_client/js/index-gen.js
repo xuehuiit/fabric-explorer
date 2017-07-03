@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "51a4c94d958e629f4698"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "96b77d7d62f85e6a739e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -93589,9 +93589,9 @@
 	                //Dashboard.render.widget(_this.name, _this.shell.tpl);
 	                //alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
 
-	                _this.title = 'Transaction #' + _this.data.txid;
+	                _this.title = 'Transaction ';
 
-	                if (_this.data.txid != '0') _this.title = 'Transaction #' + _this.data.txid;else _this.title = 'No Transaction ';
+	                if (_this.data.txid != '0') _this.title = 'Transaction ';else _this.title = 'No Transaction ';
 
 	                /*var transtions = res.transactions;
 	                var transtions_str = '';
