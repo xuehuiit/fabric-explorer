@@ -28,7 +28,6 @@ module.exports = function(id) {
 					rows.push(_this.templateRow(item))
                 })
 
-				console.info(rows.join('') )
 				$('#widget-' + _this.shell.id).html( _this.template({ rows: rows.join('') }) );
 				_this.postFetch();
             });
