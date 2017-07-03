@@ -47,8 +47,8 @@
 
         // try to derive the websocket location from the current location
         var pathname = window.location.pathname;
-        // var wsUrl='ws://'+window.location.host+'/stomp';
-        var wsUrl='ws://localhost:8080/stomp';
+        var wsUrl='ws://'+window.location.host+'/stomp';
+        // var wsUrl='ws://localhost:8080/stomp';
 
         var stomp = Client.stomp = Stomp.client(wsUrl);
 
