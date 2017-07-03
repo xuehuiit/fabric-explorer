@@ -100,7 +100,7 @@ app.post("/api/block/getinfo", function(req, res) {
     let number=req.body.number
     query.getBlockByNumber('peer1',ledgerMgr.getCurrChannel(),parseInt(number),'admin','org1').then(block=>{
         res.send({
-            'number':block.header.number,
+            'number':block.header.number.toString(),
             'previous_hash':block.header.previous_hash,
             'data_hash':block.header.data_hash,
             'transactions':block.data.data

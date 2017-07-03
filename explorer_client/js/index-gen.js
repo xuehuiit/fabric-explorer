@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "96b77d7d62f85e6a739e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f95085d25b17f54825e9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -92814,7 +92814,7 @@
 
 			url: 'chaincodelist',
 
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;">' + '<tr><td width="20%">name</td><td width="10%">version</td><td width="60%">path</td><td width="10%">trans</td></tr>' + '</thead>' + '<tbody><%= rows %></tbody> </table> <div>'),
+			template: _.template('<div class="info-table"> <table style="width: 100%; " class="table table-striped">' + '<thead style="font-weight: bold;"><tr><td>name</td><td>version</td><td>path</td><td>trans</td></tr></thead>' + '<tbody><%= rows %></tbody> </table> <div>'),
 
 			templateRow: _.template('<tr> <td><%= channelName %></td> <td><%= version %></td><td><%= path %></td> <td><%= txCount %></td></tr>'),
 
@@ -93549,7 +93549,7 @@
 
 	        customButtons: '<li><i id="button_showtxjson" class="show_tx_detailorgin1 fa fa-expand"></i></li>',
 
-	        template: _.template('<div class="info-table"><table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' + '' + '<tbody>' + '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.tx_id %></td> </tr>' + '<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.timestamp %></td> </tr>' + '<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= res.channel_id %></td> </tr>' + '<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.type %> </td> </tr>' + '</tbody> </table> <div>'),
+	        template: _.template('<div class="info-table"> <table class="table table-striped"> ' + '' + '<tbody>' + '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= tx_id %></td> </tr>' + '<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= timestamp %></td> </tr>' + '<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%= channel_id %></td> </tr>' + '<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=test %> </td> </tr>' + '</tbody> </table> <div>'),
 
 	        setData: function setData(data) {
 
@@ -93589,9 +93589,9 @@
 	                //Dashboard.render.widget(_this.name, _this.shell.tpl);
 	                //alert('I am blockinfo !!!!!'+_this.data.c.currchannel);
 
-	                _this.title = 'Transaction ';
+	                _this.title = 'Transaction #' + _this.data.txid;
 
-	                if (_this.data.txid != '0') _this.title = 'Transaction ';else _this.title = 'No Transaction ';
+	                if (_this.data.txid != '0') _this.title = 'Transaction #' + _this.data.txid;else _this.title = 'No Transaction ';
 
 	                /*var transtions = res.transactions;
 	                var transtions_str = '';
@@ -93620,10 +93620,9 @@
 
 	                $('#widget-shell-' + _this.shell.id + ' .panel-title span').html(_this.title);
 
-	                $('#button_showtxjson').unbind("click");
 	                $('#button_showtxjson').click(function (e) {
 	                    e.preventDefault();
-	                    opentxdetail(_this.data.txid);
+	                    opentxdetail(_this.data.bocknum);
 	                });
 
 	                _this.postRender();
