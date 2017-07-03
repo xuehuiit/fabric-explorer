@@ -7,7 +7,7 @@ class Metrics {
     }
 
     push(n){
-        while(this.stats.length>this.size){
+        while(this.stats.data.length>this.size){
             this.stats.shift()
         }
         this.stats.push(n)
@@ -23,9 +23,11 @@ class Metrics {
     }
 }
 
-var txMetrics=new Metrics(12)
-var blockMetrics=new Metrics(12)
+var txMetrics=new Metrics(2)
+var blockMetrics=new Metrics(2)
+var txnPerSecMeter=new Metrics(2)
 
 exports.Metrics=Metrics
 exports.txMetrics=txMetrics
 exports.blockMetrics=blockMetrics
+exports.txnPerSecMeter=txnPerSecMeter

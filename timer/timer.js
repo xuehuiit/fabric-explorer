@@ -1,9 +1,9 @@
-var Metrics=require('../metrics/metrics.js').Metrics
+var Metrics=require('../metrics/metrics.js')
 var blockListener=require('../listener/blocklistener.js').blockListener()
 
-var blockPerMinMeter=new Metrics(12)
-var txnPerSecMeter=new Metrics(12)
-var txnPerMinMeter=new Metrics(12)
+var blockPerMinMeter=Metrics.blockMetrics
+var txnPerSecMeter=Metrics.txnPerSecMeter
+var txnPerMinMeter=Metrics.txMetrics
 
 var stomp=require('../socket/websocketserver.js').stomp()
 
@@ -25,7 +25,7 @@ function start() {
         blockPerMinMeter.push(0)
         txnPerSecMeter.push(0)
         txnPerMinMeter.push(0)
-    },1000)
+    },500)
 
     /*
     * /topic/metrics/txnPerSec
