@@ -27,9 +27,9 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
 1. `git clone https://github.com/onechain/fabric-explorer.git`
 2. `rm -rf artifacts/crypto-config/`
-2. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config fabric-explorer/ artifacts/crypto-config/`
+3. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config ./fabric-explorer/artifacts/crypto-config/`
 
-2. 修改config.json,配置channel,mysql
+4. 修改config.json,配置channel,mysql
 ```json
  "channelsList": ["mychannel"],
  "mysql":{
@@ -40,7 +40,7 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
    }
 ```
 
-3. 修改 app/network-config.json ,配置节点信息
+5. 修改 app/network-config.json ,配置节点信息
 ```json
  {
 	"network-config": {
