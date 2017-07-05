@@ -2,9 +2,11 @@
 
 fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
-## [在线DEMO](http://ks.blockchain001.com/)
+## Demo
+[See live demo here](http://ks.blockchain001.com/)
 
-# required
+
+# Requirements
 
 * docker 1.12.6
 * docker-compose 1.11.2
