@@ -1,6 +1,8 @@
 # fabric explorer
 
-fabric explorer 是帮助大家学习、管理、监控fabric（什么是fabric,请参考项目 https://github.com/hyperledger/fabric ）的工具。
+fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
+
+## [在线DEMO](http://ks.blockchain001.com/)
 
 # required
 
