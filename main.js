@@ -27,6 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var query=require('./app/query.js')
 var sql=require('./db/mysqlservice.js')
 
+var config = require('./config.json');
+var host = process.env.HOST || config.host;
+var port = process.env.PORT || config.port;
 // =======================   控制器绑定  ===================
 
 app.post("/api/tx/getinfo", function(req, res) {
@@ -161,8 +164,8 @@ app.post('/channellist',function(req,res){
 
 // ============= 启动服务器 =======================
 
-var server = http.listen(8080, function() {
-    console.log("请在浏览器访问：http://localhost:8080/");
+var server = http.listen(port, function() {
+    console.log(`请在浏览器访问：http://${host}:${port}/`);
 });
 
 

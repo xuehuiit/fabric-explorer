@@ -1,11 +1,10 @@
 {
    "host":"localhost",
-   "port":"4000",
+   "port":"8080",
    "channelsList": ["mychannel"],
    "GOPATH":"../artifacts",
    "keyValueStore":"/tmp/fabric-client-kvs",
    "eventWaitTime":"30000",
-   "invokeQueryFcnName":"invoke",
    "users":[
       {
          "username":"admin",
