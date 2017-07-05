@@ -4,11 +4,14 @@
 
 
 var mysql = require('mysql');
+var config = require('../config.json');
+var mysqlconfig=config.mysql
+
 var connection = mysql.createConnection({
-    host: '192.168.23.228',
-    user: 'root',
-    password: '123456',
-    database:'fabricexplorer'
+    host: mysqlconfig.host,
+    user: mysqlconfig.username,
+    password: mysqlconfig.passwd,
+    database:mysqlconfig.database
 });
 
 //打开连接

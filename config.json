@@ -10,5 +10,11 @@
          "username":"admin",
          "secret":"adminpw"
       }
-   ]
+   ],
+   "mysql":{
+      "host":"172.16.10.162",
+      "database":"fabricexplorer",
+      "username":"root",
+      "passwd":"123456"
+   }
 }
