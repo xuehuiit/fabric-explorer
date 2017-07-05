@@ -88,4 +88,6 @@ fabric explorer 是帮助大家学习、管理、监控fabric（什么是fabric,
 ```
 
 # 启动fabric explorer
-`node main.js'
+1. `npm install`
+2. `node main.js`
+
