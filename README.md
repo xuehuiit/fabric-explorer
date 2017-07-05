@@ -17,14 +17,19 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 # setup fabric docker environment
 
 1. `git clone https://github.com/onechain/fabric-docker-compose-svt.git`
-2. `mv fabric-docker-compose-svt $GOPATH/src/src/github.com/hyperledger/fabric/examples/`
+2. `mv fabric-docker-compose-svt $GOPATH/src/github.com/hyperledger/fabric/examples/`
 3. `cd $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt`
 4. `./download_images.sh`
 5. `./start.sh`
 
+
 # 启动fabric 浏览器
 
-1. 修改config.json,配置channel,mysql
+1. `git clone https://github.com/onechain/fabric-explorer.git`
+2. `rm -rf artifacts/crypto-config/`
+2. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config fabric-explorer/ artifacts/crypto-config/`
+
+2. 修改config.json,配置channel,mysql
 ```json
  "channelsList": ["mychannel"],
  "mysql":{
@@ -35,7 +40,7 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
    }
 ```
 
-2. 修改 app/network-config.json ,配置节点信息
+3. 修改 app/network-config.json ,配置节点信息
 ```json
  {
 	"network-config": {
