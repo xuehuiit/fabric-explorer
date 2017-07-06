@@ -3,6 +3,7 @@ var query=require('../app/query.js')
 var helper=require('../app/helper.js')
 var co=require('co')
 var stomp=require('../socket/websocketserver.js').stomp()
+var logger = helper.getLogger('blockscanner');
 
 var blockListener
 
@@ -19,10 +20,10 @@ function  syncBlock(channelName) {
         co(saveBlockRange,channelName,curBlockNum,maxBlockNum).then(()=>{
             blockListener.emit('syncBlock', channelName)
         }).catch(err=>{
-            console.info(err)
+            logger.error(err)
         })
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
     })
 
 
@@ -43,9 +44,6 @@ function* saveBlockRange(channelName,start,end){
         //push last block
         stomp.send('/topic/block/all',{},start)
         start++
-        console.info(block.header.number.toString())
-        console.info(block.header.previous_hash)
-        console.info(block.header.data_hash)
 
         //////////tx/////////////////////////
         let txLen=block.data.data.length
@@ -77,7 +75,7 @@ function getMaxBlockNum(channelName){
     return query.getChannelHeight('peer1',channelName,'admin','org1').then(data=>{
         return data
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
     })
 }
 
@@ -85,7 +83,7 @@ function getCurBlockNum(channelName){
     let curBlockNum
     return sql.getRowsBySQlCase(`select max(blocknum) as blocknum from blocks  where channelname='${channelName}'`).then(row=>{
         if(row.blocknum==null){
-            curBlockNum=0
+            curBlockNum=-1
         }else{
             curBlockNum=parseInt(row.blocknum)
         }
@@ -93,7 +91,7 @@ function getCurBlockNum(channelName){
     }).then(()=>{
         return curBlockNum
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
     })
 }
 
@@ -104,7 +102,7 @@ function* saveChaincodes(channelName){
     let chaincodes=yield query.getInstalledChaincodes('peer1',channelName,'installed','admin','org1')
     let len=chaincodes.length
     if(typeof chaincodes ==='string'){
-        console.info(chaincodes)
+        logger.debug(chaincodes)
         return
     }
     for(let i=0;i<len;i++){
@@ -122,7 +120,7 @@ function syncChaincodes(channelName){
     co(saveChaincodes,channelName).then(()=>{
         blockListener.emit('syncChaincodes', channelName)
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
     })
 }
 

@@ -1,14 +1,15 @@
 
 var EventEmitter = require('events').EventEmitter;
 var ledgerEvent = new EventEmitter();
+var config=require('../config.json')
 
-var channels=['mychannel']
+var channels=config.channelsList
 
 var currChannel=channels[0]
 
 function changeChannel(channelName){
     currChannel=channelName
-    ledgerMgr.emit('channgelLedger')
+    ledgerEvent.emit('channgelLedger')
 }
 
 function getCurrChannel(){

@@ -1,6 +1,8 @@
 var bcservice=require('./bcservice.js')
 var sql=require('../db/mysqlservice.js')
 var co=require('co')
+var helper = require('../app/helper.js');
+var logger = helper.getLogger('metricservice');
 
 //==========================query counts ==========================
 function getChaincodeCount(channelName){
@@ -33,7 +35,7 @@ function getTxPerChaincode(channelName,cb) {
     co(getTxPerChaincodeGenerate,channelName).then(txArray=>{
         cb(txArray)
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
         cb([])
     })
 }
@@ -50,7 +52,7 @@ function getStatus(channelName ,cb){
     co(getStatusGenerate,channelName).then(data=>{
         cb(data)
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
     })
 }
 

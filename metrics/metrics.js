@@ -1,4 +1,6 @@
 var Stats = require('fast-stats').Stats;
+var helper = require('../app/helper.js');
+var logger = helper.getLogger('metrics');
 
 class Metrics {
     constructor(size=10){
@@ -14,12 +16,12 @@ class Metrics {
     }
 
     sum(){
-        console.info(this.stats.range())
+        logger.debug(this.stats.range())
         return this.stats.sum
     }
 
     clean(){
-        this.stats.clean()
+        this.stats.reset()
     }
 }
 

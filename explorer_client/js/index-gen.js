@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "be0af0fb8c6f0173de94"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "44b9bbc4ef7475e46ecb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -881,6 +881,20 @@
 	                }));
 	            });
 
+	            //show channel list
+	            var channelListTemplate = _.template('<li><a href="#"><%=channlename%></a></li>');
+
+	            _jquery2.default.when(_utils2.default.load({ url: 'channellist' }) //channellist
+	            ).done(function (data) {
+	                var channelsel = [];
+	                var channels = data.channelList;
+	                channels.forEach(function (item) {
+	                    channelsel.push(channelListTemplate({ channlename: item }));
+	                });
+
+	                (0, _jquery2.default)('#selectchannel').html(channelsel.join(''));
+	            });
+
 	            _utils2.default.subscribe('/topic/metrics/status', statusUpdate);
 	        },
 
@@ -918,6 +932,17 @@
 	        } else {
 	            (0, _jquery2.default)('body').removeClass('sticky');
 	        }
+	    });
+
+	    (0, _jquery2.default)('#selectchannel').bind('click', 'li.dropdown-item', function (event) {
+	        var channelName = (0, _jquery2.default)(event.target).html();
+	        _jquery2.default.when(_utils2.default.load({ url: 'changeChannel', data: { 'channelName': channelName } })).done(function (data) {
+	            _jquery2.default.when(_utils2.default.load({ url: 'curChannel' })).done(function (data) {
+	                (0, _jquery2.default)('#channel-name').html((0, _jquery2.default)('<span>', {
+	                    html: data.currentChannel
+	                }));
+	            });
+	        });
 	    });
 
 	    // logo handler

@@ -170,6 +170,23 @@ window.Tower = {
                 }));
             });
 
+            //show channel list
+            var channelListTemplate = _.template('<li><a href="#"><%=channlename%></a></li>');
+
+
+            $.when(
+                utils.load({ url: 'channellist' }),//channellist
+            ).done(function(data) {
+                var channelsel = [];
+                var channels = data.channelList;
+                channels.forEach(function(item){
+                    channelsel.push( channelListTemplate ( { channlename: item } ) );
+				})
+
+                $('#selectchannel').html( channelsel.join('') );
+
+            })
+
             utils.subscribe('/topic/metrics/status', statusUpdate);
 
 		},
@@ -224,6 +241,22 @@ $(function() {
 			$('body').removeClass('sticky');
 		}
 	});
+
+	$('#selectchannel').bind('click','li.dropdown-item',function(event){
+		var channelName=$(event.target).html()
+        $.when(
+            utils.load({ url: 'changeChannel' ,data: { 'channelName':channelName  }})
+        ).done(function(data) {
+            $.when(
+                utils.load({ url: 'curChannel' })
+            ).done(function(data) {
+                $('#channel-name').html($('<span>', {
+                    html: data.currentChannel
+                }));
+
+            });
+        });
+	})
 
 	// logo handler
 	$("a.tower-logo").click(function(e) {

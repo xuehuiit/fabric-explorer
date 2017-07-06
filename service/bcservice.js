@@ -13,6 +13,7 @@ var ORGS = hfc.getConfigSetting('network-config');
 var config = require('../config.json');
 
 var query=require('../app/query.js')
+var logger = helper.getLogger('bcservice');
 
 // var bcserver = require('./bcservice');
 
@@ -152,7 +153,7 @@ function getBlockRange(from,to){
         })
         return Promise.resolve(block_array)
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
     })
 }
 
@@ -164,7 +165,7 @@ function getTx(channelName,tx_array){
     return Promise.all(params).then(datas=>{
         return Promise.resolve(datas)
     }).catch(err=>{
-        console.info(err)
+        logger.error(err)
     })
 }
 

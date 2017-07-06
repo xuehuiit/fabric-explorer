@@ -137,7 +137,6 @@ app.post("/api/status/get", function(req, res) {
 
 app.post('/chaincodelist',function(req,res){
     statusMertics.getTxPerChaincode(ledgerMgr.getCurrChannel(),function (data) {
-        console.info(data)
         res.send(data)
     })
 })
@@ -145,6 +144,7 @@ app.post('/chaincodelist',function(req,res){
 app.post('/changeChannel',function(req,res){
     let channelName=req.body.channelName
     ledgerMgr.changeChannel(channelName)
+    res.end()
 })
 
 app.post('/curChannel',function(req,res){

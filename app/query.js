@@ -148,7 +148,7 @@ var getChannelConfig=function(org,channelName){
     }).then((response) => {
         return response
     }).catch((err) => {
-        console.info(err)
+        logger.error(err)
     });
 
 }
