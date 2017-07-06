@@ -44,6 +44,7 @@ function* getStatusGenerate(channelName){
     var chaincodeCount=yield  getChaincodeCount(channelName)
     var txCount=yield  getTxCount(channelName)
     var blockCount=yield  getBlockCount(channelName)
+    blockCount.c=blockCount.c ? blockCount.c: 0
     var peerCount=  getPeerCount(channelName)
     return {'chaincodeCount':chaincodeCount.c,'txCount':txCount.c,'latestBlock':blockCount.c,'peerCount':peerCount}
 }
