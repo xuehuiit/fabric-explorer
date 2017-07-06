@@ -98,5 +98,5 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
 # 启动fabric explorer
 1. `npm install`
-2. `node main.js`
+2. `./start.sh`
 
