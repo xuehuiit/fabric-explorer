@@ -21,7 +21,7 @@ function getPeerCount(){
 
 function* getTxPerChaincodeGenerate(channelName){
     let txArray=[]
-    var c = yield sql.getRowsBySQlNoCondtion(`select c.channelname as channelname,c.name as chaincodename,c.version as version,c.path as path ,count(c.name)  as c from transaction t ,chaincodes c where t.chaincodename=c.name and c.channelname='${channelName}' group by c.name,c.version,c.path,c.channelname `);
+    var c = yield sql.getRowsBySQlNoCondtion(`select c.channelname as channelname,c.name as chaincodename,c.version as version,c.path as path ,txcount  as c from chaincodes c where  c.channelname='${channelName}' `);
     c.forEach((item,index)=>{
         txArray.push({'channelName':item.channelname,'chaincodename':item.chaincodename,'path':item.path,'version':item.version,'txCount':item.c})
     })

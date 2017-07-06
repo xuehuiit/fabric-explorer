@@ -35,9 +35,6 @@ var port = process.env.PORT || config.port;
 app.post("/api/tx/getinfo", function(req, res) {
 
     let  txid = req.body.txid
-
-
-
     if( txid != '0' ){
     query.getTransactionByID('peer1',ledgerMgr.getCurrChannel(),txid,'admin','org1').then(response_payloads=>{
 
@@ -63,9 +60,6 @@ app.post("/api/tx/getinfo", function(req, res) {
 app.post("/api/tx/json", function(req, res) {
 
     let  txid = req.body.number
-
-
-
     if( txid != '0' ){
         query.getTransactionByID('peer1',ledgerMgr.getCurrChannel(),txid,'admin','org1').then(response_payloads=>{
 

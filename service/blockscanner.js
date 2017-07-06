@@ -29,7 +29,6 @@ function  syncBlock(channelName) {
 }
 
 function* saveBlockRange(channelName,start,end){
-    console.info(`${start} ---------------- ${end}`)
     while(start<end){
         let block=yield query.getBlockByNumber('peer1',channelName,start,'admin','org1')
         blockListener.emit('createBlock',block)
@@ -66,6 +65,7 @@ function* saveBlockRange(channelName,start,end){
                     'createdt':new Date(tx.payload.header.channel_header.timestamp),
                     'chaincodename':chaincode
                 })
+            yield sql.updateBySql(`update chaincodes set txcount =txcount+1 where name = '${chaincode}' and channelname='${channelName}' `)
         }
 
     }
