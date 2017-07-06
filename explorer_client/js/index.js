@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 import 'bootstrap';
 import 'd3';
+import 'bootstrap-tour';
 import 'jquery-ui';
 import 'epoch-charting-ie-patched';
 import moment from 'moment';
@@ -18,6 +19,7 @@ import common from './common';
 import './vendor/stomp.min'
 import './vendor/client'
 import utils from './utils';
+import './tour';
 
 window.utils = utils;
 window.moment = moment;
@@ -34,6 +36,12 @@ window.Tower = {
 
 		// let everyone listening in know
 		Dashboard.Utils.emit('tower-control|ready|true');
+
+        if (window.localStorage.getItem('tourEnded') === null) {
+            //first time, activate tour automatically
+            $(document).trigger('StartTour');
+            Tower.tour.start(true);
+        }
 
 		return true;
 	},
@@ -57,6 +65,7 @@ window.Tower = {
             'blocklist'			: require('./widgets/blocklist'),
             'blockinfo'			: require('./widgets/blockinfo'),
             'txdetail'			: require('./widgets/txdetail'),
+            'doc-frame'         : require('./widgets/doc-frame'),
 
         });
 
@@ -161,18 +170,10 @@ window.Tower = {
 
             });
 
-            //show current channel
-            $.when(
-                utils.load({ url: 'curChannel' })
-            ).done(function(data) {
-                $('#channel-name').html($('<span>', {
-                    html: data.currentChannel
-                }));
-            });
+
 
             //show channel list
             var channelListTemplate = _.template('<li><a href="#"><%=channlename%></a></li>');
-
 
             $.when(
                 utils.load({ url: 'channellist' }),//channellist
@@ -218,9 +219,28 @@ window.Tower = {
 
 			];
 
+            //show current channel
+            $.when(
+                utils.load({ url: 'curChannel' })
+            ).done(function(data) {
+                $('#channel-name').html($('<span>', {
+                    html: data.currentChannel
+                }));
+            });
+
+
+
 			// opens the section and pass in the widgets that it needs
 			Dashboard.showSection('peers', widgets);
-		}
+		},
+
+        'api': function() {
+            var widgets = [
+                { widgetId: 'doc-frame' }
+            ];
+
+            Dashboard.showSection('api', widgets);
+        }
 
 	},
 
@@ -250,10 +270,7 @@ $(function() {
             $.when(
                 utils.load({ url: 'curChannel' })
             ).done(function(data) {
-                $('#channel-name').html($('<span>', {
-                    html: data.currentChannel
-                }));
-
+                window.location.reload();
             });
         });
 	})
@@ -277,22 +294,27 @@ $(function() {
 	})
 
 
-	// Navigation menu handler
-	$('.tower-sidebar li').click(function(e) {
-		var id = $(this).attr('id');
+    // Navigation menu handler
+    $('.tower-sidebar li').click(function(e) {
+        var id = $(this).attr('id');
+        if (id === 'help') {
+            $(document).trigger('StartTour');
+            Tower.tour.start(true);
+            return;
+        }
 
-		e.preventDefault();
+        e.preventDefault();
 
-		Tower.current = id;
+        Tower.current = id;
 
-		$('.tower-sidebar li').removeClass('active');
-		$(this).addClass('active');
+        $('.tower-sidebar li').removeClass('active');
+        $(this).addClass('active');
 
-		Tower.section[Tower.current]();
+        Tower.section[Tower.current]();
 
-		$('.tower-page-title').html( $('<span>', { html: $(this).find('.tower-sidebar-item').html() }) );
+        $('.tower-page-title').html( $('<span>', { html: $(this).find('.tower-sidebar-item').html() }) );
+    });
 
-	});
 
 	// ---------- INIT -----------
 	Tower.init();

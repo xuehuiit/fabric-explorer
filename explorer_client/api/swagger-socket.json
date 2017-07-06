@@ -1,0 +1,528 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"title": "Fabric Explorer Sockets",
+		"description": "Implemented with <a href='https://github.com/jmesnil/stomp-websocket'>STOMP</a>",
+		"version": "1.0.0",
+		"contact": {}
+	},
+	"host": "localhost:8080",
+	"schemes": [
+		"http"
+	],
+	"basePath": "/explorer/ws",
+	"tags": [
+		{
+			"name": "block "
+		},
+		{
+			"name": "transaction "
+		},
+		{
+			"metrics": "metrics "
+		}
+	],
+	"paths": {
+		"/block": {
+            "topic": {
+                "tags": [
+                    "block "
+                ],
+                "description": "Gives updates when new blocks are added",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "description": "response data",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "Block hash identifier"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "description": "resource type identifier, 'block'"
+                                        },
+                                        "attributes": {
+                                            "$ref": "#/definitions/Block"
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "4xx": {
+                        "description": "Error with the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "5xx": {
+                        "description": "Error processing the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaction": {
+            "topic": {
+                "tags": [
+                    "transaction "
+                ],
+                "description": "Gives updates for transactions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "4xx": {
+                        "description": "Error with the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "5xx": {
+                        "description": "Error processing the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/metrics/txnPerSec": {
+            "topic": {
+                "tags": [
+                    "metrics "
+                ],
+                "description": "Gives updates for transactions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "description": "response data",
+                                    "$ref": "#/definitions/Metrics"
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "4xx": {
+                        "description": "Error with the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "5xx": {
+                        "description": "Error processing the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/metrics/txnPerMin": {
+            "topic": {
+                "tags": [
+                    "metrics "
+                ],
+                "description": "Gives updates for transactions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "description": "response data",
+                                    "$ref": "#/definitions/Metrics"
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "4xx": {
+                        "description": "Error with the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "5xx": {
+                        "description": "Error processing the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/metrics/blocksPerMin": {
+            "topic": {
+                "tags": [
+                    "metrics "
+                ],
+                "description": "Gives updates for transactions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "description": "response data",
+                                    "$ref": "#/definitions/Metrics"
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "4xx": {
+                        "description": "Error with the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    },
+                    "5xx": {
+                        "description": "Error processing the request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/APIError"
+                                    }
+                                },
+                                "meta": {
+                                    "type": "object",
+                                    "description": "Extra metadata, such as API version"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+	},
+	"definitions": {
+		"Metrics": {
+            "properties": {
+                "attributes": {
+                    "type": "object",
+                    "properties": {
+                        "result": {
+                            "type": "object",
+                            "properties": {
+                                "timestamp": {
+                                    "type": "integer"
+                                },
+                                "value": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+		"TransactionResult": {
+			"required": [
+				"id"
+			],
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "ID of the newly created transaction"
+				}
+			}
+		},
+		"Transaction": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"blockHash": {
+					"type": "string"
+				},
+				"blockNumber": {
+					"type": "integer"
+				},
+				"transactionIndex": {
+					"type": "integer",
+					"description": "integer of the transaction's index position in the block"
+				},
+				"from": {
+					"type": "string",
+					"description": "address of the sender"
+				},
+				"to": {
+					"type": "string",
+					"description": "address of the receiver. null when it is a contract creation transaction."
+				},
+				"cumulativeGasUsed": {
+					"type": "integer",
+					"description": "the total amount of gas used when this transaction was executed in the block."
+				},
+				"gasUsed": {
+					"type": "integer",
+					"description": "the amount of gas used by this specific transaction alone."
+				},
+				"contractAddress": {
+					"type": "string",
+					"description": "the contract address created, if this transaction was a contract creation, otherwise null."
+				},
+				"logs": {
+					"type": "array",
+					"description": "TODO add Log type",
+					"items": {
+						"type": "object"
+					}
+				}
+			}
+		},
+		"Block": {
+			"properties": {
+				"number": {
+					"type": "integer",
+					"format": "int32",
+					"description": "Block number"
+				},
+				"hash": {
+					"type": "string",
+					"description": "hash of the block"
+				},
+				"parentHash": {
+					"type": "string",
+					"description": "hash of the parent block"
+				},
+				"nonce": {
+					"type": "string",
+					"description": "hash of the generated proof-of-work (if avail)"
+				},
+				"sha3Uncles": {
+					"type": "string",
+					"description": "SHA3 of the uncles data in the block (32 bytes)"
+				},
+				"logsBloom": {
+					"type": "string",
+					"description": "the bloom filter for the logs of the block (256 bytes)"
+				},
+				"transactionsRoot": {
+					"type": "string",
+					"description": "the root of the transaction trie of the block (32 bytes)"
+				},
+				"stateRoot": {
+					"type": "string",
+					"description": "the root of the final state trie of the block (32 bytes)"
+				},
+				"miner": {
+					"type": "string",
+					"description": "the address of the beneficiary to whom the mining rewards were given (20 bytes)"
+				},
+				"difficulty": {
+					"type": "integer",
+					"format": "int64",
+					"description": "integer of the difficulty of this block"
+				},
+				"totalDifficulty": {
+					"type": "integer",
+					"format": "int64",
+					"description": "integer of the total difficulty of the chain until this block"
+				},
+				"extraData": {
+					"type": "string",
+					"description": "the \"extra data\" field for this block"
+				},
+				"gasLimit": {
+					"type": "integer",
+					"format": "int32",
+					"description": "the maximum gas allowed in this block"
+				},
+				"gasUsed": {
+					"type": "integer",
+					"format": "int32",
+					"description": "the total gas used by all transactions in this block"
+				},
+				"timestamp": {
+					"type": "integer",
+					"format": "int32",
+					"description": "the unix timestamp for when the block was collated"
+				},
+				"transactions": {
+					"type": "array",
+					"description": "Array of transaction hashes",
+					"items": {
+						"type": "string"
+					}
+				},
+				"uncles": {
+					"type": "array",
+					"description": "Array of uncle hashes",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
