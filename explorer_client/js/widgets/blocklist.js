@@ -1,3 +1,4 @@
+import utils from '../utils';
 
 module.exports = function(id) {
 	var extended = {

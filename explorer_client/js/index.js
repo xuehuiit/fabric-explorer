@@ -160,6 +160,16 @@ window.Tower = {
 				}
 
             });
+
+            //show current channel
+            $.when(
+                utils.load({ url: 'curChannel' })
+            ).done(function(data) {
+                $('#channel-name').html($('<span>', {
+                    html: data.currentChannel
+                }));
+            });
+
             utils.subscribe('/topic/metrics/status', statusUpdate);
 
 		},
@@ -189,62 +199,12 @@ window.Tower = {
 				//{ widgetId: 'metrix_choc_tx' ,data: data},
 				{ widgetId: 'chaincodelist' ,data: data},
 
-				/*{ widgetId: 'misc' },
-				{ widgetId: 'lab' },
-				{ widgetId: 'date' },
-				{ widgetId: 'controls' },
-				{ widgetId: 'weather' },
-				{ widgetId: 'info' , data: data}, //data can be passed in
-				{ widgetId: 'form' },*/
-
 			];
 
 			// opens the section and pass in the widgets that it needs
 			Dashboard.showSection('peers', widgets);
-		},
-
-		// a section using same widget template for multiple widgets
-		'user': function() {
-
-			// define the data
-			var userlist = {
-				'user1': {
-					'name'	: 'Admin',
-					'role'	: 'admin',
-					'id'	: 123
-				},
-				'user2': {
-					'name'	: 'Developer',
-					'role'	: 'developer',
-					'id'	: 456
-				},
-				'user3': {
-					'name'	: 'Data Scientist',
-					'role'	: 'data scientist',
-					'id'	: 789
-				},
-				'user4': {
-					'name'	: 'QA',
-					'role'	: 'qa',
-					'id'	: 101
-				}
-			}
-
-			var widgets = [];
-			//iterate over the data, creating a new widget for each item
-			_.each(userlist, function(user, key) {
-				var widget = {};
-				widget[key + '-user'] = require('./widgets/user.js');
-				Dashboard.preregisterWidgets(widget);
-
-				widgets = widgets.concat([{
-					widgetId: key + '-user',
-					data: user
-				}])
-			})
-
-			Dashboard.showSection('channels', widgets);
 		}
+
 	},
 
 

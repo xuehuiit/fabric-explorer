@@ -148,11 +148,11 @@ app.post('/changeChannel',function(req,res){
 })
 
 app.post('/curChannel',function(req,res){
-    res.send(ledgerMgr.getCurrChannel())
+    res.send({'currentChannel':ledgerMgr.getCurrChannel()})
 })
 
 app.post('/channellist',function(req,res){
-    res.send(ledgerMgr.getChannellist())
+    res.send({'channelList':ledgerMgr.getChannellist()})
 })
 
 

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fa4d8f9ba99e41a58706"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "be0af0fb8c6f0173de94"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -711,21 +711,21 @@
 
 	__webpack_require__(142);
 
-	__webpack_require__(263);
+	__webpack_require__(255);
 
-	__webpack_require__(264);
+	__webpack_require__(256);
 
-	__webpack_require__(262);
+	__webpack_require__(254);
 
 	var _common = __webpack_require__(203);
 
 	var _common2 = _interopRequireDefault(_common);
 
-	__webpack_require__(265);
+	__webpack_require__(257);
 
-	__webpack_require__(266);
+	__webpack_require__(258);
 
-	var _utils = __webpack_require__(253);
+	var _utils = __webpack_require__(244);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -738,260 +738,226 @@
 	window.moment = _moment2.default;
 
 	window.Tower = {
-		ready: false,
-		current: null,
-		status: {},
+	    ready: false,
+	    current: null,
+	    status: {},
 
-		// Tower Control becomes ready only after the first status is received from the server
-		isReady: function isReady() {
-			Tower.ready = true;
+	    // Tower Control becomes ready only after the first status is received from the server
+	    isReady: function isReady() {
+	        Tower.ready = true;
 
-			// let everyone listening in know
-			Dashboard.Utils.emit('tower-control|ready|true');
+	        // let everyone listening in know
+	        Dashboard.Utils.emit('tower-control|ready|true');
 
-			return true;
-		},
+	        return true;
+	    },
 
-		init: function init() {
-			//set options for the Dashboard
-			Dashboard.setOptions({
-				'appName': 'onechain fabricexplorer'
-			});
+	    init: function init() {
+	        //set options for the Dashboard
+	        Dashboard.setOptions({
+	            'appName': 'onechain fabricexplorer'
+	        });
 
-			Dashboard.preregisterWidgets({
+	        Dashboard.preregisterWidgets({
 
-				'chaincodelist': __webpack_require__(246),
-				// 'metrix_choc_tx'	: require('./widgets/metrix_choc_tx'),
-				'metrix_block_min': __webpack_require__(252),
-				'metrix_txn_sec': __webpack_require__(256),
-				'metrix_txn_min': __webpack_require__(255),
-				'peerlist': __webpack_require__(258),
-				'blockview': __webpack_require__(245),
-				'blocklist': __webpack_require__(204),
-				'blockinfo': __webpack_require__(202),
-				'txdetail': __webpack_require__(259)
+	            'chaincodelist': __webpack_require__(246),
+	            // 'metrix_choc_tx'	: require('./widgets/metrix_choc_tx'),
+	            'metrix_block_min': __webpack_require__(247),
+	            'metrix_txn_sec': __webpack_require__(250),
+	            'metrix_txn_min': __webpack_require__(249),
+	            'peerlist': __webpack_require__(251),
+	            'blockview': __webpack_require__(245),
+	            'blocklist': __webpack_require__(204),
+	            'blockinfo': __webpack_require__(202),
+	            'txdetail': __webpack_require__(252)
 
-			});
+	        });
 
-			//initialize the Dashboard, set up widget container
-			Dashboard.init();
+	        //initialize the Dashboard, set up widget container
+	        Dashboard.init();
 
-			// Adding event for hash changes
-			(0, _jquery2.default)(window).on('hashchange', this.processHash);
+	        // Adding event for hash changes
+	        (0, _jquery2.default)(window).on('hashchange', this.processHash);
 
-			this.processHash();
+	        this.processHash();
 
-			// Reusing socket from cakeshop.js
-			Tower.stomp = Client.stomp;
-			Tower.stomp_subscriptions = Client._stomp_subscriptions;
+	        // Reusing socket from cakeshop.js
+	        Tower.stomp = Client.stomp;
+	        Tower.stomp_subscriptions = Client._stomp_subscriptions;
 
-			//open first section - channel
-			Tower.section['default']();
-		},
+	        //open first section - channel
+	        Tower.section['default']();
+	    },
 
-		processHash: function processHash() {
-			if (window.location.hash) {
-				var params = {};
-				var hash = window.location.hash.substring(1, window.location.hash.length);
+	    processHash: function processHash() {
+	        if (window.location.hash) {
+	            var params = {};
+	            var hash = window.location.hash.substring(1, window.location.hash.length);
 
-				_.each(hash.split('&'), function (pair) {
-					pair = pair.split('=');
-					params[pair[0]] = decodeURIComponent(pair[1]);
-				});
+	            _.each(hash.split('&'), function (pair) {
+	                pair = pair.split('=');
+	                params[pair[0]] = decodeURIComponent(pair[1]);
+	            });
 
-				var werk = function werk() {
-					if (params.section) {
-						(0, _jquery2.default)('#' + params.section).click();
-					}
+	            var werk = function werk() {
+	                if (params.section) {
+	                    (0, _jquery2.default)('#' + params.section).click();
+	                }
 
-					if (params.data) {
-						try {
-							params.data = JSON.parse(params.data);
-						} catch (err) {}
-					}
+	                if (params.data) {
+	                    try {
+	                        params.data = JSON.parse(params.data);
+	                    } catch (err) {}
+	                }
 
-					if (params.widgetId) {
-						Dashboard.show({
-							widgetId: params.widgetId,
-							section: params.section ? params.section : Tower.current,
-							data: params.data, refetch: true
-						});
-					}
-				};
+	                if (params.widgetId) {
+	                    Dashboard.show({
+	                        widgetId: params.widgetId,
+	                        section: params.section ? params.section : Tower.current,
+	                        data: params.data, refetch: true
+	                    });
+	                }
+	            };
 
-				// do when ready
-				if (!Tower.ready) {
-					Dashboard.Utils.on(function (ev, action) {
-						if (action.indexOf('tower-control|ready|') === 0) {
-							werk();
-						}
-					});
-				} else {
-					werk();
-				}
-			}
-		},
+	            // do when ready
+	            if (!Tower.ready) {
+	                Dashboard.Utils.on(function (ev, action) {
+	                    if (action.indexOf('tower-control|ready|') === 0) {
+	                        werk();
+	                    }
+	                });
+	            } else {
+	                werk();
+	            }
+	        }
+	    },
 
-		//define the sections
-		section: {
+	    //define the sections
+	    section: {
 
-			'default': function _default() {
-				var statusUpdate = function statusUpdate(response) {
-					var status = response;
+	        'default': function _default() {
+	            var statusUpdate = function statusUpdate(response) {
+	                var status = response;
 
-					_utils2.default.prettyUpdate(Tower.status.peerCount, status.peerCount, (0, _jquery2.default)('#default-peers'));
-					_utils2.default.prettyUpdate(Tower.status.latestBlock, status.latestBlock, (0, _jquery2.default)('#default-blocks'));
-					_utils2.default.prettyUpdate(Tower.status.txCount, status.txCount, (0, _jquery2.default)('#default-txn'));
-					_utils2.default.prettyUpdate(Tower.status.chaincodeCount, status.chaincodeCount, (0, _jquery2.default)('#default-chaincode'));
+	                _utils2.default.prettyUpdate(Tower.status.peerCount, status.peerCount, (0, _jquery2.default)('#default-peers'));
+	                _utils2.default.prettyUpdate(Tower.status.latestBlock, status.latestBlock, (0, _jquery2.default)('#default-blocks'));
+	                _utils2.default.prettyUpdate(Tower.status.txCount, status.txCount, (0, _jquery2.default)('#default-txn'));
+	                _utils2.default.prettyUpdate(Tower.status.chaincodeCount, status.chaincodeCount, (0, _jquery2.default)('#default-chaincode'));
 
-					Tower.status = status;
+	                Tower.status = status;
 
-					// Tower Control becomes ready only after the first status is received from the server
-					if (!Tower.ready) {
-						Tower.isReady();
-					}
+	                // Tower Control becomes ready only after the first status is received from the server
+	                if (!Tower.ready) {
+	                    Tower.isReady();
+	                }
 
-					Dashboard.Utils.emit('node-status|announce');
-				};
+	                Dashboard.Utils.emit('node-status|announce');
+	            };
 
-				_jquery2.default.ajax({
-					type: "post",
-					url: "api/status/get",
-					cache: false,
-					async: false,
-					dataType: "json",
-					success: function success(response) {
-						statusUpdate(response);
-					},
-					error: function error(err) {
-						statusUpdate({
-							peerCount: 'n/a',
-							latestBlock: 'n/a',
-							txCount: 'n/a',
-							chaincodeCount: 'n/a'
-						});
-					}
+	            _jquery2.default.ajax({
+	                type: "post",
+	                url: "api/status/get",
+	                cache: false,
+	                async: false,
+	                dataType: "json",
+	                success: function success(response) {
+	                    statusUpdate(response);
+	                },
+	                error: function error(err) {
+	                    statusUpdate({
+	                        peerCount: 'n/a',
+	                        latestBlock: 'n/a',
+	                        txCount: 'n/a',
+	                        chaincodeCount: 'n/a'
+	                    });
+	                }
 
-				});
-				_utils2.default.subscribe('/topic/metrics/status', statusUpdate);
-			},
+	            });
 
-			'channel': function channel() {
-				// data that the widgets will use
-				var data = {
-					'numUser': 4,
-					'appName': 'sample app',
-					'url': 'hello.com',
-					'description': 'this is a description of the app.'
+	            //show current channel
+	            _jquery2.default.when(_utils2.default.load({ url: 'curChannel' })).done(function (data) {
+	                (0, _jquery2.default)('#channel-name').html((0, _jquery2.default)('<span>', {
+	                    html: data.currentChannel
+	                }));
+	            });
 
-					// the array of widgets that belong to the section,
-					// these were preregistered in init() because they are unique
+	            _utils2.default.subscribe('/topic/metrics/status', statusUpdate);
+	        },
 
-				};var widgets = [{ widgetId: 'blockinfo', data: { bocknum: Tower.status.latestBlock } }, { widgetId: 'blocklist', data: Tower.status.latestBlock }, { widgetId: 'blockview', data: data }, { widgetId: 'txdetail', data: { txid: '0' } }, { widgetId: 'peerlist', data: data }, { widgetId: 'metrix_txn_sec', data: data }, { widgetId: 'metrix_txn_min', data: data }, { widgetId: 'metrix_block_min', data: data },
-				//{ widgetId: 'metrix_choc_tx' ,data: data},
-				{ widgetId: 'chaincodelist', data: data }];
+	        'channel': function channel() {
+	            // data that the widgets will use
+	            var data = {
+	                'numUser': 4,
+	                'appName': 'sample app',
+	                'url': 'hello.com',
+	                'description': 'this is a description of the app.'
 
-				// opens the section and pass in the widgets that it needs
-				Dashboard.showSection('peers', widgets);
-			},
+	                // the array of widgets that belong to the section,
+	                // these were preregistered in init() because they are unique
 
-			// a section using same widget template for multiple widgets
-			'user': function user() {
+	            };var widgets = [{ widgetId: 'blockinfo', data: { bocknum: Tower.status.latestBlock } }, { widgetId: 'blocklist', data: Tower.status.latestBlock }, { widgetId: 'blockview', data: data }, { widgetId: 'txdetail', data: { txid: '0' } }, { widgetId: 'peerlist', data: data }, { widgetId: 'metrix_txn_sec', data: data }, { widgetId: 'metrix_txn_min', data: data }, { widgetId: 'metrix_block_min', data: data },
+	            //{ widgetId: 'metrix_choc_tx' ,data: data},
+	            { widgetId: 'chaincodelist', data: data }];
 
-				// define the data
-				var userlist = {
-					'user1': {
-						'name': 'Admin',
-						'role': 'admin',
-						'id': 123
-					},
-					'user2': {
-						'name': 'Developer',
-						'role': 'developer',
-						'id': 456
-					},
-					'user3': {
-						'name': 'Data Scientist',
-						'role': 'data scientist',
-						'id': 789
-					},
-					'user4': {
-						'name': 'QA',
-						'role': 'qa',
-						'id': 101
-					}
-				};
+	            // opens the section and pass in the widgets that it needs
+	            Dashboard.showSection('peers', widgets);
+	        }
 
-				var widgets = [];
-				//iterate over the data, creating a new widget for each item
-				_.each(userlist, function (user, key) {
-					var widget = {};
-					widget[key + '-user'] = __webpack_require__(260);
-					Dashboard.preregisterWidgets(widget);
+	    },
 
-					widgets = widgets.concat([{
-						widgetId: key + '-user',
-						data: user
-					}]);
-				});
-
-				Dashboard.showSection('channels', widgets);
-			}
-		},
-
-		debug: function debug(message) {
-			var _ref;
-			return typeof window !== 'undefined' && window !== null ? (_ref = window.console) !== null ? _ref.log(message) : void 0 : void 0;
-		}
+	    debug: function debug(message) {
+	        var _ref;
+	        return typeof window !== 'undefined' && window !== null ? (_ref = window.console) !== null ? _ref.log(message) : void 0 : void 0;
+	    }
 	};
 
 	(0, _jquery2.default)(function () {
-		(0, _jquery2.default)(window).on('scroll', function (e) {
-			if ((0, _jquery2.default)(window).scrollTop() > 50) {
-				(0, _jquery2.default)('body').addClass('sticky');
-			} else {
-				(0, _jquery2.default)('body').removeClass('sticky');
-			}
-		});
+	    (0, _jquery2.default)(window).on('scroll', function (e) {
+	        if ((0, _jquery2.default)(window).scrollTop() > 50) {
+	            (0, _jquery2.default)('body').addClass('sticky');
+	        } else {
+	            (0, _jquery2.default)('body').removeClass('sticky');
+	        }
+	    });
 
-		// logo handler
-		(0, _jquery2.default)("a.tower-logo").click(function (e) {
-			e.preventDefault();
-			(0, _jquery2.default)("#channel").click();
-		});
+	    // logo handler
+	    (0, _jquery2.default)("a.tower-logo").click(function (e) {
+	        e.preventDefault();
+	        (0, _jquery2.default)("#channel").click();
+	    });
 
-		// Menu (burger) handler
-		(0, _jquery2.default)('.tower-toggle-btn').on('click', function () {
-			(0, _jquery2.default)('.tower-logo-container').toggleClass('tower-nav-min');
-			(0, _jquery2.default)('.tower-sidebar').toggleClass('tower-nav-min');
-			(0, _jquery2.default)('.tower-body-wrapper').toggleClass('tower-nav-min');
-		});
+	    // Menu (burger) handler
+	    (0, _jquery2.default)('.tower-toggle-btn').on('click', function () {
+	        (0, _jquery2.default)('.tower-logo-container').toggleClass('tower-nav-min');
+	        (0, _jquery2.default)('.tower-sidebar').toggleClass('tower-nav-min');
+	        (0, _jquery2.default)('.tower-body-wrapper').toggleClass('tower-nav-min');
+	    });
 
-		(0, _jquery2.default)('#reset').on('click', function () {
-			Dashboard.reset();
-		});
+	    (0, _jquery2.default)('#reset').on('click', function () {
+	        Dashboard.reset();
+	    });
 
-		// Navigation menu handler
-		(0, _jquery2.default)('.tower-sidebar li').click(function (e) {
-			var id = (0, _jquery2.default)(this).attr('id');
+	    // Navigation menu handler
+	    (0, _jquery2.default)('.tower-sidebar li').click(function (e) {
+	        var id = (0, _jquery2.default)(this).attr('id');
 
-			e.preventDefault();
+	        e.preventDefault();
 
-			Tower.current = id;
+	        Tower.current = id;
 
-			(0, _jquery2.default)('.tower-sidebar li').removeClass('active');
-			(0, _jquery2.default)(this).addClass('active');
+	        (0, _jquery2.default)('.tower-sidebar li').removeClass('active');
+	        (0, _jquery2.default)(this).addClass('active');
 
-			Tower.section[Tower.current]();
+	        Tower.section[Tower.current]();
 
-			(0, _jquery2.default)('.tower-page-title').html((0, _jquery2.default)('<span>', { html: (0, _jquery2.default)(this).find('.tower-sidebar-item').html() }));
-		});
+	        (0, _jquery2.default)('.tower-page-title').html((0, _jquery2.default)('<span>', { html: (0, _jquery2.default)(this).find('.tower-sidebar-item').html() }));
+	    });
 
-		// ---------- INIT -----------
-		Tower.init();
+	    // ---------- INIT -----------
+	    Tower.init();
 
-		// Setting 'peers' as first section
-		(0, _jquery2.default)('.tower-sidebar li').first().click();
+	    // Setting 'peers' as first section
+	    (0, _jquery2.default)('.tower-sidebar li').first().click();
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -86047,42 +86013,26 @@
 		"./blockinfo.js": 202,
 		"./blocklist": 204,
 		"./blocklist.js": 204,
-		"./blocklist_bak": 244,
-		"./blocklist_bak.js": 244,
 		"./blockview": 245,
 		"./blockview.js": 245,
 		"./chaincodelist": 246,
 		"./chaincodelist.js": 246,
-		"./controls": 247,
-		"./controls.js": 247,
-		"./date": 248,
-		"./date.js": 248,
-		"./form": 249,
-		"./form.js": 249,
-		"./info": 250,
-		"./info.js": 250,
-		"./lab": 251,
-		"./lab.js": 251,
-		"./metrix_block_min": 252,
-		"./metrix_block_min.js": 252,
-		"./metrix_choc_tx": 254,
-		"./metrix_choc_tx.js": 254,
-		"./metrix_txn_min": 255,
-		"./metrix_txn_min.js": 255,
-		"./metrix_txn_sec": 256,
-		"./metrix_txn_sec.js": 256,
-		"./misc": 257,
-		"./misc.js": 257,
-		"./peerlist": 258,
-		"./peerlist.js": 258,
-		"./txdetail": 259,
-		"./txdetail.js": 259,
-		"./user": 260,
-		"./user.js": 260,
-		"./weather": 261,
-		"./weather.js": 261,
-		"./widget-root": 262,
-		"./widget-root.js": 262
+		"./metrix_block_min": 247,
+		"./metrix_block_min.js": 247,
+		"./metrix_choc_tx": 248,
+		"./metrix_choc_tx.js": 248,
+		"./metrix_txn_min": 249,
+		"./metrix_txn_min.js": 249,
+		"./metrix_txn_sec": 250,
+		"./metrix_txn_sec.js": 250,
+		"./peerlist": 251,
+		"./peerlist.js": 251,
+		"./txdetail": 252,
+		"./txdetail.js": 252,
+		"./weather": 253,
+		"./weather.js": 253,
+		"./widget-root": 254,
+		"./widget-root.js": 254
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -86366,6 +86316,12 @@
 
 	var _bluebird = __webpack_require__(205);
 
+	var _utils = __webpack_require__(244);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	module.exports = function (id) {
 	    var extended = {
 	        name: 'blocklist',
@@ -86392,7 +86348,7 @@
 
 	        subscribe: function subscribe(data) {
 	            // subscribe to get new blocks
-	            utils.subscribe(this.topic, this.onNewBlock);
+	            _utils2.default.subscribe(this.topic, this.onNewBlock);
 	        },
 
 	        onNewBlock: function onNewBlock(data) {
@@ -86425,7 +86381,7 @@
 	            }
 
 	            _.times(displayLimit, function (n) {
-	                promizes.push(utils.load({
+	                promizes.push(_utils2.default.load({
 	                    url: _this.url,
 	                    data: { number: _this.lastBlockNum - n },
 	                    complete: function complete(res) {
@@ -92658,83 +92614,60 @@
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
-	module.exports = function (id) {
-		var extended = {
-			name: 'blocklist',
-			title: 'Blocklist',
-			size: 'small',
-			widgetId: id, //needed for dashboard
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-			hideLink: true,
+	var _stringify = __webpack_require__(178);
 
-			template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped">' + '<thead style="font-weight: bold;">' + '<tr><td>Block</td><td>TXNs</td><td>nums</td></tr>' + '</thead>' + '<tbody>' + '<tr> <td>#1</td> <td><%= app %></td><td>12</td></tr>' + '<tr> <td>#2</td> <td><%= numUser %></td> <td>12</td></tr>' + '<tr> <td>#3</td> <td><a href=""><%= url %></a></td><td>12</td></tr>' + '<tr> <td>#4</td> <td><%=desc%> </td> <td>12</td></tr>' + '</tbody> </table> <div>'),
+	var _stringify2 = _interopRequireDefault(_stringify);
 
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-				if (data) {
-					this.setData(data);
-				}
+	exports.default = {
+	    load: function load(opts) {
+	        var config = {
+	            type: opts.method ? opts.method : 'POST',
+	            url: opts.url,
+	            contentType: opts.type ? opts.type : 'application/json',
+	            cache: false,
+	            async: opts.async ? opts.async : true
+	        };
 
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
+	        if (opts.data) {
+	            config.data = (0, _stringify2.default)(opts.data);
+	        }
 
-				this.initialized = true;
+	        if (opts.complete) {
+	            config.complete = opts.complete;
+	        }
 
-				Dashboard.Utils.emit('widget|ready|' + this.name);
+	        return $.ajax(config);
+	    },
 
-				this.ready();
+	    subscribe: Client.subscribe,
 
-				Dashboard.Utils.emit('widget|render|' + this.name);
+	    prettyUpdate: function prettyUpdate(oldValue, newValue, el) {
+	        if (oldValue !== newValue) {
+	            el.css({
+	                'opacity': 0
+	            });
 
-				this.subscribe();
-			},
+	            setTimeout(function () {
+	                el.html($('<span>', {
+	                    html: newValue
+	                }));
 
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: 'dddd',
-					desc: 'dddd',
-					numUser: 'dddd',
-					url: 'dddd'
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-
-				$('#widget-' + this.shell.id).on('click', 'a', this.showBlock);
-			},
-
-			showBlock: function showBlock(e) {
-
-				e.preventDefault();
-
-				Dashboard.show({ widgetId: 'blockinfo', section: 'channel', data: { a: 'ddd', b: 'bbb' }, refetch: true });
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
+	                el.css({
+	                    'opacity': 1
+	                });
+	            }, 500);
+	        }
+	    }
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 245 */
@@ -92829,7 +92762,6 @@
 						rows.push(_this.templateRow(item));
 					});
 
-					console.info(rows.join(''));
 					$('#widget-' + _this.shell.id).html(_this.template({ rows: rows.join('') }));
 					_this.postFetch();
 				});
@@ -92848,282 +92780,9 @@
 /* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			title: 'Control Panel',
-			size: 'third',
-			widgetId: id,
-
-			hideLink: true,
-
-			template: _.template('<div class="controls-container"><ul>' + '<li><button class="btn btn-default"><i class="fa fa-bolt"></i>Button 1</button></li>' + '<li><button class="btn btn-default"><i class="fa fa-times"></i>Button 2</button></li>' + '<li><button class="btn btn-default"><i class="fa fa-trash"></i>Button 3</button></li>' + '</ul></div>'),
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template());
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 248 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			title: 'Date',
-			size: 'third',
-			widgetId: id,
-
-			hideLink: true,
-
-			template: _.template('<div class="date-container"><div><%=month%> / <%=day%></div> <div><%=year%></div></div>'),
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-
-				this.fetch();
-
-				var today = new Date();
-				var dd = today.getDate();
-				var mm = today.getMonth() + 1; //January is 0!
-				var yyyy = today.getFullYear();
-
-				if (dd < 10) {
-					dd = '0' + dd;
-				}
-
-				if (mm < 10) {
-					mm = '0' + mm;
-				}
-
-				today = mm + '/' + dd + '/' + yyyy;
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					date: today,
-					month: mm,
-					day: dd,
-					year: yyyy
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 249 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'form',
-			title: 'Form',
-			size: 'medium',
-			widgetId: id,
-
-			hideLink: true,
-
-			template: _.template('<form>' + '<div class="form-group">' + '<label for="exampleInputEmail1">Email address</label>' + '<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">' + '</div>' + '<div class="form-group">' + '<label for="address">Address</label>' + '<input type="text" class="form-control" id="address" placeholder="Address">' + '</div>' + '<div class="form-group">' + '<label for="exampleInputFile">File input</label>' + '<input type="file" id="exampleInputFile">' + '</div>' + '<div class="checkbox">' + '<label>' + '<input type="checkbox"> Check me out' + '</label>' + '</div>' + '<button type="submit" class="btn btn-default">Submit</button>' + '</form>'),
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template());
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 250 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'info',
-			title: 'Info',
-			size: 'medium',
-			widgetId: id, //needed for dashboard
-
-			hideLink: true,
-
-			template: _.template('<div class="info-table"> <table class="table table-striped"> <tbody>' + '<tr> <td>App Name</td> <td><%= app %></td> </tr>' + '<tr> <td># of Users</td> <td><%= numUser %></td> </tr>' + '<tr> <td>URL</td> <td><a href=""><%= url %></a></td> </tr>' + '<tr> <td>Description</td> <td><%=desc%> </td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					app: this.data.appName,
-					desc: this.data.description,
-					numUser: this.data.numUser,
-					url: this.data.url
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 251 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			title: 'Lab',
-			size: 'third',
-			widgetId: id,
-
-			hideLink: true,
-
-			template: _.template('<div class="date-container"><div>test peers </div> <div><%=year%></div></div>'),
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-
-				this.fetch();
-
-				var today = new Date();
-				var dd = today.getDate();
-				var mm = today.getMonth() + 1; //January is 0!
-				var yyyy = today.getFullYear();
-
-				if (dd < 10) {
-					dd = '0' + dd;
-				}
-
-				if (mm < 10) {
-					mm = '0' + mm;
-				}
-
-				today = mm + '/' + dd;
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					date: today,
-					month: mm,
-					day: dd,
-					year: yyyy
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 252 */
-/***/ (function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
 
-	var _utils = __webpack_require__(253);
+	var _utils = __webpack_require__(244);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -93178,71 +92837,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 253 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _stringify = __webpack_require__(178);
-
-	var _stringify2 = _interopRequireDefault(_stringify);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	    load: function load(opts) {
-	        var config = {
-	            type: opts.method ? opts.method : 'POST',
-	            url: opts.url,
-	            contentType: opts.type ? opts.type : 'application/json',
-	            cache: false,
-	            async: opts.async ? opts.async : true
-	        };
-
-	        if (opts.data) {
-	            config.data = (0, _stringify2.default)(opts.data);
-	        }
-
-	        if (opts.complete) {
-	            config.complete = opts.complete;
-	        }
-
-	        return $.ajax(config);
-	    },
-
-	    subscribe: Client.subscribe,
-
-	    prettyUpdate: function prettyUpdate(oldValue, newValue, el) {
-	        if (oldValue !== newValue) {
-	            el.css({
-	                'opacity': 0
-	            });
-
-	            setTimeout(function () {
-	                el.html($('<span>', {
-	                    html: newValue
-	                }));
-
-	                el.css({
-	                    'opacity': 1
-	                });
-	            }, 500);
-	        }
-	    }
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
-/* 254 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
 
-	var _utils = __webpack_require__(253);
+	var _utils = __webpack_require__(244);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -93300,12 +92900,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 255 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
 
-	var _utils = __webpack_require__(253);
+	var _utils = __webpack_require__(244);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -93362,12 +92962,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 256 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {'use strict';
 
-	var _utils = __webpack_require__(253);
+	var _utils = __webpack_require__(244);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -93424,45 +93024,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
-/* 257 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			name: 'misc',
-			title: 'Misc',
-			size: 'large',
-			widgetId: id,
-
-			template: _.template('its empty'),
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template());
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 258 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -93535,7 +93097,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 259 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -93551,7 +93113,7 @@
 
 	        customButtons: '<li><i id="button_showtxjson" class="show_tx_detailorgin1 fa fa-expand"></i></li>',
 
-	        template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' + '' + '<tbody>' + '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.tx_id %></td> </tr>' + '<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.timestamp %></td> </tr>' + '<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.channel_id %></td> </tr>' + '<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.test %> </td> </tr>' + '</tbody> </table> <div>'),
+	        template: _.template('<div class="info-table"> <table style="width: 100%; table-layout: fixed;" class="table table-striped"> ' + '' + '<tbody>' + '<tr> <td  style="width: 120px;">tx_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.tx_id %></td> </tr>' + '<tr> <td  style="width: 120px;">timestamp</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.timestamp %></td> </tr>' + '<tr> <td  style="width: 120px;">channel_id</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.channel_id %></td> </tr>' + '<tr> <td  style="width: 120px;">type</td> <td class="value" contentEditable="false" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><%=res.type %> </td> </tr>' + '</tbody> </table> <div>'),
 
 	        setData: function setData(data) {
 
@@ -93644,79 +93206,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 260 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
-
-	module.exports = function (id) {
-		var extended = {
-			title: 'Users',
-			size: 'small',
-			widgetId: id,
-
-			hideLink: true,
-
-			template: _.template('<div class="users"> <table class="table"> <tbody>' + '<tr> <td>Name</td> <td><%= name %></td> </tr>' + '<tr> <td>Role</td> <td><%= role %></td> </tr>' + '<tr> <td>ID</td> <td><%=id%> </td> </tr>' + '</tbody> </table> <div>'),
-
-			init: function init(data) {
-				Dashboard.Utils.emit('widget|init|' + this.name);
-
-				if (data) {
-					this.setData(data);
-				}
-
-				this.shell = Dashboard.TEMPLATES.widget({
-					name: this.name,
-					title: this.title,
-					size: this.size,
-					hideLink: this.hideLink,
-					hideRefresh: this.hideRefresh,
-					customButtons: this.customButtons,
-					details: true
-				});
-
-				this.initialized = true;
-
-				Dashboard.Utils.emit('widget|ready|' + this.name);
-
-				this.ready();
-
-				Dashboard.Utils.emit('widget|render|' + this.name);
-
-				this.subscribe();
-			},
-
-			render: function render() {
-				Dashboard.render.widget(this.name, this.shell.tpl);
-
-				this.fetch();
-
-				$('#widget-' + this.shell.id).css({
-					'height': '240px',
-					'margin-bottom': '10px',
-					'overflow-x': 'hidden',
-					'width': '100%'
-				}).html(this.template({
-					name: this.data.name,
-					role: this.data.role,
-					id: this.data.id
-				}));
-
-				this.postRender();
-				$(document).trigger("WidgetInternalEvent", ["widget|rendered|" + this.name]);
-			}
-		};
-
-		var widget = _.extend({}, widgetRoot, extended);
-
-		// register presence with screen manager
-		Dashboard.addWidget(widget);
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
-
-/***/ }),
-/* 261 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {'use strict';
@@ -93756,7 +93246,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)))
 
 /***/ }),
-/* 262 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -93850,7 +93340,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 263 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -93920,7 +93410,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 264 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
@@ -93971,7 +93461,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 265 */
+/* 257 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -94212,7 +93702,7 @@
 	}).call(undefined);
 
 /***/ }),
-/* 266 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {"use strict";
