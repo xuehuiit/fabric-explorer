@@ -2,6 +2,8 @@
 
 fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
+[English document](https://github.com/onechain/fabric-explorer#introduction)
+
 ## Demo
 [See live demo here](http://ks.blockchain001.com/)
 
@@ -100,3 +102,6 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 1. `npm install`
 2. `./start.sh`
 
+---
+
+# introduction
