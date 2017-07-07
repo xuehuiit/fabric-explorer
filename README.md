@@ -214,7 +214,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
-[English document](https://github.com/onechain/fabric-explorer#fabric explorer)
+[English document](https://github.com/onechain/fabric-explorer#Demo)
 
 ## Demo
 [See live demo here](http://112.124.115.82:8800/)
