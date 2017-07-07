@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "511c568747df1def826e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c56fbd46a5fc9a80e4b4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -94899,8 +94899,16 @@
 
 	    steps: [].concat([{
 	      element: "div.tower-logo-container",
-	      title: "Welcome to the Cakeshop!",
+	      title: "Welcome to the Fabric Explorer!",
 	      content: "Let's start with a brief tour",
+	      container: ".tower-navigation",
+	      backdropContainer: ".tower-navigation",
+	      onShow: function onShow() {}
+	    }, {
+	      element: "div.dropdown.settings",
+	      title: "Select Channel",
+	      content: "Click to Select Channel to show",
+	      placement: "left",
 	      container: ".tower-navigation",
 	      backdropContainer: ".tower-navigation",
 	      onShow: function onShow() {}
@@ -94913,7 +94921,106 @@
 	      onHide: function onHide() {
 	        $(".tower-navigation").css({ "z-index": 10000 });
 	      }
+	    }]).concat([
+	    //------------------------------------------------------------------------
+	    // CONSOLE
+	    {
+	      element: "#channel",
+	      title: "Channel",
+	      content: "You're currently looking at the channel Console, which gives you an overview of the blockchain node running on the local system",
+	      backdropContainer: ".tower-sidebar",
+	      onShow: showMenuStep("#console"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#channel-name",
+	      content: "当前正在查看的channel",
+	      placement: "bottom",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#heads-up",
+	      content: "Here are some simple metrics which are always available, such as number of connected peers, current block number,  transaction count and chancodes count",
+	      placement: "bottom",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#grounds",
+	      content: "This is the main application area and is composed of a number of widgets. They can be reordered and resized as needed",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.blockinfo",
+	      content: "This shows the detailed headers stored with each block and contains links to any transactions that were committed in the block as well",
+	      placement: "bottom",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.blockinfo .show_bock_detailorgin",
+	      content: "click to show block's detail  ",
+	      placement: "bottom",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.blocklist",
+	      content: "List of Blocks, in reverse chronological order. This list will update in realtime",
+	      placement: "bottom",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.blockview",
+	      content: "Search for a block or transaction",
+	      placement: "bottom",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.txdetail",
+	      content: "This show tx's detail",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.peerlist",
+	      content: "展现包含在这个Channel中的节点",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.metrix_txn_sec",
+	      content: "Transactions committed per second",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.metrix_txn_min",
+	      content: "Transactions committed per minute",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.metrix_block_min",
+	      content: "Blocks generated per minute",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.chaincodelist",
+	      content: "channel中的chaincode",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }]).concat([
+	    //------------------------------------------------------------------------
+	    // API DOCS
+	    {
+	      element: "#api",
+	      title: "API Documentation",
+	      content: "This dashboard and all related tools are built using a set of RESTful APIs. These APIs provide a friendly interface for interacting with the blockchain and abstract away some of the complexity",
+	      backdropContainer: ".tower-sidebar",
+	      onShow: showMenuStep("#api"),
+	      onHide: hideMenuStep
 	    }])
+
 	  });
 
 	  function loadWidget(tab, widget, click_sel) {
