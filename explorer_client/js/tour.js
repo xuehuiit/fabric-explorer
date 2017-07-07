@@ -56,7 +56,7 @@ import 'jif-dashboard/dashboard-template';
       },
       {
           element: "#channel-name",
-          content: "当前正在查看的channel",
+          content: "current channel",
           placement: "bottom",
           onShow: showMenuStep("#channel"),
           onHide: hideMenuStep,
@@ -112,7 +112,7 @@ import 'jif-dashboard/dashboard-template';
       },
       {
         element: ".widget-shell.peerlist",
-        content: "展现包含在这个Channel中的节点",
+        content: " nodes in channel",
         placement: "top",
         onShow: showMenuStep("#channel"),
         onHide: hideMenuStep,
