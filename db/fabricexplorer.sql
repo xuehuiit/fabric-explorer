@@ -1,8 +1,17 @@
 /*
- fabric-explorer mysql database
+ Navicat MySQL Data Transfer
 
- http://www.blockchainbtother.com
+ Source Server         : 172.16.10.162
+ Source Server Type    : MySQL
+ Source Server Version : 50635
+ Source Host           : 172.16.10.162
+ Source Database       : fabricexplorer
 
+ Target Server Type    : MySQL
+ Target Server Version : 50635
+ File Encoding         : utf-8
+
+ Date: 07/07/2017 10:14:31 AM
 */
 
 SET NAMES utf8;
@@ -19,9 +28,8 @@ CREATE TABLE `blocks` (
   `prehash` varchar(256) DEFAULT NULL,
   `channelname` varchar(128) DEFAULT NULL,
   `txcount` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `block_ind` (`channelname`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='blocks';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='blocks';
 
 -- ----------------------------
 --  Table structure for `chaincodes`
@@ -33,8 +41,9 @@ CREATE TABLE `chaincodes` (
   `version` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `channelname` varchar(255) DEFAULT NULL,
+  `txcount` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='Chain codes ';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `channel`
@@ -46,7 +55,7 @@ CREATE TABLE `channel` (
   `blocks` int(11) DEFAULT NULL,
   `trans` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='Channel';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='channel';
 
 -- ----------------------------
 --  Table structure for `peer`
@@ -62,7 +71,7 @@ CREATE TABLE `peer` (
   `server_hostname` varchar(64) DEFAULT NULL,
   `createdt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT=' ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='peer';
 
 -- ----------------------------
 --  Table structure for `peer_ref_channel`
@@ -73,7 +82,7 @@ CREATE TABLE `peer_ref_channel` (
   `peerid` int(11) DEFAULT NULL,
   `channelid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT=' ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='';
 
 -- ----------------------------
 --  Table structure for `transaction`
@@ -87,7 +96,7 @@ CREATE TABLE `transaction` (
   `createdt` datetime DEFAULT NULL,
   `chaincodename` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2823 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT=' ';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='transtaion';
 
 -- ----------------------------
 --  Table structure for `write_lock`
