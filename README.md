@@ -8,7 +8,7 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 [See live demo here](http://ks.blockchain001.com/)
 
 
-# Requirements
+## Requirements
 
 * docker 1.12.6
 * docker-compose 1.11.2
@@ -16,7 +16,7 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 * nodejs 6.9.5
 * git
 
-# 执行创建数据库脚本: db/fabricexplorer.sql
+## 执行创建数据库脚本: db/fabricexplorer.sql
 
 ```sql
 /*
@@ -120,7 +120,7 @@ CREATE TABLE `write_lock` (
 SET FOREIGN_KEY_CHECKS = 1;
 ```
 
-# 设置fabric docker运行环境
+## 设置fabric docker运行环境
 
 1. `git clone https://github.com/onechain/fabric-docker-compose-svt.git`
 2. `mv fabric-docker-compose-svt $GOPATH/src/github.com/hyperledger/fabric/examples/`
@@ -129,7 +129,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 5. `./start.sh`
 
 
-# 启动fabric 浏览器
+## 启动fabric 浏览器
 
 1. `git clone https://github.com/onechain/fabric-explorer.git`
 2. `rm -rf ./artifacts/crypto-config/`
@@ -202,7 +202,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 }
 ```
 
-# 启动fabric explorer
+## 启动fabric explorer
 1. `npm install`
 2. `./start.sh`
 
