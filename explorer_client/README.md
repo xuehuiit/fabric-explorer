@@ -1,2 +1,1 @@
-# dashboard_sample
-a dashboard sample
+client for fabric explorer
