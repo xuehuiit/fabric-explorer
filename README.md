@@ -52,6 +52,7 @@ CREATE TABLE `chaincodes` (
   `version` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `channelname` varchar(255) DEFAULT NULL,
+  `txcount` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='Chain codes ';
 
@@ -261,6 +262,7 @@ CREATE TABLE `chaincodes` (
   `version` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `channelname` varchar(255) DEFAULT NULL,
+  `txcount` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='Chain codes ';
 
