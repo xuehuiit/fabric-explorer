@@ -242,10 +242,10 @@ function updateBySql(updateSql){
             }
 
             logger.debug('--------------------------UPDATE----------------------------');
-            logger.debug(' update result :',result.affectedRows );
+            //logger.debug(' update result :',result.affectedRows );
             logger.debug('-----------------------------------------------------------------\n\n');
 
-            resolve(result.affectedRows)
+            //resolve(result.affectedRows)
         });
     })
 
