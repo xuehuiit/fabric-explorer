@@ -2,7 +2,7 @@
 
 Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open source fabric browser. Fabric-explorer can reduce the difficulty of learning and using fabric, so that we can intuitively feel the fabric of the powerful features.
 
-[English document](https://github.com/onechain/fabric-explorer#introduction)
+[中文 文档](https://github.com/onechain/fabric-explorer#introduction)
 
 ## Demo
 [See live demo here](http://112.124.115.82:8800/)
@@ -214,7 +214,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
-[English document](https://github.com/onechain/fabric-explorer#introduction)
+[English document](https://github.com/onechain/fabric-explorer#)
 
 ## Demo
 [See live demo here](http://112.124.115.82:8800/)
