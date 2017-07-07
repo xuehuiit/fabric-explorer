@@ -48,8 +48,7 @@
 					},
 					{
 						"name": "number",
-						"description": "Bl
-ock number to retrieve",
+						"description": "Block number to retrieve",
 						"type": "integer",
 						"required": false,
 						"in": "body"
