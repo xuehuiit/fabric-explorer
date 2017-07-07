@@ -32,7 +32,7 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 3. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config ./fabric-explorer/artifacts/crypto-config/`
 
 4. 执行创建数据库脚本 db/fabricexplorer.sql
-```
+```sql
 /*
  fabric-explorer mysql database
  http://www.blockchainbtother.com
