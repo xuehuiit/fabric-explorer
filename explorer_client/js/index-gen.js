@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c56fbd46a5fc9a80e4b4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1954eec6ac1de4e25bb8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -94933,7 +94933,7 @@
 	      onHide: hideMenuStep
 	    }, {
 	      element: "#channel-name",
-	      content: "当前正在查看的channel",
+	      content: "current channel",
 	      placement: "bottom",
 	      onShow: showMenuStep("#channel"),
 	      onHide: hideMenuStep
@@ -94981,7 +94981,7 @@
 	      onHide: hideMenuStep
 	    }, {
 	      element: ".widget-shell.peerlist",
-	      content: "展现包含在这个Channel中的节点",
+	      content: " nodes in channel",
 	      placement: "top",
 	      onShow: showMenuStep("#channel"),
 	      onHide: hideMenuStep

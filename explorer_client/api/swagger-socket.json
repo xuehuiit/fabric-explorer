@@ -410,33 +410,6 @@
 				"transactionIndex": {
 					"type": "integer",
 					"description": "integer of the transaction's index position in the block"
-				},
-				"from": {
-					"type": "string",
-					"description": "address of the sender"
-				},
-				"to": {
-					"type": "string",
-					"description": "address of the receiver. null when it is a contract creation transaction."
-				},
-				"cumulativeGasUsed": {
-					"type": "integer",
-					"description": "the total amount of gas used when this transaction was executed in the block."
-				},
-				"gasUsed": {
-					"type": "integer",
-					"description": "the amount of gas used by this specific transaction alone."
-				},
-				"contractAddress": {
-					"type": "string",
-					"description": "the contract address created, if this transaction was a contract creation, otherwise null."
-				},
-				"logs": {
-					"type": "array",
-					"description": "TODO add Log type",
-					"items": {
-						"type": "object"
-					}
 				}
 			}
 		},
@@ -454,73 +427,6 @@
 				"parentHash": {
 					"type": "string",
 					"description": "hash of the parent block"
-				},
-				"nonce": {
-					"type": "string",
-					"description": "hash of the generated proof-of-work (if avail)"
-				},
-				"sha3Uncles": {
-					"type": "string",
-					"description": "SHA3 of the uncles data in the block (32 bytes)"
-				},
-				"logsBloom": {
-					"type": "string",
-					"description": "the bloom filter for the logs of the block (256 bytes)"
-				},
-				"transactionsRoot": {
-					"type": "string",
-					"description": "the root of the transaction trie of the block (32 bytes)"
-				},
-				"stateRoot": {
-					"type": "string",
-					"description": "the root of the final state trie of the block (32 bytes)"
-				},
-				"miner": {
-					"type": "string",
-					"description": "the address of the beneficiary to whom the mining rewards were given (20 bytes)"
-				},
-				"difficulty": {
-					"type": "integer",
-					"format": "int64",
-					"description": "integer of the difficulty of this block"
-				},
-				"totalDifficulty": {
-					"type": "integer",
-					"format": "int64",
-					"description": "integer of the total difficulty of the chain until this block"
-				},
-				"extraData": {
-					"type": "string",
-					"description": "the \"extra data\" field for this block"
-				},
-				"gasLimit": {
-					"type": "integer",
-					"format": "int32",
-					"description": "the maximum gas allowed in this block"
-				},
-				"gasUsed": {
-					"type": "integer",
-					"format": "int32",
-					"description": "the total gas used by all transactions in this block"
-				},
-				"timestamp": {
-					"type": "integer",
-					"format": "int32",
-					"description": "the unix timestamp for when the block was collated"
-				},
-				"transactions": {
-					"type": "array",
-					"description": "Array of transaction hashes",
-					"items": {
-						"type": "string"
-					}
-				},
-				"uncles": {
-					"type": "array",
-					"description": "Array of uncle hashes",
-					"items": {
-						"type": "string"
-					}
 				}
 			}
 		}
