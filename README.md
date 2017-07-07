@@ -1,11 +1,11 @@
 # fabric explorer
 
-fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
+Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open source fabric browser. Fabric-explorer can reduce the difficulty of learning and using fabric, so that we can intuitively feel the fabric of the powerful features.
 
-[English document](https://github.com/onechain/fabric-explorer#introduction)
+[中文 文档](https://github.com/onechain/fabric-explorer#introduction)
 
 ## Demo
-[See live demo here](http://ks.blockchain001.com/)
+[See live demo here](http://112.124.115.82:8800/)
 
 
 ## Requirements
@@ -15,8 +15,9 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 * golang 1.8
 * nodejs 6.9.5
 * git
+* mysql
 
-## 执行创建数据库脚本: db/fabricexplorer.sql
+## run database script : db/fabricexplorer.sql
 
 ```sql
 /*
@@ -121,7 +122,7 @@ CREATE TABLE `write_lock` (
 SET FOREIGN_KEY_CHECKS = 1;
 ```
 
-## 设置fabric docker运行环境
+## set fabric docker env
 
 1. `git clone https://github.com/onechain/fabric-docker-compose-svt.git`
 2. `mv fabric-docker-compose-svt $GOPATH/src/github.com/hyperledger/fabric/examples/`
@@ -130,12 +131,13 @@ SET FOREIGN_KEY_CHECKS = 1;
 5. `./start.sh`
 
 
-## 启动fabric 浏览器
+## start fabric-explorer
 
 1. `git clone https://github.com/onechain/fabric-explorer.git`
 2. `rm -rf ./artifacts/crypto-config/`
 3. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config ./fabric-explorer/artifacts/crypto-config/`
-4. 修改config.json,配置channel,mysql
+
+4. modify config.json,set channel,mysql
 ```json
  "channelsList": ["mychannel"],
  "mysql":{
@@ -146,7 +148,7 @@ SET FOREIGN_KEY_CHECKS = 1;
    }
 ```
 
-5. 修改 app/network-config.json ,配置节点信息
+5. modify app/network-config.json 
 
 ```json
  {
@@ -212,10 +214,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
-[English document](https://github.com/onechain/fabric-explorer#introduction)
+[English document](https://github.com/onechain/fabric-explorer#Demo)
 
 ## Demo
-[See live demo here](http://ks.blockchain001.com/)
+[See live demo here](http://112.124.115.82:8800/)
 
 
 ## Requirements
