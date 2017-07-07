@@ -16,22 +16,8 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 * nodejs 6.9.5
 * git
 
-# setup fabric docker environment
+# 执行创建数据库脚本: db/fabricexplorer.sql
 
-1. `git clone https://github.com/onechain/fabric-docker-compose-svt.git`
-2. `mv fabric-docker-compose-svt $GOPATH/src/github.com/hyperledger/fabric/examples/`
-3. `cd $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt`
-4. `./download_images.sh`
-5. `./start.sh`
-
-
-# 启动fabric 浏览器
-
-1. `git clone https://github.com/onechain/fabric-explorer.git`
-2. `rm -rf artifacts/crypto-config/`
-3. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config ./fabric-explorer/artifacts/crypto-config/`
-
-4. 执行创建数据库脚本: db/fabricexplorer.sql
 ```sql
 /*
  fabric-explorer mysql database
@@ -134,7 +120,21 @@ CREATE TABLE `write_lock` (
 SET FOREIGN_KEY_CHECKS = 1;
 ```
 
-5. 修改config.json,配置channel,mysql
+# 设置fabric docker运行环境
+
+1. `git clone https://github.com/onechain/fabric-docker-compose-svt.git`
+2. `mv fabric-docker-compose-svt $GOPATH/src/github.com/hyperledger/fabric/examples/`
+3. `cd $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt`
+4. `./download_images.sh`
+5. `./start.sh`
+
+
+# 启动fabric 浏览器
+
+1. `git clone https://github.com/onechain/fabric-explorer.git`
+2. `rm -rf ./artifacts/crypto-config/`
+3. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config ./fabric-explorer/artifacts/crypto-config/`
+4. 修改config.json,配置channel,mysql
 ```json
  "channelsList": ["mychannel"],
  "mysql":{
@@ -145,7 +145,8 @@ SET FOREIGN_KEY_CHECKS = 1;
    }
 ```
 
-6. 修改 app/network-config.json ,配置节点信息
+5. 修改 app/network-config.json ,配置节点信息
+
 ```json
  {
 	"network-config": {
