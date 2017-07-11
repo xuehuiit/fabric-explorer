@@ -140,7 +140,7 @@ import 'jif-dashboard/dashboard-template';
       },
       {
           element: ".widget-shell.chaincodelist",
-          content: "channel中的chaincode",
+          content: "show all chaincodes in channel",
           placement: "top",
           onShow: showMenuStep("#channel"),
           onHide: hideMenuStep,
