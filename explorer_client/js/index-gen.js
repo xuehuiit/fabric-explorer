@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1954eec6ac1de4e25bb8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2a9af636096bfd471fcc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -95005,7 +95005,7 @@
 	      onHide: hideMenuStep
 	    }, {
 	      element: ".widget-shell.chaincodelist",
-	      content: "channel中的chaincode",
+	      content: "show all chaincodes in channel",
 	      placement: "top",
 	      onShow: showMenuStep("#channel"),
 	      onHide: hideMenuStep
