@@ -227,6 +227,7 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 * golang 1.8
 * nodejs 6.9.5
 * git
+* mysql
 
 ## 执行创建数据库脚本: db/fabricexplorer.sql
 
