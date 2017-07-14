@@ -20,10 +20,17 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 ## run database script : db/fabricexplorer.sql
 
 ```sql
+
+
 /*
  fabric-explorer mysql database
  http://www.blockchainbtother.com
 */
+
+CREATE DATABASE fabricexplorer DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 
+
+use  fabricexplorer;
+
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
