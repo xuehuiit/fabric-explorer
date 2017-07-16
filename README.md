@@ -20,10 +20,19 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 ## run database script : db/fabricexplorer.sql
 
 ```sql
+
+
 /*
  fabric-explorer mysql database
  http://www.blockchainbtother.com
 */
+
+DROP DATABASE IF EXISTS `fabricexplorer`;
+
+CREATE DATABASE fabricexplorer DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 
+
+use  fabricexplorer;
+
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -227,6 +236,7 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 * golang 1.8
 * nodejs 6.9.5
 * git
+* mysql
 
 ## 执行创建数据库脚本: db/fabricexplorer.sql
 
@@ -235,6 +245,12 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
  fabric-explorer mysql database
  http://www.blockchainbtother.com
 */
+
+DROP DATABASE IF EXISTS `fabricexplorer`;
+
+CREATE DATABASE fabricexplorer DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 
+
+use  fabricexplorer;
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
