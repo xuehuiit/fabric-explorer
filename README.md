@@ -4,6 +4,8 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 
 [中文 文档](https://github.com/onechain/fabric-explorer#introduction)
 
+[技术支持](http://www.blockchainbrother.com/articles/fabric-explorer)
+
 ## Demo
 [See live demo here](http://112.124.115.82:8800/)
 
