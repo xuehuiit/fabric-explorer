@@ -7,7 +7,7 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 [技术支持](http://www.blockchainbrother.com/articles/fabric-explorer)
 
 ## Directory Structure
-
+```
 ├── app                    fabric GRPC interface
 ├── artifacts              car
 ├── blockdata              the fabric data struct sample
@@ -19,7 +19,7 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 ├── socket
 ├── timer                   
 └── utils                    
-
+```
 
 
 ## Demo
