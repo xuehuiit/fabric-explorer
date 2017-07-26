@@ -6,6 +6,22 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 
 [技术支持](http://www.blockchainbrother.com/articles/fabric-explorer)
 
+## Directory Structure
+
+├── app                    fabric GRPC interface
+├── artifacts              car
+├── blockdata              the fabric data struct sample
+├── db					   the mysql script
+├── explorer_client        Web Ui
+├── listener               websocket listener
+├── metrics                
+├── service                the service 
+├── socket
+├── timer                   
+└── utils                    
+
+
+
 ## Demo
 [See live demo here](http://112.124.115.82:8800/)
 
