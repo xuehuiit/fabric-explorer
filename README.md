@@ -9,15 +9,15 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 ## Directory Structure
 ```
 ├── app                    fabric GRPC interface
-├── artifacts              car
+├── artifacts              
 ├── blockdata              the fabric data struct sample
 ├── db			   the mysql script and help class
 ├── explorer_client        Web Ui
 ├── listener               websocket listener
-├── metrics                
+├── metrics                metrics about tx count per minute and block count per minute
 ├── service                the service 
-├── socket
-├── timer                   
+├── socket		   push real time data to front end
+├── timer                    
 └── utils                    
 ```
 
