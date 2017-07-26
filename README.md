@@ -11,7 +11,7 @@ Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open so
 ├── app                    fabric GRPC interface
 ├── artifacts              car
 ├── blockdata              the fabric data struct sample
-├── db					   the mysql script
+├── db			   the mysql script and help class
 ├── explorer_client        Web Ui
 ├── listener               websocket listener
 ├── metrics                
