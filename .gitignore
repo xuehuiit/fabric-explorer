@@ -2,3 +2,4 @@ node_modules/*
 .idea/*
 test/*
 explorer_client/node_modules/*
+.log
