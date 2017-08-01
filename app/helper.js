@@ -356,6 +356,9 @@ var getLogger = function(moduleName) {
 
 var getPeerAddressByName = function(org, peer) {
 	var address = ORGS[org][peer].requests;
+	if(config.enableTls){
+        return address.split('grpcs://')[1];
+	}
 	return address.split('grpc://')[1];
 };
 

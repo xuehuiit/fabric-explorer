@@ -1,11 +1,11 @@
 {
    "host":"localhost",
    "port":"8080",
-   "channelsList": ["mychannel"],
+   "channelsList": ["mychannel1"],
    "GOPATH":"../artifacts",
    "keyValueStore":"/tmp/fabric-client-kvs",
    "eventWaitTime":"30000",
-   "enableTls":false,
+   "enableTls":true,
    "users":[
       {
          "username":"admin",
