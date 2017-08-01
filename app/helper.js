@@ -12,7 +12,11 @@ var FabricCAService = require('fabric-ca-client');
 var config = require('../config.json');
 
 var hfc = require('fabric-client');
-hfc.addConfigFile(path.join(__dirname, 'network-config.json'));
+if(config.enableTls){
+	hfc.addConfigFile(path.join(__dirname, 'network-config-tls.json'));
+}else{
+	hfc.addConfigFile(path.join(__dirname, 'network-config.json'));
+}
 hfc.setLogger(logger);
 var ORGS = hfc.getConfigSetting('network-config');
 
@@ -47,9 +51,21 @@ for (let key in ORGS) {
 function setupPeers(channel, org, client) {
 	for (let key in ORGS[org]) {
 		if (key.indexOf('peer') === 0) {
-			let peer = client.newPeer(
-				ORGS[org][key].requests
-			);
+            let peer
+			if(config.enableTls){
+                let data = fs.readFileSync(path.join(__dirname, ORGS[org][key]['tls_cacerts']));
+                peer = client.newPeer(
+                    ORGS[org][key].requests,
+                    {
+                        pem: Buffer.from(data).toString(),
+                        'ssl-target-name-override': ORGS[org][key]['server-hostname']
+                    }
+                );
+			}else{
+				peer = client.newPeer(
+					ORGS[org][key].requests
+				);
+			}
 
 			channel.addPeer(peer);
 		}
@@ -58,10 +74,22 @@ function setupPeers(channel, org, client) {
 
 function newOrderer(client, channel) {
 	for (let index in ORGS['orderer']) {
-			let newOrderer = client.newOrderer(
+        let newOrderer
+		if(config.enableTls){
+            let data = fs.readFileSync(path.join(__dirname, ORGS.orderer[index]['tls_cacerts']));
+            newOrderer = client.newOrderer(
+                ORGS.orderer[index].url,
+                {
+                    pem: Buffer.from(data).toString(),
+                    'ssl-target-name-override': ORGS.orderer[index]['server-hostname']
+                }
+            );
+		}else{
+			newOrderer = client.newOrderer(
 				ORGS.orderer[index].url
 			);
-			channel.addOrderer(newOrderer);
+		}
+		channel.addOrderer(newOrderer);
 	}
 }
 
@@ -108,12 +136,28 @@ function newRemotes(urls, forPeers, userOnewRemoterg) {
 						if (org[prop]['requests'].indexOf(peerUrl) >= 0) {
 							// found a peer matching the subject url
 							if (forPeers) {
-								targets.push(client.newPeer('grpc://' + peerUrl));
+								if(config.enableTls){
+                                    let data = fs.readFileSync(path.join(__dirname, org[prop]['tls_cacerts']));
+                                    targets.push(client.newPeer('grpcs://' + peerUrl, {
+                                        pem: Buffer.from(data).toString(),
+                                        'ssl-target-name-override': org[prop]['server-hostname']
+                                    }));
+								}else{
+									targets.push(client.newPeer('grpc://' + peerUrl));
+								}
 
 								continue outer;
 							} else {
 								let eh = client.newEventHub();
-								eh.setPeerAddr(org[prop]['events']);
+								if(config.enableTls){
+                                    let data = fs.readFileSync(path.join(__dirname, org[prop]['tls_cacerts']));
+                                    eh.setPeerAddr(org[prop]['events'], {
+                                        pem: Buffer.from(data).toString(),
+                                        'ssl-target-name-override': org[prop]['server-hostname']
+                                    });
+								}else{
+									eh.setPeerAddr(org[prop]['events']);
+								}
 								targets.push(eh);
 
 								continue outer;
