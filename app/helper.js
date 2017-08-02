@@ -1,7 +1,7 @@
 'use strict';
 var log4js = require('log4js');
 var logger = log4js.getLogger('Helper');
-logger.setLevel('ERROR');
+logger.setLevel('DEBUG');
 
 var path = require('path');
 var util = require('util');
@@ -53,7 +53,7 @@ function setupPeers(channel, org, client) {
 		if (key.indexOf('peer') === 0) {
             let peer
 			if(config.enableTls){
-                let data = fs.readFileSync(path.join(__dirname, ORGS[org][key]['tls_cacerts']));
+                let data = fs.readFileSync(path.join(__dirname,"../", ORGS[org][key]['tls_cacerts']));
                 peer = client.newPeer(
                     ORGS[org][key].requests,
                     {
@@ -76,7 +76,7 @@ function newOrderer(client, channel) {
 	for (let index in ORGS['orderer']) {
         let newOrderer
 		if(config.enableTls){
-            let data = fs.readFileSync(path.join(__dirname, ORGS.orderer[index]['tls_cacerts']));
+            let data = fs.readFileSync(path.join(__dirname,"../", ORGS.orderer[index]['tls_cacerts']));
             newOrderer = client.newOrderer(
                 ORGS.orderer[index].url,
                 {
@@ -137,7 +137,7 @@ function newRemotes(urls, forPeers, userOnewRemoterg) {
 							// found a peer matching the subject url
 							if (forPeers) {
 								if(config.enableTls){
-                                    let data = fs.readFileSync(path.join(__dirname, org[prop]['tls_cacerts']));
+                                    let data = fs.readFileSync(path.join(__dirname,"../", org[prop]['tls_cacerts']));
                                     targets.push(client.newPeer('grpcs://' + peerUrl, {
                                         pem: Buffer.from(data).toString(),
                                         'ssl-target-name-override': org[prop]['server-hostname']
@@ -150,7 +150,7 @@ function newRemotes(urls, forPeers, userOnewRemoterg) {
 							} else {
 								let eh = client.newEventHub();
 								if(config.enableTls){
-                                    let data = fs.readFileSync(path.join(__dirname, org[prop]['tls_cacerts']));
+                                    let data = fs.readFileSync(path.join(__dirname,"../", org[prop]['tls_cacerts']));
                                     eh.setPeerAddr(org[prop]['events'], {
                                         pem: Buffer.from(data).toString(),
                                         'ssl-target-name-override': org[prop]['server-hostname']
