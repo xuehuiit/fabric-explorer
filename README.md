@@ -162,10 +162,11 @@ SET FOREIGN_KEY_CHECKS = 1;
 2. `rm -rf ./artifacts/crypto-config/`
 3. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config ./fabric-explorer/artifacts/crypto-config/`
 
-4. modify config.json,set channel,mysql,tls
+4. modify config.json,set channel,mysql,tls（if you not user tls , please set property enableTls to value true ,if not set false ）
+
 ```json
  "channelsList": ["mychannel"],
- "enableTls":true, ## if you not user tls , please set false
+ "enableTls":true, 
  "mysql":{
       "host":"172.16.10.162",
       "database":"fabricexplorer",
