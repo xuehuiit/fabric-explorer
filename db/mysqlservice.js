@@ -486,8 +486,7 @@ function getRowsBySQlCase(sql){
             // console.log(  `The solution is: ${rows.length }  `  );
             logger.debug(` the getRowsBySQlCase ${sql}`)
 
-
-            if( rows.length == 0 )
+            if( !rows || rows.length == 0 )
                 resolve(null)
             else
                 resolve(rows[0])
