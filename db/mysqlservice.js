@@ -9,12 +9,40 @@ var mysqlconfig=config.mysql
 var helper = require('../app/helper.js');
 var logger = helper.getLogger('mysqlservice');
 
-var connection = mysql.createConnection({
-    host: mysqlconfig.host,
-    user: mysqlconfig.username,
-    password: mysqlconfig.passwd,
-    database:mysqlconfig.database
-});
+var connection
+
+function handleDisconnect() {
+    // Recreate the connection, since
+    // the old one cannot be reused.
+    connection = mysql.createConnection({
+        host: mysqlconfig.host,
+        user: mysqlconfig.username,
+        password: mysqlconfig.passwd,
+        database:mysqlconfig.database
+    });
+
+    connection.connect(function(err) {
+        // The server is either down
+        // or restarting
+        if(err) {
+            // We introduce a delay before attempting to reconnect,
+            // to avoid a hot loop, and to allow our node script to
+            // process asynchronous requests in the meantime.
+            console.log('error when connecting to db:', err);
+            setTimeout(handleDisconnect, 2000);
+        }
+    });
+    connection.on('error', function(err) {
+        console.log('db error', err);
+        if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleDisconnect();
+        }else{
+            throw err;
+        }
+    });
+}
+
+handleDisconnect()
 
 //打开连接
 function openconnection() {
