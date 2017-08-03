@@ -281,7 +281,7 @@ function getRowByPk(tablename,column,pkColumn,value){
             // console.log(  `The solution is: ${rows.length }  `  );
             logger.debug(' the getRowByPk ')
 
-            if( rows.length == 0 )
+            if( !rows || rows.length == 0 )
                 resolve(null)
             else
                 resolve(rows[0])
@@ -314,7 +314,7 @@ function getRowByPkOne(sql){
             logger.debug(` the getRowByPkOne sql ${sql}`)
 
 
-            if( rows.length == 0 )
+            if( !rows || rows.length == 0 )
                 resolve(null)
             else
                 resolve(rows[0])
