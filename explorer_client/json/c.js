@@ -21,7 +21,7 @@ function Process(){
     html = ProcessObject(obj[0], 0, false, false, false);
     $id("Canvas").innerHTML = "<PRE class='CodeContainer'>"+html+"</PRE>";
   }catch(e){
-    alert("JSON数据格式不正确:\n"+e.message);
+    alert("JSON data formate not correct:\n"+e.message);
     $id("Canvas").innerHTML = "";
   }
 }
