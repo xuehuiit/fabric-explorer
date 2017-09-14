@@ -159,7 +159,7 @@ app.post('/channellist',function(req,res){
 // ============= start server =======================
 
 var server = http.listen(port, function() {
-    console.log(`Please open Internet Explorer to access：http://${host}:${port}/`);
+    console.log(`Please open Internet explorer to access ：http://${host}:${port}/`);
 });
 
 
