@@ -23,10 +23,15 @@ var logger = helper.getLogger('mysqlservice');
 var connection
 
 function handleDisconnect() {
+
+    var port = mysql.port?mysql.port:"3306";
+
     // Recreate the connection, since
     // the old one cannot be reused.
+
     connection = mysql.createConnection({
         host: mysqlconfig.host,
+        port: port,
         user: mysqlconfig.username,
         password: mysqlconfig.passwd,
         database:mysqlconfig.database
@@ -400,7 +405,6 @@ function getRowsByCondition(tablename,column ,condtion,orderBy,limit){
         var sql = ` select  ${column} from ${tablename} where ${updatewhereparm} ${orderBy} ${limit}`
 
         logger.debug(` the search sql is : ${sql} `)
-
 
 
         connection.query(sql, function(err, rows, fields  ) {

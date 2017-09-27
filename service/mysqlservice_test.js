@@ -1,11 +1,16 @@
 /**
  * Created by fengxiang on 2017/6/21.
+ *
+ *
+ * 关于数据库的调用有一个奇葩的属性   http://www.cnblogs.com/youlechang123/p/6321757.html
+ * 没有时间讨论了,暂时先记录下来吧!
+ *
  */
 
 
-var mysql = require('./mysqlservice')
+var mysql = require('../db/mysqlservice')
 
-mysql.openconnection()
+//mysql.openconnection()
 
 
 //==========    saveRow() ===========
@@ -140,7 +145,7 @@ mysql.getRowByPk('bc_company','','id',333).then( row=>{
 //=============================== getRowByPkOne  =========================
 
 
-/*mysql.getRowByPkOne(`select * from bc_company where id = 318`).then( row=>{
+mysql.getRowByPkOne(`select * from blocks where id >0`).then( row=>{
 
     console.log( ` the getRowByPkOne is ${JSON.stringify(row)}  ` )
 
@@ -153,7 +158,7 @@ mysql.getRowByPk('bc_company','','id',333).then( row=>{
     console.log(err)
     mysql.closeconnection()
 
-} )*/
+} )
 
 
 
@@ -254,6 +259,7 @@ mysql.getSQL2Map( 'select * from bc_company where id = 389','id'  ).then( update
 
 /////// ===================   getSQL2Map  ===================
 
+/*
 mysql.getSQL2Map4Arr( 'select * from bc_company where id = 389','id'  ).then( updaterows=>{
 
     console.log( `the getSQL2Map4Arr is ${ JSON.stringify(updaterows.get(389)) } ` )
@@ -268,4 +274,5 @@ mysql.getSQL2Map4Arr( 'select * from bc_company where id = 389','id'  ).then( up
     mysql.closeconnection()
 
 } )
+*/
 
