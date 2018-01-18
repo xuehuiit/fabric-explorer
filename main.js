@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/apis',channelsRouter)
 
-var query=require('./app/query.js')
+
 var sql=require('./db/mysqlservice.js')
 
 var config = require('./config.json');
