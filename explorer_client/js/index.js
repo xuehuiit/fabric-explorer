@@ -56,6 +56,7 @@ window.Tower = {
         Dashboard.preregisterWidgets({
 
             'chaincodelist': require('./widgets/chaincodelist'),
+            'channellist': require('./widgets/channellist'),
             'network': require('./widgets/network'),
             //'metrix_choc_tx'	: require('./widgets/metrix_choc_tx'),
             'metrix_block_min': require('./widgets/metrix_block_min'),
@@ -248,7 +249,7 @@ window.Tower = {
             utils.showHead(["default-peers","default-chaincode","default-blocks","default-txn"]);
 
 			// opens the section and pass in the widgets that it needs
-			Dashboard.showSection('peers', widgets);
+			Dashboard.showSection('channel', widgets);
 		},
 
         'peers': function () {
@@ -272,7 +273,7 @@ window.Tower = {
 
         'api': function() {
             var widgets = [
-                { widgetId: 'doc-frame' }
+                { widgetId: 'doc-frame' ,refetch: true}
             ];
 
             utils.showHead([]);

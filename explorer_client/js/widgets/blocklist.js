@@ -67,8 +67,8 @@ module.exports = function(id) {
                             data: { number: _this.lastBlockNum - n },
                             complete: function(res) {
                                 rows.push( {
-                                    num: res.responseJSON.number,
-                                    txCount: res.responseJSON.txCount,
+                                    num: 1/*res.responseJSON.number*/,
+                                    txCount: 2/*res.responseJSON.txCount*/,
                                 } );
                             }
                         })
