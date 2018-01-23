@@ -32,9 +32,8 @@
 				<div class="tower-logo-container">
 					<img src="https://avatars1.githubusercontent.com/u/7657900?v=3&s=45"/>
 					<a href="#" class="tower-logo"> - FABRIC EXPLORER </a>
-					<!-- <a href="#" class="tower-toggle-btn pull-right"><i class="fa fa-bars"></i></a> -->
 				</div>
-				<a href="#" class="tower-logo-hidden">Tower Control</a>
+			<!--	<a href="#" class="tower-logo-hidden">Tower Control</a>
 				<div class="dropdown settings">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						Select Channel
@@ -42,7 +41,7 @@
 					</a>
 					<ul id="selectchannel" class="dropdown-menu" role="menu" >
 					</ul>
-				</div>
+				</div>-->
 			</nav>
 		</header>
 	</section>
@@ -50,10 +49,22 @@
 	<aside>
 		<nav class="tower-sidebar">
 			<ul>
+				<li id="organization">
+					<a href="#" class="done">
+						<i class="fa fa-users"><span class="icon-bg"></span></i>
+						<span class="tower-sidebar-item">Organization</span>
+					</a>
+				</li>
 				<li id="channel">
 					<a href="#" class="done">
 						<i class="fa fa-cubes"><span class="icon-bg"></span></i>
 						<span class="tower-sidebar-item">Channel</span>
+					</a>
+				</li>
+				<li id="peers">
+					<a href="#" class="done">
+						<i class="fa fa-users"><span class="icon-bg"></span></i>
+						<span class="tower-sidebar-item">Peers</span>
 					</a>
 				</li>
 				<li id="api">
@@ -83,9 +94,25 @@
 		<section>
 			<div class="tower-body-wrapper">
 				<div class="container-fluid">
-					<header class="tower-page-title" id="channel-name">
-						<span>Console</span>
-					</header>
+					<div class="row tower-page-title">
+						<div class="col-lg-3 col-xs-6" id="showTitle">
+							<span>Console</span>
+						</div>
+						<div class="col-lg-2 col-xs-6 col-lg-offset-7" id="showSelect">
+							<div class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="showSelectTitle">
+									Select Channel
+									<b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu" id="showSelectContent">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
 
 					<div class="row" id="heads-up">
 						<div class="col-lg-3 col-xs-6">
@@ -94,6 +121,16 @@
 								<span class="heading">peer</span>
 								<span class="value default" id="default-peers">
 									<span>0</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-xs-6">
+							<div class="tower-nugget tower-txt-success">
+								<i class="fa fa-play"></i>
+								<span class="heading">channels</span>
+								<span class="value default" id="default-channels">
+									<span>2</span>
 								</span>
 							</div>
 						</div>

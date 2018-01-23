@@ -55,18 +55,17 @@ window.Tower = {
 
         Dashboard.preregisterWidgets({
 
-            'chaincodelist'		: require('./widgets/chaincodelist'),
-            // 'metrix_choc_tx'	: require('./widgets/metrix_choc_tx'),
-            'metrix_block_min'	: require('./widgets/metrix_block_min'),
-            'metrix_txn_sec'	: require('./widgets/metrix_txn_sec'),
-            'metrix_txn_min'	: require('./widgets/metrix_txn_min'),
-            'peerlist'			: require('./widgets/peerlist'),
-            'blockview'			: require('./widgets/blockview'),
-            'blocklist'			: require('./widgets/blocklist'),
-            'blockinfo'			: require('./widgets/blockinfo'),
-            'txdetail'			: require('./widgets/txdetail'),
-            'doc-frame'         : require('./widgets/doc-frame'),
-
+            'chaincodelist': require('./widgets/chaincodelist'),
+            'network': require('./widgets/network'),
+            //'metrix_choc_tx'	: require('./widgets/metrix_choc_tx'),
+            'metrix_block_min': require('./widgets/metrix_block_min'),
+            'metrix_txn_sec': require('./widgets/metrix_txn_sec'),
+            'metrix_txn_min': require('./widgets/metrix_txn_min'),
+            'peerlist': require('./widgets/peerlist'),
+            'blockview': require('./widgets/blockview'),
+            'blocklist': require('./widgets/blocklist'),
+            'blockinfo': require('./widgets/blockinfo'),
+            'txdetail': require('./widgets/txdetail'),
         });
 
 		//initialize the Dashboard, set up widget container
@@ -192,6 +191,24 @@ window.Tower = {
 
 		},
 
+        'organization': function () {
+            // data that the widgets will use
+            var data = {
+                'numUser': 4,
+                'appName': 'sample app',
+                'url': 'hello.com',
+                'description': 'this is a description of the app.'
+            };
+
+            var widgets = [
+                {widgetId: 'network', data: data,refetch: true},
+            ];
+
+            utils.showHead(["default-channels","default-peers","default-chaincode"]);
+
+            Dashboard.showSection('organization', widgets);
+        },
+
 		'channel': function() {
 			// data that the widgets will use
 			var data = {
@@ -206,16 +223,16 @@ window.Tower = {
 
 			var widgets = [
 
-				{ widgetId: 'blockinfo',data: {bocknum: Tower.status.latestBlock}},
-				{ widgetId: 'blocklist' ,data: Tower.status.latestBlock},
-				{ widgetId: 'blockview' ,data: data},
-				{ widgetId: 'txdetail'  ,data: {txid:'0'} },
-				{ widgetId: 'peerlist'  ,data: data},
-				{ widgetId: 'metrix_txn_sec' ,data: data},
-				{ widgetId: 'metrix_txn_min' ,data: data},
-				{ widgetId: 'metrix_block_min' ,data: data},
+				{ widgetId: 'blockinfo',data: {bocknum: Tower.status.latestBlock},refetch: true},
+				{ widgetId: 'blocklist' ,data: Tower.status.latestBlock,refetch: true},
+				{ widgetId: 'blockview' ,data: data,refetch: true},
+				{ widgetId: 'txdetail'  ,data: {txid:'0'},refetch: true},
+				{ widgetId: 'peerlist'  ,data: data,refetch: true},
+				{ widgetId: 'metrix_txn_sec' ,data: data,refetch: true},
+				{ widgetId: 'metrix_txn_min' ,data: data,refetch: true},
+				{ widgetId: 'metrix_block_min' ,data: data,refetch: true},
 				//{ widgetId: 'metrix_choc_tx' ,data: data},
-				{ widgetId: 'chaincodelist' ,data: data},
+				{ widgetId: 'chaincodelist' ,data: data,refetch: true},
 
 			];
 
@@ -228,17 +245,37 @@ window.Tower = {
                 }));
             });
 
-
+            utils.showHead(["default-peers","default-chaincode","default-blocks","default-txn"]);
 
 			// opens the section and pass in the widgets that it needs
 			Dashboard.showSection('peers', widgets);
 		},
+
+        'peers': function () {
+            // data that the widgets will use
+            var data = {
+                'numUser': 4,
+                'appName': 'sample app',
+                'url': 'hello.com',
+                'description': 'this is a description of the app.'
+            }
+
+
+            var widgets = [
+                {widgetId: 'channellist', data: data,refetch: true},
+                {widgetId: 'chaincodelist', data: data,refetch: true},
+            ];
+
+            utils.showHead(["default-channels","default-chaincode"]);
+            Dashboard.showSection('peers', widgets);
+        },
 
         'api': function() {
             var widgets = [
                 { widgetId: 'doc-frame' }
             ];
 
+            utils.showHead([]);
             Dashboard.showSection('api', widgets);
         }
 
@@ -312,7 +349,8 @@ $(function() {
 
         Tower.section[Tower.current]();
 
-        $('.tower-page-title').html( $('<span>', { html: $(this).find('.tower-sidebar-item').html() }) );
+        $('#showTitle').html($('<span>', {html: $(this).find('.tower-sidebar-item').html()}));
+        utils.showSelet(Tower.current);
     });
 
 
