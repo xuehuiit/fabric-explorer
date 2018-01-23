@@ -1,22 +1,50 @@
 {
-   "host":"localhost",
-   "port":"8080",
-   "channelsList": ["mychannel"],
-   "GOPATH":"../artifacts",
-   "keyValueStore":"/tmp/fabric-client-kvs",
-   "eventWaitTime":"30000",
-   "enableTls":false,
-   "users":[
-      {
-         "username":"admin",
-         "secret":"adminpw"
+
+   "orgs": [{
+      "name": "org1",
+      "mspid": "Org1MSP",
+      "peers": [
+         {
+            "name": "peer1",
+            "requests": "192.168.23.212:7051",
+            "events": "192.168.23.212:7053",
+            "server-hostname": "peer0.org1.robertfabrictest.com",
+            "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+         },
+         {
+            "name": "peer2",
+            "requests": "172.16.10.186:7051",
+            "events": "172.16.10.186:7053",
+            "server-hostname": "peer1.org1.robertfabrictest.com",
+            "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+         },
+         {
+            "name": "peer3",
+            "requests": "172.16.10.187:7051",
+            "events": "172.16.10.187:7053",
+            "server-hostname": "peer2.org1.robertfabrictest.com",
+            "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+         }
+
+      ],
+      "admin": {
+         "key": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/users/Admin@org1.robertfabrictest.com/msp/keystore",
+         "cert": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/users/Admin@org1.robertfabrictest.com/msp/signcerts"
       }
-   ],
-   "mysql":{
-      "host":"127.0.0.1",
-      "database":"fabricexplorer",
-      "port":"3306",
-      "username":"root",
-      "passwd":"123456"
+   }],
+
+   "host": "localhost",
+   "port": "8080",
+   "keyValueStore": "/project/ws_nodejs/fabric_sdk_node_studynew/fabric-client-kvs",
+   "eventWaitTime": "30000",
+   "enableTls":false,
+   "loglevel":"INFO",
+   "channelsList": ["mychannel"],
+   "mysql": {
+      "host": "172.16.10.86",
+      "port": "3306",
+      "database": "blockchainexplorer",
+      "username": "root",
+      "passwd": "q1w2e3r4t%"
    }
 }

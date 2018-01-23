@@ -1,6 +1,6 @@
-var bcconfig = require('./config.json');
+var bcconfig = require('../config.json');
 var fabricservice = require('./fabricservice');
-var sql=require('./db/mysqlservice.js')
+var sql=require('../db/mysqlservice.js')
 
 var orgnamemap = initConfig(0);
 var orgmspidmap = initConfig(1);
@@ -187,7 +187,7 @@ var testfunc = async (orgname)=> {
 
     //测试数据库
 
-    /*let testsqlresult = await sql.saveRow('block',{
+    /*let testsqlresult = await sql.saveRow('blocks',{
         'channelid':'roberttestchannel',
         'blocknum':
         'datahash':'ddddddddddd',
@@ -427,7 +427,7 @@ var modify_channel_block = async ( channel_id,peer,fabricservice )=>{
         };
 
 
-        await sql.saveRow('block',block);
+        await sql.saveRow('blocks',block);
 
         await modify_channel_block_trans( channel_id , peer , blockinfo , fabricservice  )
 

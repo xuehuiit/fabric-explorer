@@ -6,7 +6,7 @@ var Peer = require('fabric-client/lib/Peer.js');
 var EventHub = require('fabric-client/lib/EventHub.js');
 var User = require('fabric-client/lib/User.js');
 var crypto = require('crypto');
-var FabricCAService = require('fabric-ca-client');
+//svar FabricCAService = require('fabric-ca-client');
 
 var hfc = require('fabric-client');
 var log4js = require('log4js');

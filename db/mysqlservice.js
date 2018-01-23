@@ -17,8 +17,16 @@
 var mysql = require('mysql');
 var config = require('../config.json');
 var mysqlconfig=config.mysql
+
+/*
 var helper = require('../app/helper.js');
 var logger = helper.getLogger('mysqlservice');
+*/
+
+var log4js = require('log4js');
+var logger = log4js.getLogger('mysqlservice');
+logger.setLevel(config.loglevel);
+
 
 var connection
 

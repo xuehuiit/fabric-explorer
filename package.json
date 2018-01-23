@@ -20,6 +20,7 @@
     "fabric-ca-client": "^1.0.0",
     "fabric-client": "^1.0.0",
     "fast-stats": "0.0.3",
+    "fs-extra": "^5.0.0",
     "log4js": "^0.6.38",
     "mysql": "^2.13.0",
     "prettyjson": "^1.2.1",
