@@ -1,6 +1,7 @@
 var bcconfig = require('../config.json');
 var fabricservice = require('./fabricservice');
 var sql = require('../db/mysqlservice.js')
+var EventEmitter = require('events').EventEmitter;
 var blockScanEvent = new EventEmitter();
 var blockListener = require('../listener/blocklistener.js').blockListener();
 var ledgerMgr = require('../utils/ledgerMgr');
