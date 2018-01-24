@@ -20,6 +20,7 @@ var config = require('../config.json');
 var sql = require('../db/mysqlservice.js');
 
 var channels = config.channelsList;
+var currchannelpeerma = {};
 
 //var currChannel=channels[0]
 
@@ -54,6 +55,21 @@ function changeCurrOrg(orgname) {
     currOrg = orgname;
 
 }
+
+var getcurrchannelpeerma = ()=>{
+
+return currchannelpeerma;
+}
+
+
+var changecurrchannelpeerma = (currchannelmap)=>{
+
+    currchannelpeerma = currchannelmap;
+
+}
+
+exports.getcurrchannelpeerma=getcurrchannelpeerma;
+exports.changecurrchannelpeerma=changecurrchannelpeerma;
 
 exports.getCurrChannel=getCurrChannel;
 exports.changeChannel=changeChannel;

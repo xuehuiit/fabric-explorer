@@ -22,8 +22,12 @@ var statusMertics=require('./service/metricservice.js')
 
 var channelsRouter=require('./router/channels.js');
 
+<<<<<<< Updated upstream
 var keyset=require('./service/keysetService.js');
 
+=======
+var bcexplorerservice = require('./service/bcexplorerservice');
+>>>>>>> Stashed changes
 
 
 app.use(express.static(path.join(__dirname,'explorer_client')));
@@ -41,11 +45,33 @@ var port = process.env.PORT || config.port;
 
 // =======================   controller  ===================
 
-app.post("/api/tx/getinfo", function(req, res) {
+app.post("/api/tx/getinfo", async function(req, res) {
 
     let  txid = req.body.txid
     if( txid != '0' ){
-    query.getTransactionByID('peer1',ledgerMgr.getCurrChannel(),txid,'admin','org1').then(response_payloads=>{
+
+    let fabricservice = bcexplorerservice.getCurrOrgFabricservice();
+    let curr_channel = ledgerMgr.getCurrChannel();
+    let channelpeermap = ledgerMgr.getcurrchannelpeerma();
+    let peer = channelpeermap[curr_channel];
+
+    let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
+
+    let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
+
+    var header = response_payloads['transactionEnvelope']['payload']['header']
+    var data = response_payloads['transactionEnvelope']['payload']['data']
+    var signature = response_payloads['transactionEnvelope']['signature'].toString("hex")
+
+    res.send({
+        'tx_id':header.channel_header.tx_id,
+        'timestamp':header.channel_header.timestamp,
+        'channel_id':header.channel_header.channel_id,
+        'type':header.channel_header.type,
+    })
+
+
+    /*query.getTransactionByID('peer1',ledgerMgr.getCurrChannel(),txid,'admin','org1').then(response_payloads=>{
 
         var header = response_payloads['transactionEnvelope']['payload']['header']
         var data = response_payloads['transactionEnvelope']['payload']['data']
@@ -57,7 +83,7 @@ app.post("/api/tx/getinfo", function(req, res) {
             'channel_id':header.channel_header.channel_id,
             'type':header.channel_header.type,
         })
-    })
+    })*/
 
     }else{
         res.send({ })
@@ -66,11 +92,35 @@ app.post("/api/tx/getinfo", function(req, res) {
 
 });
 
-app.post("/api/tx/json", function(req, res) {
+app.post("/api/tx/json", async function(req, res) {
 
     let  txid = req.body.number
+
+
+
     if( txid != '0' ){
-        query.getTransactionByID('peer1',ledgerMgr.getCurrChannel(),txid,'admin','org1').then(response_payloads=>{
+
+
+
+        let fabricservice = bcexplorerservice.getCurrOrgFabricservice();
+        let curr_channel = ledgerMgr.getCurrChannel();
+        let channelpeermap = ledgerMgr.getcurrchannelpeerma();
+        let peer = channelpeermap[curr_channel];
+
+        let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
+
+        let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
+
+
+        var header = response_payloads['transactionEnvelope']['payload']['header'];
+        var data = response_payloads['transactionEnvelope']['payload']['data'];
+        var signature = response_payloads['transactionEnvelope']['signature'].toString("hex");
+
+        var blockjsonstr = JSON.stringify(response_payloads['transactionEnvelope']);
+
+        res.send(blockjsonstr);
+
+        /*query.getTransactionByID('peer1',ledgerMgr.getCurrChannel(),txid,'admin','org1').then(response_payloads=>{
 
             var header = response_payloads['transactionEnvelope']['payload']['header']
             var data = response_payloads['transactionEnvelope']['payload']['data']
@@ -81,7 +131,7 @@ app.post("/api/tx/json", function(req, res) {
             res.send(blockjsonstr)
 
         })
-
+        */
     }else{
 
         res.send({ })
@@ -90,29 +140,76 @@ app.post("/api/tx/json", function(req, res) {
 
 });
 
-app.post("/api/block/json", function(req, res) {
+app.post("/api/block/json", async function(req, res) {
 
     let number=req.body.number
-    query.getBlockByNumber('peer1',ledgerMgr.getCurrChannel(),parseInt(number),'admin','org1').then(block=>{
+
+    let fabricservice = bcexplorerservice.getCurrOrgFabricservice();
+    let curr_channel = ledgerMgr.getCurrChannel();
+    let channelpeermap = ledgerMgr.getcurrchannelpeerma();
+    let peer = channelpeermap[curr_channel];
+
+    let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
+
+    //let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
+    let blockinfo = await fabricservice.getblockInfobyNum( curr_channel , peerRequest , parseInt(number) );
+    var blockjsonstr = JSON.stringify(blockinfo);
+
+    res.send(blockjsonstr);
+
+    /*query.getBlockByNumber('peer1',ledgerMgr.getCurrChannel(),parseInt(number),'admin','org1').then(block=>{
 
         var blockjsonstr = JSON.stringify(block)
 
         res.send(blockjsonstr)
-    })
+    })*/
+
 });
 
 
-app.post("/api/block/getinfo", function(req, res) {
+app.post("/api/block/getinfo", async function(req, res) {
+
+
 
     let number=req.body.number
-    query.getBlockByNumber('peer1',ledgerMgr.getCurrChannel(),parseInt(number),'admin','org1').then(block=>{
+
+    let fabricservice = bcexplorerservice.getCurrOrgFabricservice();
+    let curr_channel = ledgerMgr.getCurrChannel();
+    let channelpeermap = ledgerMgr.getcurrchannelpeerma();
+    let peer = channelpeermap[curr_channel];
+
+    let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
+
+    //let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
+    let blockinfo = await fabricservice.getblockInfobyNum( curr_channel , peerRequest , parseInt(number) );
+    let blockjsonstr = JSON.stringify(blockinfo);
+
+    let low = blockinfo['header']['number']['low'];
+    /*let previous_hash = blockinfo['header']['previous_hash'];
+    let data_hash = blockinfo['header']['data_hash'];
+    let transactions = blockinfo['header']['number']['low'];
+    */
+
+    res.send({
+        'number':low,
+        'previous_hash':blockinfo['header']['previous_hash'],
+        'data_hash':blockinfo['header']['data_hash'],
+        'transactions':blockinfo['data']['data']
+    })
+
+
+
+    /*let number=req.body.number
+    query.getBlockByNumber('peer1'']',ledgerMgr.getCurrChannel(),parseInt(number),'admin','org1').then(block=>{
         res.send({
             'number':block.header.number.toString(),
             'previous_hash':block.header.previous_hash,
             'data_hash':block.header.data_hash,
             'transactions':block.data.data
         })
-    })
+    })*/
+
+
 });
 
 /*app.post("/api/block/get", function(req, res) {

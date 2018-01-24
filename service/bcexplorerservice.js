@@ -15,10 +15,11 @@ function initConfig(types) {
     let orgs = bcconfig['orgs'];
     var orgnamemap = {};
     var peers = {};
-    var peermap = {};
+
 
     for (let ind = 0; ind < orgs.length; ind++) {
 
+        var peermap = {};
         let org = orgs[ind];
         let peers = org['peers'];
 
@@ -37,7 +38,7 @@ function initConfig(types) {
             orgnamemap[orgname] = org;
         } else if (types == 1) {
 
-            let orgmspid = org['Org1MSP'];
+            let orgmspid = org['mspid'];
             orgnamemap[orgmspid] = org;
 
         }
@@ -63,7 +64,15 @@ blockScanEvent.on('syncBlockNow', function (orgname) {
         parserOrg(orgname);
 });
 
-function getPeerRequest(peerrequest) {
+
+
+var  getPeer4Channelid = (channel_id)=> {
+
+}
+
+
+
+var  getPeerRequest = (peerrequest)=> {
 
     if (bcconfig.enableTls) {
         return "grpcs://" + peerrequest;
@@ -174,7 +183,8 @@ var testfunc = async (orgname) => {
     console.info(JSON.stringify(blockinfo['data']['data'][0]['payload']['data']['actions'][0]['payload']['action']['proposal_response_payload']['extension']));
 
 
-    console.info((JSON.stringify(getkeyset4Transaction(blockinfo['data']['data'][0]))));
+    //console.info((JSON.stringify(getkeyset4Transaction(blockinfo['data']['data'][0]))));
+    //console.info((JSON.stringify(getkeyset4Transaction(blockinfo['data']['data'][0]))));
 
 
     //}
@@ -213,10 +223,18 @@ var testfunc = async (orgname) => {
     console.info(  JSON.stringify( testsqlresult) );*/
 
 
-    let channels = sql.getRowByPkOne(` select id from channel where channelid = 'dddd' `)
-    console.info(JSON.stringify(channels));
+    let channels = await sql.getRowsBySQl('select * from channel ','','');
+    console.info(  JSON.stringify( channels) )
 
     sql.closeconnection();
+
+}
+
+
+var parserDefaultOrg = ()=>{
+
+    let orgname = ledgerMgr.getCurrOrg();
+    parserOrg(orgname);
 
 }
 
@@ -270,7 +288,7 @@ var parserOrg = async (orgname) => {
 
     var curr_channel = ledgerMgr.getCurrChannel();
 
-
+    ledgerMgr.changecurrchannelpeerma(channelpeermap);
 
     //更新channel 以及  channel和peer的关系
     await modifypeers(peerjoinchannels);
@@ -727,6 +745,7 @@ var getFabricService4OrgName = (orgname)=>{
 }
 
 
+exports.parserDefaultOrg = parserDefaultOrg;
 exports.getCurrOrgFabricservice = getCurrOrgFabricservice;
 exports.getFabricService4OrgName = getFabricService4OrgName;
 exports.testfunc = testfunc;
@@ -735,3 +754,5 @@ exports.getPeer = getPeer;
 exports.ORGNAMEMAP = orgnamemap;
 exports.parserOrg = parserOrg;
 exports.blockScanEvent = blockScanEvent;
+exports.getPeer4Channelid = getPeer4Channelid;
+exports.getPeerRequest = getPeerRequest;

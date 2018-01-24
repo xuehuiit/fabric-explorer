@@ -365,7 +365,7 @@ var setupChaincodeDeploy = function() {
 
 var getLogger = function(moduleName) {
 	var logger = log4js.getLogger(moduleName);
-	logger.setLevel('DEBUG');
+	logger.setLevel('INFO');
 	return logger;
 };
 
