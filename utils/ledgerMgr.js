@@ -20,7 +20,10 @@ var config=require('../config.json')
 
 var channels=config.channelsList
 
-var currChannel=channels[0]
+//var currChannel=channels[0]
+
+var currChannel='';
+
 
 function changeChannel(channelName){
     currChannel=channelName

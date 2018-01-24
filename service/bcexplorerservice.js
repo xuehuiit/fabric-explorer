@@ -3,6 +3,7 @@ var fabricservice = require('./fabricservice');
 var sql = require('../db/mysqlservice.js')
 var blockScanEvent = new EventEmitter();
 var blockListener = require('../listener/blocklistener.js').blockListener();
+var ledgerMgr = require('../utils/ledgerMgr');
 
 var orgnamemap = initConfig(0);
 var orgmspidmap = initConfig(1);
@@ -162,7 +163,6 @@ var testfunc = async (orgname) => {
 
     //for (let ind = 30; ind < 179; ind++) {
 
-
     let blockinfo = await fabricservice.getblockInfobyNum('roberttestchannel', 'grpc://192.168.23.212:7051', 94);
 
     console.info(JSON.stringify(blockinfo['data']['data'][0]['payload']['header']['channel_header']['tx_id']));
@@ -244,8 +244,8 @@ var parserOrg = async (orgname) => {
 
         peer['channels'] = peerchannels;
 
-
         peerjoinchannels.push(peer);
+
 
 
         for (let cind = 0; cind < peerchannels.length; cind++) {
@@ -255,6 +255,8 @@ var parserOrg = async (orgname) => {
             if (channelpeermap[channel_id] == null)
                 channelpeermap[channel_id] = peer;
 
+            if(  cind == 0 && ledgerMgr.getCurrChannel() == null  )
+                 ledgerMgr.changeChannel(channel_id);
         }
 
 
@@ -275,7 +277,6 @@ var parserOrg = async (orgname) => {
     await modify_peer_chaincode(peerjoinchannels, tempdir, adminkey, admincert);
 
     //console.info(  JSON.stringify( peerjoinchannels) );
-
 
     sql.closeconnection();
 
@@ -511,10 +512,15 @@ var modify_channel_block = async (channel_id, peer, fabricservice) => {
             'remark': '',
         };
 
-
         await sql.saveRow('blocks', block);
-        // 新区块
-        blockListener.emit('createBlock', block)
+
+
+        if( ledgerMgr.getCurrChannel() == channel_id  ){
+            // 新区块
+            blockListener.emit('createBlock', blockinfo );
+
+        }
+
 
         await modify_channel_block_trans(channel_id, peer, blockinfo, fabricservice)
         // 新交易
