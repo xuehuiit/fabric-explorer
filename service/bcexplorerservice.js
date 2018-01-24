@@ -1,24 +1,26 @@
 var bcconfig = require('../config.json');
 var fabricservice = require('./fabricservice');
-var sql=require('../db/mysqlservice.js')
+var sql = require('../db/mysqlservice.js')
+var blockScanEvent = new EventEmitter();
+var blockListener = require('../listener/blocklistener.js').blockListener();
 
 var orgnamemap = initConfig(0);
 var orgmspidmap = initConfig(1);
 
 
-function initConfig (types) {
+function initConfig(types) {
 
     let orgs = bcconfig['orgs'];
     var orgnamemap = {};
     var peers = {};
     var peermap = {};
 
-    for ( let ind = 0 ; ind<orgs.length;ind++ ){
+    for (let ind = 0; ind < orgs.length; ind++) {
 
         let org = orgs[ind];
         let peers = org['peers'];
 
-        for( let pind = 0 ; pind<peers.length; pind++ ){
+        for (let pind = 0; pind < peers.length; pind++) {
 
             let peer = peers[pind];
             peermap[peer['name']] = peer;
@@ -28,10 +30,10 @@ function initConfig (types) {
         org['peernamemap'] = peermap;
 
 
-        if(  types == 0 ) {
+        if (types == 0) {
             let orgname = org['name'];
             orgnamemap[orgname] = org;
-        }else if( types == 1 ){
+        } else if (types == 1) {
 
             let orgmspid = org['Org1MSP'];
             orgnamemap[orgmspid] = org;
@@ -44,14 +46,25 @@ function initConfig (types) {
 }
 
 
+blockScanEvent.on('syncBlock', function (channelName) {
+    setTimeout(function () {
+        syncBlock(channelName)
+    }, 1000)
+})
 
-function  getPeerRequest( peerrequest ) {
+blockScanEvent.on('syncChaincodes', function (channelName) {
+    setTimeout(function () {
+        syncChaincodes(channelName)
+    }, 1000)
+})
 
-    if( bcconfig.enableTls  ){
-        return "grpcs://"+peerrequest;
-    }else{
+function getPeerRequest(peerrequest) {
 
-        return "grpc://"+peerrequest;
+    if (bcconfig.enableTls) {
+        return "grpcs://" + peerrequest;
+    } else {
+
+        return "grpc://" + peerrequest;
     }
 
 }
@@ -63,7 +76,7 @@ function  getPeerRequest( peerrequest ) {
  */
 var getPeers4OrgMspId = function (orgmspid) {
 
-    return  orgmspidmap[orgmspid]['peers'];
+    return orgmspidmap[orgmspid]['peers'];
 
 }
 
@@ -73,7 +86,7 @@ var getPeers4OrgMspId = function (orgmspid) {
  */
 var getPeers4Org = function (orgname) {
 
-    return  orgnamemap[orgname]['peers'];
+    return orgnamemap[orgname]['peers'];
 
 }
 
@@ -83,59 +96,58 @@ var getPeers4Org = function (orgname) {
  * @param peername
  *
  */
-var getPeer = function( orgname , peername ){
+var getPeer = function (orgname, peername) {
 
     return orgnamemap[orgname][peername];
 
 }
 
 
-
 /** ================  fabric service   ================**/
 
 
-var getkeyset4Transaction = ( transaction )=>{
+var getkeyset4Transaction = (transaction) => {
 
 
     let actions = transaction['payload']['data']['actions'];
 
-    if( actions != null && actions[0]['payload'] != null ){
+    if (actions != null && actions[0]['payload'] != null) {
 
-    let ns_rwset = transaction['payload']['data']['actions'][0]['payload']['action']['proposal_response_payload']['extension']['results']['ns_rwset'];
+        let ns_rwset = transaction['payload']['data']['actions'][0]['payload']['action']['proposal_response_payload']['extension']['results']['ns_rwset'];
 
-    //console.info(JSON.stringify(blockinfo['data']['data'][0]['payload']['data']['actions'][0]['payload']['action']['proposal_response_payload']['extension']['results']['ns_rwset'][1]['rwset']['writes']));
-
-
-    let keyset = {}
-
-    for( let ind = 0 ; ind<ns_rwset.length ; ind++ ){
-
-        let keysettemp = ns_rwset[ind];
-
-        let namespace = keysettemp['namespace'];
+        //console.info(JSON.stringify(blockinfo['data']['data'][0]['payload']['data']['actions'][0]['payload']['action']['proposal_response_payload']['extension']['results']['ns_rwset'][1]['rwset']['writes']));
 
 
-        if( namespace != 'lscc' ){
+        let keyset = {}
 
-            keyset = keysettemp;
-            break;
+        for (let ind = 0; ind < ns_rwset.length; ind++) {
+
+            let keysettemp = ns_rwset[ind];
+
+            let namespace = keysettemp['namespace'];
+
+
+            if (namespace != 'lscc') {
+
+                keyset = keysettemp;
+                break;
+            }
+
         }
 
-    }
-
-    if( keyset != null && keyset['rwset']!=null )
-        return { 'chaincode':keyset['namespace'],'writes':keyset['rwset']['writes'] }
-    else
-        return {};
+        if (keyset != null && keyset['rwset'] != null)
+            return {'chaincode': keyset['namespace'], 'writes': keyset['rwset']['writes']}
+        else
+            return {};
 
 
-    }else
+    } else
         return {};
 
 }
 
 
-var testfunc = async (orgname)=> {
+var testfunc = async (orgname) => {
 
     let org = orgnamemap[orgname];
     let tempdir = bcconfig['keyValueStore'];
@@ -151,7 +163,7 @@ var testfunc = async (orgname)=> {
     //for (let ind = 30; ind < 179; ind++) {
 
 
-    let blockinfo = await fabricservice.getblockInfobyNum('roberttestchannel', 'grpc://192.168.23.212:7051', 94 );
+    let blockinfo = await fabricservice.getblockInfobyNum('roberttestchannel', 'grpc://192.168.23.212:7051', 94);
 
     console.info(JSON.stringify(blockinfo['data']['data'][0]['payload']['header']['channel_header']['tx_id']));
     console.info(JSON.stringify(blockinfo['data']['data'][0]['payload']['header']['channel_header']['timestamp']));
@@ -161,15 +173,12 @@ var testfunc = async (orgname)=> {
     console.info((JSON.stringify(getkeyset4Transaction(blockinfo['data']['data'][0]))));
 
 
-
     //}
     //let peerchannels = await fabricservice.getPeerChannel('grpc://192.168.23.212:7051');
     //let peerchannels = await fabricservice.getPeerChannel('grpc://172.16.10.186:7051');
     /*let peerchannels = await fabricservice.getPeerChannel('grpc://172.16.10.187:7051');
     console.info(  JSON.stringify( peerchannels) );*/
     //{"channels":[{"channel_id":"roberttestchannel"},{"channel_id":"roberttestchannelnew"}]}
-
-
 
 
     //let installcc = await fabricservice.getPeerInstallCc('grpc://192.168.23.212:7051')
@@ -200,85 +209,84 @@ var testfunc = async (orgname)=> {
     console.info(  JSON.stringify( testsqlresult) );*/
 
 
-    let channels = sql.getRowByPkOne( ` select id from channel where channelid = 'dddd' `)
-    console.info(  JSON.stringify( channels) );
+    let channels = sql.getRowByPkOne(` select id from channel where channelid = 'dddd' `)
+    console.info(JSON.stringify(channels));
 
     sql.closeconnection();
 
 }
 
 
-
-var parserOrg = async ( orgname )=>{
-
-
-        let org = orgnamemap[orgname];
-        let peers = org['peers'];
-        let channelpeermap = {};
-        let peerjoinchannels = [];
+var parserOrg = async (orgname) => {
 
 
-        let tempdir = bcconfig['keyValueStore'];
-        let adminkey = org['admin']['key'];
-        let admincert = org['admin']['cert'];
-
-        fabricservice.inits(tempdir,adminkey,admincert);
-
-
-        for( let ind = 0 ; ind < peers.length ; ind++ ){
-
-            let peer = peers[ind];
-            let peerrequest = getPeerRequest(peer['requests']);
-            let peerchannel = await fabricservice.getPeerChannel(peerrequest);
-
-            //console.info(  JSON.stringify( peerchannels) );
-            let peerchannels = peerchannel['channels'];
-
-            peer['channels'] = peerchannels;
+    let org = orgnamemap[orgname];
+    let peers = org['peers'];
+    let channelpeermap = {};
+    let peerjoinchannels = [];
 
 
-            peerjoinchannels.push(peer);
+    let tempdir = bcconfig['keyValueStore'];
+    let adminkey = org['admin']['key'];
+    let admincert = org['admin']['cert'];
+
+    fabricservice.inits(tempdir, adminkey, admincert);
 
 
-            for( let cind = 0 ; cind<peerchannels.length;cind++ ){
+    for (let ind = 0; ind < peers.length; ind++) {
 
-                let channel_id = peerchannels[cind]['channel_id'];
+        let peer = peers[ind];
+        let peerrequest = getPeerRequest(peer['requests']);
+        let peerchannel = await fabricservice.getPeerChannel(peerrequest);
 
-                if(  channelpeermap[channel_id] == null )
-                    channelpeermap[channel_id] = peer;
+        //console.info(  JSON.stringify( peerchannels) );
+        let peerchannels = peerchannel['channels'];
 
-            }
+        peer['channels'] = peerchannels;
 
+
+        peerjoinchannels.push(peer);
+
+
+        for (let cind = 0; cind < peerchannels.length; cind++) {
+
+            let channel_id = peerchannels[cind]['channel_id'];
+
+            if (channelpeermap[channel_id] == null)
+                channelpeermap[channel_id] = peer;
 
         }
 
 
-        //更新channel 以及  channel和peer的关系
-        await modifypeers(peerjoinchannels);
-
-        //更新每个peer上面的chaincode
-        await modifypeer_chaincode(peerjoinchannels,fabricservice);
-
-        //更新channel上面的数据信息 区块链 交易 keyset
-        await modify_channels( channelpeermap ,fabricservice);
+    }
 
 
-        //更新peer上面的状态为 install的 chaincode信息
-        await modify_peer_chaincode(peerjoinchannels,tempdir,adminkey,admincert);
+    //更新channel 以及  channel和peer的关系
+    await modifypeers(peerjoinchannels);
 
-        //console.info(  JSON.stringify( peerjoinchannels) );
+    //更新每个peer上面的chaincode
+    await modifypeer_chaincode(peerjoinchannels, fabricservice);
+
+    //更新channel上面的数据信息 区块链 交易 keyset
+    await modify_channels(channelpeermap, fabricservice);
 
 
-        sql.closeconnection();
+    //更新peer上面的状态为 install的 chaincode信息
+    await modify_peer_chaincode(peerjoinchannels, tempdir, adminkey, admincert);
+
+    //console.info(  JSON.stringify( peerjoinchannels) );
+
+
+    sql.closeconnection();
 
 
 }
 
 
-var modifypeer_chaincode = async ( peers , fabricservice )=>{
+var modifypeer_chaincode = async (peers, fabricservice) => {
 
 
-    for( let ind = 0 ; ind<peers.length ; ind++  ) {
+    for (let ind = 0; ind < peers.length; ind++) {
 
         let peer = peers[ind];
         let requests = peer['requests'];
@@ -287,10 +295,10 @@ var modifypeer_chaincode = async ( peers , fabricservice )=>{
 
         let installcc = await fabricservice.getPeerInstallCc(peer_request)
 
-        let installccs =   installcc['chaincodes'];
+        let installccs = installcc['chaincodes'];
 
 
-        for( let iind = 0 ; iind<installccs.length ; iind++ ){
+        for (let iind = 0; iind < installccs.length; iind++) {
 
             let installcctemp = installccs[iind];
 
@@ -301,27 +309,26 @@ var modifypeer_chaincode = async ( peers , fabricservice )=>{
             let vscc = installcctemp['vscc'];
 
 
-
             var chaincodes = {
 
-                'peer_name':peer_name,
-                'channelname':'',
-                'name':name,
-                'version':version,
-                'path':path,
-                'escc':escc,
-                'vscc':vscc,
-                'txcount':0,
-                'ccstatus':0,
-                'remark':'',
+                'peer_name': peer_name,
+                'channelname': '',
+                'name': name,
+                'version': version,
+                'path': path,
+                'escc': escc,
+                'vscc': vscc,
+                'txcount': 0,
+                'ccstatus': 0,
+                'remark': '',
 
             };
 
 
-            let installccheck = await sql.getRowByPkOne( ` select id from chaincodes where peer_name = '${peer_name}' and  name = '${name}' and version = '${version}'  `)
+            let installccheck = await sql.getRowByPkOne(` select id from chaincodes where peer_name = '${peer_name}' and  name = '${name}' and version = '${version}'  `)
 
-            if( installccheck == null ){
-                let installinserresult = await sql.saveRow('chaincodes',chaincodes);
+            if (installccheck == null) {
+                let installinserresult = await sql.saveRow('chaincodes', chaincodes);
             }
 
 
@@ -334,10 +341,10 @@ var modifypeer_chaincode = async ( peers , fabricservice )=>{
 
 }
 
-var modifypeers = async (peers)=>{
+var modifypeers = async (peers) => {
 
 
-    for( let ind = 0 ; ind<peers.length ; ind++  ){
+    for (let ind = 0; ind < peers.length; ind++) {
 
         let peer = peers[ind];
         let channels = peer['channels'];
@@ -345,7 +352,7 @@ var modifypeers = async (peers)=>{
         let peer_name = peer['name'];
 
 
-        for( let cind = 0 ; cind < channels.length ; cind++ ){
+        for (let cind = 0; cind < channels.length; cind++) {
 
             let channel = channels[cind];
 
@@ -353,7 +360,7 @@ var modifypeers = async (peers)=>{
 
             await save_channel(channel_id);
 
-            await save_peer_ref_channel(channel_id,peer_name);
+            await save_peer_ref_channel(channel_id, peer_name);
 
 
         }
@@ -362,48 +369,46 @@ var modifypeers = async (peers)=>{
     }
 
 
-
-
 }
 
 
-var save_channel = async ( channel_id )=>{
+var save_channel = async (channel_id) => {
 
 
-    let channels = await sql.getRowByPkOne( ` select id from channel where channelname = '${channel_id}' `)
+    let channels = await sql.getRowByPkOne(` select id from channel where channelname = '${channel_id}' `)
 
-    if( channels == null  ){
+    if (channels == null) {
 
         let channel = {
-            'channelname':channel_id,
-            'blocks':0,
-            'trans':0,
-            'remark':'',
+            'channelname': channel_id,
+            'blocks': 0,
+            'trans': 0,
+            'remark': '',
         };
 
-        await sql.saveRow('channel',channel);
+        await sql.saveRow('channel', channel);
     }
 
 
 }
 
 
-var save_peer_ref_channel = async ( channel_id , peer_name) =>{
+var save_peer_ref_channel = async (channel_id, peer_name) => {
 
 
-    let peerrefchannels = await sql.getRowByPkOne( ` select id from peer_ref_channel where peer_name = '${peer_name}' and  channelname = '${channel_id}'  `)
+    let peerrefchannels = await sql.getRowByPkOne(` select id from peer_ref_channel where peer_name = '${peer_name}' and  channelname = '${channel_id}'  `)
 
-    if( peerrefchannels == null  ){
+    if (peerrefchannels == null) {
 
         let peer_ref_channel = {
 
-            'peer_name':peer_name,
-            'channelname':channel_id,
+            'peer_name': peer_name,
+            'channelname': channel_id,
 
         };
 
 
-        await sql.saveRow( 'peer_ref_channel' , peer_ref_channel );
+        await sql.saveRow('peer_ref_channel', peer_ref_channel);
 
     }
 
@@ -411,34 +416,36 @@ var save_peer_ref_channel = async ( channel_id , peer_name) =>{
 }
 
 
-
-var modify_channels = async ( channelpeermap,fabricservice )=>{
-
+var modify_channels = async (channelpeermap, fabricservice) => {
 
 
-    for( let key in channelpeermap ){
+    for (let key in channelpeermap) {
 
-        let channel_id = key ;
+        let channel_id = key;
         let peer = channelpeermap[channel_id];
 
-        await modify_channel_block( channel_id,peer,fabricservice);
+        await modify_channel_block(channel_id, peer, fabricservice);
 
 
     }
 
 
+}
+
+
+var modify_channel_byId = async (channel_id, channelpeermap, fabricservice) => {
+
+    let peer = channelpeermap[channel_id];
+    await modify_channel_block(channel_id, peer, fabricservice);
 
 
 }
 
 
-
-var modify_channel = async ( channels ) =>{
-
+var modify_channel = async (channels) => {
 
 
 }
-
 
 
 /*var modify_channel_cc = async ( channel_id,peer,fabricservice )=> {
@@ -457,11 +464,11 @@ var modify_channel = async ( channels ) =>{
 
 }*/
 
-var modify_channel_block = async ( channel_id,peer,fabricservice )=>{
+var modify_channel_block = async (channel_id, peer, fabricservice) => {
 
 
     let peer_request = getPeerRequest(peer['requests']);
-    let blockchaininfo = await fabricservice.getBlockChainInfo(channel_id,peer_request);
+    let blockchaininfo = await fabricservice.getBlockChainInfo(channel_id, peer_request);
 
     let channel = await  sql.getRowByPkOne(`  select * from channel where channelname = '${channel_id}'  `);
     //let channel = channels[0];
@@ -471,67 +478,64 @@ var modify_channel_block = async ( channel_id,peer,fabricservice )=>{
     let blockheight = blockchaininfo['height']['low'];
 
     let updageresult = await sql.updateBySql(` update channel set blocks = ${blockheight} where id = ${channelid}  `);
-    console.info(  JSON.stringify( blockchaininfo['height']['low']) );
+    console.info(JSON.stringify(blockchaininfo['height']['low']));
 
 
     let countblocks = channel['countblocks'];
 
 
-    while(  blockheight > countblocks  ){
+    while (blockheight > countblocks) {
 
 
-        let blockinfo = await fabricservice.getblockInfobyNum( channel_id , peer_request , countblocks-1 );
+        let blockinfo = await fabricservice.getblockInfobyNum(channel_id, peer_request, countblocks - 1);
 
         let blocknum = blockinfo['header']['number']['low'];
         let datahash = blockinfo['header']['data_hash'];
-        let perhash =  blockinfo['header']['previous_hash'];
+        let perhash = blockinfo['header']['previous_hash'];
 
         let txcount = 0;
 
         let trans = blockinfo['data']['data'];
 
-        if( trans != null ){
+        if (trans != null) {
             txcount = trans.length;
         }
 
 
         let block = {
-            'channelname':channel_id,
-            'blocknum':blocknum,
-            'datahash':datahash,
-            'perhash':perhash,
-            'txcount':txcount,
-            'remark':'',
+            'channelname': channel_id,
+            'blocknum': blocknum,
+            'datahash': datahash,
+            'perhash': perhash,
+            'txcount': txcount,
+            'remark': '',
         };
 
 
-        await sql.saveRow('blocks',block);
+        await sql.saveRow('blocks', block);
+        // 新区块
+        blockListener.emit('createBlock', block)
 
-        await modify_channel_block_trans( channel_id , peer , blockinfo , fabricservice  )
+        await modify_channel_block_trans(channel_id, peer, blockinfo, fabricservice)
+        // 新交易
 
         countblocks++;
         let updageresult = await sql.updateBySql(` update channel set countblocks = countblocks+1 where id = ${channelid}  `);
 
 
-
-
-
-
     }
-
-
-
+    blockListener.emit('txIdle');
 
 
 }
 
 
-var modify_channel_block_trans = async (channel_id,peer,blockinfo,fabricservice)=>{
+var modify_channel_block_trans = async (channel_id, peer, blockinfo, fabricservice) => {
 
 
     let trans = blockinfo['data']['data'];
 
-    if( trans != null ){
+    if (trans != null) {
 
 
         let blocknum = blockinfo['header']['number']['low'];
@@ -539,11 +543,10 @@ var modify_channel_block_trans = async (channel_id,peer,blockinfo,fabricservice)
         //let perhash =  blockinfo['header']['previous_hash'];
 
 
+        for (let ind = 0; ind < trans.length; ind++) {
 
-        for ( let ind = 0 ; ind<trans.length ; ind++ ){
 
-
-            let transaction = trans[ ind ];
+            let transaction = trans[ind];
 
             let txhash = transaction['payload']['header']['channel_header']['tx_id'];
             let timestamp = transaction['payload']['header']['channel_header']['timestamp'];
@@ -551,30 +554,30 @@ var modify_channel_block_trans = async (channel_id,peer,blockinfo,fabricservice)
 
             let chaincodename = '';
 
-            if( keyset != null )
+            if (keyset != null)
                 chaincodename = keyset['chaincode'];
 
 
             let transactions = {
 
-                'channelname':channel_id,
-                'blocknum':blocknum,
-                'blockhash':blockhash,
-                'txhash':txhash,
+                'channelname': channel_id,
+                'blocknum': blocknum,
+                'blockhash': blockhash,
+                'txhash': txhash,
                 //'txcreatedt':timestamp,
-                'chaincodename':chaincodename,
-                'remark':''
+                'chaincodename': chaincodename,
+                'remark': ''
             };
 
-            let transcheck = await sql.getRowByPkOne( ` select id from transaction where txhash = '${txhash}' and  channelname = '${channel_id}'  `)
-            if( transcheck == null )
-                await sql.saveRow('transaction',transactions);
+            let transcheck = await sql.getRowByPkOne(` select id from transaction where txhash = '${txhash}' and  channelname = '${channel_id}'  `)
+            if (transcheck == null)
+                await sql.saveRow('transaction', transactions);
 
             let keyset_writer = keyset['writes'];
 
-            if( keyset_writer != null ){
+            if (keyset_writer != null) {
 
-                for( let kind = 0 ; kind<keyset_writer.length;kind++ ){
+                for (let kind = 0; kind < keyset_writer.length; kind++) {
 
 
                     let keysettemp = keyset_writer[kind];
@@ -584,28 +587,27 @@ var modify_channel_block_trans = async (channel_id,peer,blockinfo,fabricservice)
 
                     let is_delete_v = 0;
 
-                    if( is_delete )
-                            is_delete_v = 1;
+                    if (is_delete)
+                        is_delete_v = 1;
 
 
                     let keyset = {
 
-                        'channelname':channel_id,
-                        'blocknum':blocknum,
-                        'blockhash':blockhash,
-                        'transactionhash':txhash,
-                        'keyname':keyname,
-                        'isdelete':is_delete_v,
-                        'chaincode':chaincodename,
-                        'remark':'',
+                        'channelname': channel_id,
+                        'blocknum': blocknum,
+                        'blockhash': blockhash,
+                        'transactionhash': txhash,
+                        'keyname': keyname,
+                        'isdelete': is_delete_v,
+                        'chaincode': chaincodename,
+                        'remark': '',
                     };
 
 
-                    let keysetcheck = await sql.getRowByPkOne( ` select id from keyset where keyname = '${keyname}' and  channelname = '${channel_id}'  `)
-                    if(  keysetcheck == null  ){
-                        let keysetresult = await sql.saveRow('keyset',keyset);
+                    let keysetcheck = await sql.getRowByPkOne(` select id from keyset where keyname = '${keyname}' and  channelname = '${channel_id}'  `)
+                    if (keysetcheck == null) {
+                        let keysetresult = await sql.saveRow('keyset', keyset);
                     }
-
 
 
                 }
@@ -614,12 +616,7 @@ var modify_channel_block_trans = async (channel_id,peer,blockinfo,fabricservice)
             }
 
 
-
-
-
-
         }
-
 
 
     }
@@ -627,20 +624,16 @@ var modify_channel_block_trans = async (channel_id,peer,blockinfo,fabricservice)
 }
 
 
-var modify_keyset = ()=>{
-
+var modify_keyset = () => {
 
 
 }
 
 
+var modify_peer_chaincode = async (peers, tempdir, adminkey, admincert) => {
 
 
-var modify_peer_chaincode = async ( peers,tempdir,adminkey,admincert  )=>{
-
-
-
-    for( let ind = 0 ; ind<peers.length ; ind++  ){
+    for (let ind = 0; ind < peers.length; ind++) {
 
         let peer = peers[ind];
         let channels = peer['channels'];
@@ -648,22 +641,21 @@ var modify_peer_chaincode = async ( peers,tempdir,adminkey,admincert  )=>{
         let peer_name = peer['name'];
         let peer_request = getPeerRequest(peer['requests']);
 
-        for( let cind = 0 ; cind < channels.length ; cind++ ){
+        for (let cind = 0; cind < channels.length; cind++) {
 
             let channel = channels[cind];
             let channel_id = channel['channel_id'];
 
             let fabricservice1 = require('./fabricservice');
-            fabricservice1.inits(tempdir,adminkey,admincert);
+            fabricservice1.inits(tempdir, adminkey, admincert);
 
-            let instancecc = await fabricservice1.getPeerInstantiatedCc(channel_id,peer_request);
-
-
-
-            let instanceccs =   instancecc['chaincodes'];
+            let instancecc = await fabricservice1.getPeerInstantiatedCc(channel_id, peer_request);
 
 
-            for( let iind = 0 ; iind<instanceccs.length ; iind++ ){
+            let instanceccs = instancecc['chaincodes'];
+
+
+            for (let iind = 0; iind < instanceccs.length; iind++) {
 
                 let instancecctemp = instanceccs[iind];
 
@@ -674,14 +666,12 @@ var modify_peer_chaincode = async ( peers,tempdir,adminkey,admincert  )=>{
                 let vscc = instancecctemp['vscc'];
 
 
-                let updatecc  = ` update  chaincodes set channelname = '${channel_id}' , ccstatus = 1  ,escc = '${escc}' , vscc = '${vscc}'   where peer_name = '${peer_name}' and  name = '${name}' and version = '${version}'  `;
+                let updatecc = ` update  chaincodes set channelname = '${channel_id}' , ccstatus = 1  ,escc = '${escc}' , vscc = '${vscc}'   where peer_name = '${peer_name}' and  name = '${name}' and version = '${version}'  `;
 
                 let installccheck = await sql.updateBySql(updatecc);
 
 
             }
-
-
 
 
             console.info(JSON.stringify(instancecc));
@@ -696,17 +686,8 @@ var modify_peer_chaincode = async ( peers,tempdir,adminkey,admincert  )=>{
 }
 
 
-
-
-
-
-
-
-
-
-
-exports.testfunc  = testfunc;
+exports.testfunc = testfunc;
 exports.getPeers4Org = getPeers4Org;
-exports.getPeer=getPeer;
+exports.getPeer = getPeer;
 exports.ORGNAMEMAP = orgnamemap;
 exports.parserOrg = parserOrg;

@@ -9,7 +9,7 @@ var app = express();
 var http= require('http').Server(app);
 var bodyParser = require('body-parser');
 
-require('./socket/websocketserver.js')(http)
+require('./socket/websocketserver.js').init(http)
 
 var timer=require('./timer/timer.js')
 timer.start()

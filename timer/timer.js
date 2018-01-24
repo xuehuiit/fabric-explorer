@@ -15,7 +15,9 @@
  */
 
 var Metrics=require('../metrics/metrics.js')
-var blockListener=require('../listener/blocklistener.js').blockListener()
+var blockListener=require('../listener/blocklistener.js').blockListener();
+var blockScanEvent=require('../service/blockscanner.js').blockScanEvent;
+
 
 var blockPerMinMeter=Metrics.blockMetrics
 var txnPerSecMeter=Metrics.txnPerSecMeter
@@ -69,8 +71,8 @@ function start() {
     },1000)*/
 
     //同步区块
-    blockListener.emit('syncChaincodes', ledgerMgr.getCurrChannel())
-    blockListener.emit('syncBlock', ledgerMgr.getCurrChannel())
+    blockScanEvent.emit('syncChaincodes', ledgerMgr.getCurrChannel())
+    blockScanEvent.emit('syncBlock', ledgerMgr.getCurrChannel())
 
 }
 

@@ -16,8 +16,8 @@
 var EventEmitter = require('events').EventEmitter;
 var blockListener = new EventEmitter();
 
-var blockScanner=require('../service/blockscanner.js')
-blockScanner.setBlockListener(blockListener)
+/*var blockScanner=require('../service/blockscanner.js')
+blockScanner.setBlockListener(blockListener)*/
 
 var blockMetrics=require('../metrics/metrics').blockMetrics
 var txMetrics=require('../metrics/metrics').txMetrics
@@ -33,7 +33,11 @@ blockListener.on('createBlock',function (block) {
     stomp.send('/topic/metrics/txnPerSec',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:block.data.data.length/10}))
 })
 
-blockListener.on('syncBlock',function (channelName) {
+blockListener.on('txIdle',function () {
+    stomp.send('/topic/metrics/txnPerSec',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:0}));
+})
+
+/*blockListener.on('syncBlock',function (channelName) {
     setTimeout(function () {
         blockScanner.syncBlock(channelName)
     },1000)
@@ -43,7 +47,7 @@ blockListener.on('syncChaincodes',function (channelName) {
     setTimeout(function () {
         blockScanner.syncChaincodes(channelName)
     },1000)
-})
+})*/
 
 exports.blockListener=function () {
     return blockListener
