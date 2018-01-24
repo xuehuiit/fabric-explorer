@@ -261,12 +261,15 @@ var parserOrg = async (orgname) => {
 
             let currentledg = ledgerMgr.getCurrChannel();
 
-            if(  cind == 0 && currentledg == ""  )
+            if(  cind == 0 && currentledg == ''  )
                  ledgerMgr.changeChannel(channel_id);
         }
 
 
     }
+
+    var curr_channel = ledgerMgr.getCurrChannel();
+
 
 
     //更新channel 以及  channel和peer的关系

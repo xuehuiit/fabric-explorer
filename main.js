@@ -20,7 +20,9 @@ var ledgerMgr=require('./utils/ledgerMgr.js')
 
 var statusMertics=require('./service/metricservice.js')
 
-var channelsRouter=require('./router/channels.js')
+var channelsRouter=require('./router/channels.js');
+
+
 
 app.use(express.static(path.join(__dirname,'explorer_client')));
 app.use(bodyParser.json());
