@@ -687,8 +687,7 @@ var modify_peer_chaincode = async (peers, tempdir, adminkey, admincert) => {
 
             }
 
-
-            console.info(JSON.stringify(instancecc));
+            //console.info(JSON.stringify(instancecc));
 
 
         }
@@ -700,6 +699,33 @@ var modify_peer_chaincode = async (peers, tempdir, adminkey, admincert) => {
 }
 
 
+
+var getCurrOrgFabricservice = ()=>{
+
+    let orgname = ledgerMgr.getCurrOrg();
+    return getFabricService4OrgName(orgname);
+
+}
+
+
+var getFabricService4OrgName = (orgname)=>{
+
+    let org = orgnamemap[orgname];
+
+    let tempdir = bcconfig['keyValueStore'];
+    let adminkey = org['admin']['key'];
+    let admincert = org['admin']['cert'];
+
+
+    let currrogservice = require('./fabricservice');
+    currrogservice.inits(tempdir, adminkey, admincert);
+
+    return currrogservice;
+}
+
+
+exports.getCurrOrgFabricservice = getCurrOrgFabricservice;
+exports.getFabricService4OrgName = getFabricService4OrgName;
 exports.testfunc = testfunc;
 exports.getPeers4Org = getPeers4Org;
 exports.getPeer = getPeer;
