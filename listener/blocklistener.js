@@ -30,7 +30,9 @@ blockListener.on('createBlock',function (block) {
     blockMetrics.push(1)
     txMetrics.push(block.data.data.length)
 
-    stomp.send('/topic/block',{},JSON.stringify({'number':block['header']['number']['low'],'txCount':block.data.data.length}))
+    let trans =  block['data']['data'];
+
+    stomp.send('/topic/block',{},JSON.stringify({'number':block['header']['number']['low'],'txCount': trans.length }))
 
     stomp.send('/topic/metrics/txnPerSec',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:block.data.data.length/10}))
 })
