@@ -65,10 +65,11 @@ module.exports = function(id) {
                         utils.load({
                             url: _this.url,
                             data: { number: _this.lastBlockNum - n },
+                            timeout:3000,
                             complete: function(res) {
                                 rows.push( {
-                                    num: 1/*res.responseJSON.number*/,
-                                    txCount: 2/*res.responseJSON.txCount*/,
+                                    num: res.responseJSON.number,
+                                    txCount: res.responseJSON.txCount,
                                 } );
                             }
                         })

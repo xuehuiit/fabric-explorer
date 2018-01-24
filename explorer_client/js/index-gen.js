@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f015871425356a8a9285"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d9ea472c3ab6cdaa46be"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -88630,10 +88630,11 @@
 	                promizes.push(_utils2['default'].load({
 	                    url: _this.url,
 	                    data: { number: _this.lastBlockNum - n },
+	                    timeout: 3000,
 	                    complete: function complete(res) {
 	                        rows.push({
-	                            num: 1 /*res.responseJSON.number*/
-	                            , txCount: 2 /*res.responseJSON.txCount*/
+	                            num: res.responseJSON.number,
+	                            txCount: res.responseJSON.txCount
 	                        });
 	                    }
 	                }));
