@@ -22,7 +22,11 @@ var channels=config.channelsList
 
 //var currChannel=channels[0]
 
+var currOrg = '';
+
 var currChannel='roberttestchannel';
+
+var currChannel='';
 
 
 function changeChannel(channelName){
@@ -37,7 +41,22 @@ function getCurrChannel(){
 function getChannellist(){
     return channels
 }
-exports.getCurrChannel=getCurrChannel
-exports.changeChannel=changeChannel
-exports.ledgerEvent=ledgerEvent
-exports.getChannellist=getChannellist
+
+
+function getCurrOrg() {
+   return currOrg;
+}
+
+function changeCurrOrg(orgname) {
+
+    currOrg = orgname;
+
+}
+
+exports.getCurrChannel=getCurrChannel;
+exports.changeChannel=changeChannel;
+exports.ledgerEvent=ledgerEvent;
+exports.getChannellist=getChannellist;
+
+exports.getCurrOrg=getCurrOrg;
+exports.changeCurrOrg=changeCurrOrg;

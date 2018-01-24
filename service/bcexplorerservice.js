@@ -42,6 +42,11 @@ function initConfig(types) {
 
         }
 
+
+        if(  ind == 0  && ledgerMgr.getCurrOrg() == ''  )
+             ledgerMgr.changeCurrOrg ( org['name'] );
+
+
     }
 
     return orgnamemap;
