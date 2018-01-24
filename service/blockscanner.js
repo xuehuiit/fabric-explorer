@@ -20,6 +20,7 @@ var helper=require('../app/helper.js')
 var co=require('co')
 var stomp=require('../socket/websocketserver.js').stomp()
 var logger = helper.getLogger('blockscanner');
+var EventEmitter = require('events').EventEmitter;
 var blockScanEvent = new EventEmitter();
 
 var blockListener=require('../listener/blocklistener.js').blockListener();
