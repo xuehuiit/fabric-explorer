@@ -58,7 +58,19 @@ export default {
         $("#showSelectContent").off('click','li a');
         $('#showSelectContent').on('click', 'li a', function (e) {
             e.preventDefault();
-            $('#showTitle').html($('<span>', {html: $(e.target).html()}));
+            var channelName=$(e.target).html();
+            $('#showTitle').html($('<span>', {html: channelName}));
+
+            $.when(
+                utils.load({ url: 'changeChannel' ,data: { 'channelName':channelName  }})
+            ).done(function(data) {
+                $.when(
+                    utils.load({ url: 'curChannel' })
+                ).done(function(data) {
+                    console.info(JSON.stringify(data));
+                });
+            });
+
             Tower.section[Tower.current]();
         });
 

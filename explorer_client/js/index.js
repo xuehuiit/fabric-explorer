@@ -241,10 +241,11 @@ window.Tower = {
             $.when(
                 utils.load({ url: 'curChannel' })
             ).done(function(data) {
-                $('#channel-name').html($('<span>', {
-                    html: data.currentChannel
-                }));
+                var channelName=data.currentChannel;
+                $('#showTitle').html($('<span>', {html: channelName}));
+                console.info(JSON.stringify(data));
             });
+
 
             utils.showHead(["default-peers","default-chaincode","default-blocks","default-txn"]);
 
@@ -300,7 +301,7 @@ $(function() {
 		}
 	});
 
-	$('#selectchannel').bind('click','li.dropdown-item',function(event){
+	/*$('#selectchannel').bind('click','li.dropdown-item',function(event){
 		var channelName=$(event.target).html()
         $.when(
             utils.load({ url: 'changeChannel' ,data: { 'channelName':channelName  }})
@@ -311,7 +312,7 @@ $(function() {
                 window.location.reload();
             });
         });
-	})
+	})*/
 
 	// logo handler
 	$("a.tower-logo").click(function(e) {
