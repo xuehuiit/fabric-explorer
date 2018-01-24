@@ -254,7 +254,9 @@ var parserOrg = async (orgname) => {
             if (channelpeermap[channel_id] == null)
                 channelpeermap[channel_id] = peer;
 
-            if(  cind == 0 && ledgerMgr.getCurrChannel() == null  )
+            let currentledg = ledgerMgr.getCurrChannel();
+
+            if(  cind == 0 && currentledg == ""  )
                  ledgerMgr.changeChannel(channel_id);
         }
 
@@ -279,7 +281,7 @@ var parserOrg = async (orgname) => {
 
     blockScanEvent.emit('syncData', orgname)
 
-    sql.closeconnection();
+    //sql.closeconnection();
 
 
 }

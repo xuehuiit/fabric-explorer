@@ -22,7 +22,7 @@ var channels=config.channelsList
 
 //var currChannel=channels[0]
 
-var currChannel='';
+var currChannel='roberttestchannel';
 
 
 function changeChannel(channelName){
