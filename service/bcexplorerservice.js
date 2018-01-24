@@ -47,17 +47,15 @@ function initConfig(types) {
 }
 
 
-blockScanEvent.on('syncBlock', function (channelName) {
+blockScanEvent.on('syncData', function (orgname) {
     setTimeout(function () {
-        syncBlock(channelName)
+        parserOrg(orgname)
     }, 1000)
-})
+});
 
-blockScanEvent.on('syncChaincodes', function (channelName) {
-    setTimeout(function () {
-        syncChaincodes(channelName)
-    }, 1000)
-})
+blockScanEvent.on('syncBlockNow', function (orgname) {
+        parserOrg(orgname);
+});
 
 function getPeerRequest(peerrequest) {
 
@@ -277,6 +275,8 @@ var parserOrg = async (orgname) => {
     await modify_peer_chaincode(peerjoinchannels, tempdir, adminkey, admincert);
 
     //console.info(  JSON.stringify( peerjoinchannels) );
+
+    blockScanEvent.emit('syncData', orgname)
 
     sql.closeconnection();
 

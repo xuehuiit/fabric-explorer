@@ -71,8 +71,9 @@ function start() {
     },1000)*/
 
     //同步区块
-    blockScanEvent.emit('syncChaincodes', ledgerMgr.getCurrChannel())
-    blockScanEvent.emit('syncBlock', ledgerMgr.getCurrChannel())
+    // blockScanEvent.emit('syncChaincodes', ledgerMgr.getCurrChannel())
+    // blockScanEvent.emit('syncBlock', ledgerMgr.getCurrChannel())
+    blockScanEvent.emit('syncBlockNow', 'org1')
 
 }
 
