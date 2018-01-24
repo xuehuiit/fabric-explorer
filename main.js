@@ -22,6 +22,8 @@ var statusMertics=require('./service/metricservice.js')
 
 var channelsRouter=require('./router/channels.js');
 
+var keyset=require('./service/keysetService.js');
+
 
 
 app.use(express.static(path.join(__dirname,'explorer_client')));
@@ -151,7 +153,7 @@ app.post('/chaincodelist',function(req,res){
 app.post('/changeChannel',function(req,res){
     let channelName=req.body.channelName
     ledgerMgr.changeChannel(channelName)
-    res.end()
+    res.send({'a':ledgerMgr.getCurrChannel()})
 })
 
 app.post('/curChannel',function(req,res){
@@ -166,6 +168,13 @@ app.post('/channellist',function(req,res){
     })
 })
 
+
+app.post('/getKeyset',function(req,res){
+    keyset.getKeyset().then(rows=>{
+        console.info(JSON.stringify(rows))
+        res.send(rows);
+    })
+})
 
 // ============= start server =======================
 
