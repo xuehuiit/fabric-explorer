@@ -16,7 +16,7 @@
 
 var Metrics=require('../metrics/metrics.js')
 var blockListener=require('../listener/blocklistener.js').blockListener();
-var blockScanEvent=require('../service/blockscanner.js').blockScanEvent;
+var blockScanEvent=require('../service/bcexplorerservice.js').blockScanEvent;
 
 
 var blockPerMinMeter=Metrics.blockMetrics

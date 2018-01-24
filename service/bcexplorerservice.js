@@ -697,3 +697,4 @@ exports.getPeers4Org = getPeers4Org;
 exports.getPeer = getPeer;
 exports.ORGNAMEMAP = orgnamemap;
 exports.parserOrg = parserOrg;
+exports.blockScanEvent = blockScanEvent;
