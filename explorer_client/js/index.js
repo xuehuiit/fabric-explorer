@@ -55,6 +55,7 @@ window.Tower = {
 
         Dashboard.preregisterWidgets({
 
+            'keyset': require('./widgets/keyset'),
             'chaincodelist': require('./widgets/chaincodelist'),
             'channellist': require('./widgets/channellist'),
             'network': require('./widgets/network'),
@@ -234,6 +235,7 @@ window.Tower = {
 				{ widgetId: 'metrix_block_min' ,data: data,refetch: true},
 				//{ widgetId: 'metrix_choc_tx' ,data: data},
 				{ widgetId: 'chaincodelist' ,data: data,refetch: true},
+				{ widgetId: 'keyset' ,data: data,refetch: true},
 
 			];
 

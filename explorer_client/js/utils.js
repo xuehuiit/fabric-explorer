@@ -5,7 +5,8 @@ export default {
             url: opts.url,
             contentType: opts.type ? opts.type : 'application/json',
             cache: false,
-            async: opts.async ? opts.async : true
+            async: opts.async ? opts.async : true,
+            timeout: opts.timeout ? opts.timeout : 300
         };
 
         if (opts.data) {
@@ -55,19 +56,39 @@ export default {
         ]
         var selected = _.where(targets, {name: target});
 
-        $("#showSelectContent").off('click','li a');
+        // $("#showSelectContent").off('click','li a');
         $('#showSelectContent').on('click', 'li a', function (e) {
             e.preventDefault();
             var channelName=$(e.target).html();
             $('#showTitle').html($('<span>', {html: channelName}));
 
+            /*$.ajax({
+                type: "post",
+                url: '/changeChannel',
+                cache:false,
+                async:true,
+                dataType: "json",
+                data: {'channelName':channelName },
+
+                success: function(response){
+
+                    alert("changeChannel"+JSON.stringify(data))
+
+                },
+                error:function(err){
+                    alert(err)
+                }
+
+            });*/
+
             $.when(
                 utils.load({ url: 'changeChannel' ,data: { 'channelName':channelName  }})
             ).done(function(data) {
+                // alert("changeChannel"+JSON.stringify(data))
                 $.when(
                     utils.load({ url: 'curChannel' })
                 ).done(function(data) {
-                    console.info(JSON.stringify(data));
+                    // alert("getChannel"+JSON.stringify(data));
                 });
             });
 
