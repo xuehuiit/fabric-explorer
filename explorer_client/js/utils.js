@@ -1,5 +1,5 @@
 export default {
-    load: function(opts) {
+    load: function (opts) {
         var config = {
             type: opts.method ? opts.method : 'POST',
             url: opts.url,
@@ -21,13 +21,13 @@ export default {
 
     subscribe: Client.subscribe,
 
-    prettyUpdate: function(oldValue, newValue, el) {
+    prettyUpdate: function (oldValue, newValue, el) {
         if (oldValue !== newValue) {
             el.css({
                 'opacity': 0
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 el.html($('<span>', {
                     html: newValue
                 }));
@@ -50,14 +50,15 @@ export default {
     showSelet: function (target) {
         $('#showSelect').hide();
         var targets = [
-            {name: 'channel', showText: "Channels", url: ''},
+            {name: 'channel', showText: "Channels", url: 'channellist'},
             {name: 'peers', showText: "Peers", url: ''}
         ]
         var selected = _.where(targets, {name: target});
 
-        $("#showSelectContent").unbind('click');
-        $('#showSelectContent').on('click', 'a', function (e) {
+        $("#showSelectContent").off('click','li a');
+        $('#showSelectContent').on('click', 'li a', function (e) {
             e.preventDefault();
+            $('#showTitle').html($('<span>', {html: $(e.target).html()}));
             Tower.section[Tower.current]();
         });
 
@@ -65,14 +66,14 @@ export default {
             $("#showSelectTitle").html('Select ' + ele.name + '<b class="caret"></b>');
 
 
-            // $.when(
-            //     utils.load({url: ele.url})
-            // ).done(function (data) {
-            //     $("#showSelectContent").html('');
-            //     _.each(data, function (item) {
-            //         $("#showSelectContent").append('<li><a href="#">'+Item+'</a></li>')
-            //     })
-            // });
+            $.when(
+                utils.load({url: ele.url})
+            ).done(function (data) {
+                $("#showSelectContent").html('');
+                _.each(data.channelList, function (item) {
+                    $("#showSelectContent").append('<li><a href="#">' + item.channelname + '</a></li>')
+                })
+            });
 
             $('#showSelect').show();
         });

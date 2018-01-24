@@ -173,7 +173,7 @@ window.Tower = {
 
 
             //show channel list
-            var channelListTemplate = _.template('<li><a href="#"><%=channlename%></a></li>');
+            /*var channelListTemplate = _.template('<li><a href="#"><%=channlename%></a></li>');
 
             $.when(
                 utils.load({ url: 'channellist' }),//channellist
@@ -186,7 +186,7 @@ window.Tower = {
 
                 $('#selectchannel').html( channelsel.join('') );
 
-            })
+            })*/
 
             utils.subscribe('/topic/metrics/status', statusUpdate);
 

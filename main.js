@@ -157,7 +157,11 @@ app.post('/curChannel',function(req,res){
 })
 
 app.post('/channellist',function(req,res){
-    res.send({'channelList':ledgerMgr.getChannellist()})
+    ledgerMgr.getChannellist().then(channelList=>{
+        res.send({'channelList':channelList});
+    }).catch(err=>{
+        res.send({'channelList':[ledgerMgr.getCurrChannel()]});
+    })
 })
 
 

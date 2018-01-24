@@ -16,28 +16,32 @@
 
 var EventEmitter = require('events').EventEmitter;
 var ledgerEvent = new EventEmitter();
-var config=require('../config.json')
+var config = require('../config.json');
+var sql = require('../db/mysqlservice.js');
 
-var channels=config.channelsList
+var channels = config.channelsList;
 
 //var currChannel=channels[0]
 
-var currChannel='roberttestchannel';
+var currChannel = 'roberttestchannel';
 
 
-function changeChannel(channelName){
-    currChannel=channelName
-    ledgerEvent.emit('channgelLedger')
+function changeChannel(channelName) {
+    currChannel = channelName;
+    ledgerEvent.emit('channgelLedger');
 }
 
-function getCurrChannel(){
+function getCurrChannel() {
     return currChannel
 }
 
-function getChannellist(){
-    return channels
+async function getChannellist() {
+    let rows = await sql.getRowsBySQlNoCondtion('select channelname from channel ')
+
+    return rows;
 }
-exports.getCurrChannel=getCurrChannel
-exports.changeChannel=changeChannel
-exports.ledgerEvent=ledgerEvent
-exports.getChannellist=getChannellist
+
+exports.getCurrChannel = getCurrChannel
+exports.changeChannel = changeChannel
+exports.ledgerEvent = ledgerEvent
+exports.getChannellist = getChannellist
