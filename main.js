@@ -22,12 +22,9 @@ var statusMertics=require('./service/metricservice.js')
 
 var channelsRouter=require('./router/channels.js');
 
-<<<<<<< Updated upstream
 var keyset=require('./service/keysetService.js');
 
-=======
 var bcexplorerservice = require('./service/bcexplorerservice');
->>>>>>> Stashed changes
 
 
 app.use(express.static(path.join(__dirname,'explorer_client')));
