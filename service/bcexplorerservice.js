@@ -618,7 +618,7 @@ var modify_channel_block_trans = async (channel_id, peer, blockinfo, fabricservi
                     let keysettemp = keyset_writer[kind];
                     let keyname = keysettemp['key'];
                     let is_delete = keysettemp['is_delete'];
-                    //let keyname = keysettemp[''];
+                    let value = keysettemp['value'];
 
                     let is_delete_v = 0;
 
@@ -635,14 +635,43 @@ var modify_channel_block_trans = async (channel_id, peer, blockinfo, fabricservi
                         'keyname': keyname,
                         'isdelete': is_delete_v,
                         'chaincode': chaincodename,
-                        'remark': '',
+                        'trandtstr':timestamp,
+                        'valuess':value,
+                        'remark': ''
                     };
 
 
-                    let keysetcheck = await sql.getRowByPkOne(` select id from keyset where keyname = '${keyname}' and  channelname = '${channel_id}'  `)
+                    let keysetcheck = await sql.getRowByPkOne(` select id from keyset where keyname = '${keyname}' and  channelname = '${channel_id}' and  chaincode = '${chaincodename}' `)
+
                     if (keysetcheck == null) {
+
                         let keysetresult = await sql.saveRow('keyset', keyset);
+
+                    }else{
+
+                        let updatesql = ` update keyset set valuess = '${value}' , trandtstr = '${timestamp}' where keyname = '${keyname}' and  channelname = '${channel_id}' and  chaincode = '${chaincodename}'  `;
+                        console.info(updatesql);
+                        let updateresult = await sql.updateBySql(updatesql);
+
+
                     }
+
+
+                    var keyset_history = {
+
+                        'channelname':channel_id,
+                        'blocknum':blocknum,
+                        'blockhash':blockhash,
+                        'transactionhash':txhash,
+                        'keyname':keyname,
+                        'valuess':value,
+                        'trandtstr':timestamp,
+                        'chaincode': chaincodename,
+                        'remark':''
+                    };
+
+                    let keysetresult1 = await sql.saveRow( 'keyset_history' , keyset_history );
+
 
 
                 }
