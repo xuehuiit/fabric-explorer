@@ -35,7 +35,7 @@
 
    "host": "localhost",
    "port": "8080",
-   "keyValueStore": "~/project/ws_nodejs/fabric_sdk_node_studynew/fabric-client-kvs",
+   "keyValueStore": "/project/ws_nodejs/fabric_sdk_node_studynew/fabric-client-kvs",
    "eventWaitTime": "30000",
    "enableTls":false,
    "loglevel":"INFO",
