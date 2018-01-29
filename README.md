@@ -1,3 +1,10 @@
+> please checkout tag v1.0
+
+```
+$ git checkout v1.0
+```
+
+
 # fabric explorer
 
 Fabric-explorer is a simple, powerful, easy-to-use, highly maintainable, open source fabric browser. Fabric-explorer can reduce the difficulty of learning and using fabric, so that we can intuitively feel the fabric of the powerful features.
