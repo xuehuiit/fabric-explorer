@@ -7,9 +7,9 @@ var orgnamemap = bcexplorerservice.ORGNAMEMAP;
 console.info(  JSON.stringify( orgnamemap ) );*/
 
 
-//bcexplorerservice.testfunc('org1');
+bcexplorerservice.testfunc('org1');
 
-bcexplorerservice.parserOrg('org1');
+//bcexplorerservice.parserOrg('org1');
 
 
 

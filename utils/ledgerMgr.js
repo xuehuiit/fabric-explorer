@@ -21,8 +21,8 @@ var sql = require('../db/mysqlservice.js');
 
 var channels = config.channelsList;
 var currchannelpeerma = {};
-
 //var currChannel=channels[0]
+var currchannelpeersmap = {};
 
 
 var currOrg = '';
@@ -67,6 +67,25 @@ var changecurrchannelpeerma = (currchannelmap)=>{
     currchannelpeerma = currchannelmap;
 
 }
+
+
+
+
+var getCurrchannelpeersmap = ()=>{
+
+    return currchannelpeersmap;
+}
+
+
+var changeCurrchannelpeersmap = (currchannelmap)=>{
+
+    currchannelpeersmap = currchannelmap;
+
+}
+
+exports.changeCurrchannelpeersmap=changeCurrchannelpeersmap;
+exports.getCurrchannelpeersmap=getCurrchannelpeersmap;
+
 
 exports.getcurrchannelpeerma=getcurrchannelpeerma;
 exports.changecurrchannelpeerma=changecurrchannelpeerma;

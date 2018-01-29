@@ -26,6 +26,8 @@ var client = new hfc();
 var channelmap = {};
 var peermap = {};
 var channelpeer = {};
+var orderermap = {};
+var channelorderer = {};
 
 /*
 var channel = getchannel(channelid
@@ -113,7 +115,9 @@ var getblockInfobyNum = function (channelid , peerRequest ,blocknum) {
 var getblockInfobyHash = function ( channelid , peerRequest , blockHash ) {
 
     let channel = getchannel(channelid);
+
     let  peer = getpeer(peerRequest);
+
     setupchannel(channel,peer,channelid,peerRequest);
 
     return getOrgUser4Local().then(( user )=>{
@@ -143,6 +147,7 @@ var getPeerChannel = function ( peerRequest  ) {
 
     let  peer = getpeer(peerRequest);
 
+
     return getOrgUser4Local().then(( user )=>{
 
         return client.queryChannels(peer)
@@ -165,6 +170,7 @@ var getPeerChannel = function ( peerRequest  ) {
 var getPeerInstallCc = function (  peerRequest  ) {
 
     let  peer = getpeer(peerRequest);
+    //let  peer1 = client.newPeer("grpc://192.168.23.212:7051");
 
     return getOrgUser4Local().then(( user )=>{
 
@@ -206,6 +212,38 @@ var getPeerInstantiatedCc = function ( channelid , peerRequest ) {
 }
 
 
+/**
+ *
+ *  获取Channel中包含的其他Org
+ *
+ *  @param blocknum
+ *  @returns {Promise.<TResult>}
+ *
+ */
+var getChannelConfing = function ( channelid , peerRequest , orderers ) {
+
+
+    let channel = getchannel(channelid);
+    let  peer = getpeer(peerRequest);
+
+    setupchannel(channel,peer,channelid,peerRequest);
+    setupchannel4Orderer(channel,channelid,orderers);
+
+
+    return getOrgUser4Local().then(( user )=>{
+
+        return channel.getChannelConfig();
+
+    } ,(err)=>{
+
+        console.log('error', err);
+
+    } )
+
+}
+
+
+
 var  getTransaction = function (channelid , peerRequest ,transhash) {
 
     let channel = getchannel(channelid);
@@ -221,6 +259,8 @@ var  getTransaction = function (channelid , peerRequest ,transhash) {
     })
 
 }
+
+
 
 
 /**
@@ -423,19 +463,37 @@ function getchannel( channel_id ) {
 
 function getpeer(peerRequest) {
 
-    if( peermap[peerRequest] == null){
-        let  peer = client.newPeer(peerRequest);
-        peermap[peerRequest]=peer;
+    let requesturl = peerRequest['requests'];
+    //let requesturl_pro = getpeer
+
+    if( peermap[requesturl] == null){
+        let  peer = client.newPeer(requesturl);
+        peermap[requesturl]=peer;
     }
 
-    return peermap[peerRequest];
+    return peermap[requesturl];
 
 }
 
 
-function setupchannel( channel1, peer ,channel_id , peer_request) {
+function getOrderer( Orderer ) {
 
-    let pkey = channel_id + peer_request;
+    let orderurl = Orderer['url'];
+
+    if( orderermap[orderurl] == null){
+        let order = client.newOrderer(orderurl);
+        orderermap[orderurl]=order;
+    }
+
+    return orderermap[orderurl];
+
+
+
+}
+
+function setupchannel( channel1, peer , channel_id , peer_request ) {
+
+    let pkey = channel_id + peer['requests'];
 
     if( channelpeer[pkey] == null ){
         channel1.addPeer(peer);
@@ -445,6 +503,25 @@ function setupchannel( channel1, peer ,channel_id , peer_request) {
 
 }
 
+
+function setupchannel4Orderer( channel1 , channel_id , orderers ) {
+
+
+    for( let ind = 0 ; ind<orderers.length ; ind++ ){
+
+        let orderer = orderers[ind];
+        let pkey = channel_id + orderer['url'];
+
+
+        if(  channelorderer[pkey] == null ){
+            let fabricorderer = getOrderer(orderer);
+            channel1.addOrderer(fabricorderer);
+            channelorderer[pkey] = fabricorderer;
+
+        }
+    }
+
+}
 
 
 exports.inits = inits;
@@ -457,3 +534,4 @@ exports.getPeerInstantiatedCc = getPeerInstantiatedCc;
 exports.getTransaction = getTransaction;
 exports.sendTransaction = sendTransaction;
 exports.queryCc = queryCc;
+exports.getChannelConfing = getChannelConfing;

@@ -10,6 +10,15 @@ module.exports = function (id) {
 
         hideLink: true,
 
+        url: 'network',
+
+        nodearr :  [],
+
+
+        edgesarr : [],
+
+
+
         init: function (data) {
             Dashboard.Utils.emit('widget|init|' + this.name);
 
@@ -39,32 +48,106 @@ module.exports = function (id) {
         },
 
 
+        fetch: function() {
+            var _this = this;
+            var rows = []
+
+            $.when(
+                utils.load({ url: this.url })
+            ).done(function(data) {
+
+
+
+                $('#widget-' + _this.shell.id).css({"overflow-x":"auto"});
+
+
+
+                this.nodearr = data.nodearr;
+                this.edgesarr = data.edgesarr;
+
+
+
+                var nodes = new DataSet(this.nodearr);
+
+                // create an array with edges
+
+
+
+                var edges = new DataSet(this.edgesarr);
+
+                // create a network
+                var container = document.getElementById('widget-' + _this.shell.id);
+
+                // provide the data in the vis format
+                var data = {
+                    nodes: nodes,
+                    edges: edges
+                };
+                var options = {
+                    height: '100%',
+                    width: '100%',
+                    "interaction": {
+
+                        "zoomView": false   //控制是否被移动
+                    },
+                    "edges": {
+                        width: 1,
+
+                        height:20,
+                        arrows: {
+                            to: {
+                                scaleFactor: 2
+                            }
+                        }
+                    }
+
+                };
+
+                // initialize your network!
+                var network = new Network(container, data, options);
+
+
+                //////  ================  ///////
+
+
+
+
+                _this.postFetch();
+            });
+        },
+
         render: function () {
+
             Dashboard.render.widget(this.name, this.shell.tpl);
+
             this.fetch();
 
-            var nodes = new DataSet([
-                {id: 1, label: 'CA', font:{size:30}, shape: 'circle'},
-                {id: 2, label: 'Orderer' , font:{size:30}, shape: 'ellipse' },
-                {id: 3, label: 'peer1' ,font:{size:30}, shape: 'box'   },
-                {id: 4, label: 'peer2' ,font:{size:30}, shape: 'box' },
-                {id: 5, label: 'peer3',font:{size:30}, shape: 'box' },
-                {id: 6, label: 'peer4',font:{size:30}, shape: 'box' },
-                {id: 7, label: 'peer5',font:{size:30}, shape: 'box' },
-                {id: 8, label: 'peer6',font:{size:30}, shape: 'box' },
-                {id: 9, label: 'peer7',font:{size:30}, shape: 'box' }
-            ]);
+
+            //alert('ffffffffff');
+
+
+
+            /*var nodearr =  [
+                                {id: 1, label: 'CA', font:{size:30}, shape: 'circle'},
+                                {id: 2, label: 'Orderer' , font:{size:30}, shape: 'ellipse' },
+                                {id: 3, label: 'peer1' ,font:{size:30}, shape: 'box'   },
+                                {id: 4, label: 'peer2' ,font:{size:30}, shape: 'box' },
+                                {id: 5, label: 'peer3',font:{size:30}, shape: 'box' }
+                            ];*/
+
+
+
+            /*var nodes = new DataSet(this.nodearr);
 
             // create an array with edges
-            var edges = new DataSet([
-                {from: 3, to: 2, arrows:'to'},
-                {from: 4, to: 2, arrows:'to'},
-                {from: 5, to: 2, arrows:'to'},
-                {from: 6, to: 2, arrows:'to'},
-                {from: 7, to: 2, arrows:'to'},
-                {from: 8, to: 2, arrows:'to'},
-                {from: 9, to: 2, arrows:'to'}
-            ]);
+
+            /!*var edgesarr = [
+                                {from: 3, to: 2, arrows:'to'},
+                                {from: 4, to: 2, arrows:'to'},
+                                {from: 5, to: 2, arrows:'to'}
+                            ];*!/
+
+            var edges = new DataSet(this.edgesarr);
 
             // create a network
             var container = document.getElementById('widget-' + this.shell.id);
@@ -76,7 +159,6 @@ module.exports = function (id) {
             };
             var options = {
 
-
                 "interaction": {
 
                     "zoomView": false   //控制是否被移动
@@ -85,7 +167,7 @@ module.exports = function (id) {
             };
 
             // initialize your network!
-            var network = new Network(container, data, options);
+            var network = new Network(container, data, options);*/
 
 
             this.postRender();

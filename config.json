@@ -8,21 +8,21 @@
             "name": "peer1",
             "requests": "192.168.23.212:7051",
             "events": "192.168.23.212:7053",
-            "server-hostname": "peer0.org1.robertfabrictest.com",
+            "serverhostname": "peer0.org1.robertfabrictest.com",
             "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
          },
          {
             "name": "peer2",
             "requests": "172.16.10.186:7051",
             "events": "172.16.10.186:7053",
-            "server-hostname": "peer1.org1.robertfabrictest.com",
+            "serverhostname": "peer1.org1.robertfabrictest.com",
             "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
          },
          {
             "name": "peer3",
             "requests": "172.16.10.187:7051",
             "events": "172.16.10.187:7053",
-            "server-hostname": "peer2.org1.robertfabrictest.com",
+            "serverhostname": "peer2.org1.robertfabrictest.com",
             "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
          }
 
@@ -33,6 +33,12 @@
       }
    }],
 
+   "orderer": [{
+      "url": "192.168.23.212:7050",
+      "serverhostname": "orderer0.example.com",
+      "tls_cacerts": "/artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/ca.crt"
+   }],
+
    "host": "localhost",
    "port": "8080",
    "keyValueStore": "/project/ws_nodejs/fabric_sdk_node_studynew/fabric-client-kvs",
@@ -41,10 +47,10 @@
    "loglevel":"INFO",
    "channelsList": ["mychannel"],
    "mysql": {
-      "host": "172.16.10.86",
+      "host": "localhost",
       "port": "3306",
       "database": "blockchainexplorer",
       "username": "root",
-      "passwd": "q1w2e3r4t%"
+      "passwd": "123456"
    }
 }

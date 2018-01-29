@@ -52,13 +52,19 @@ app.post("/api/tx/getinfo", async function(req, res) {
     let channelpeermap = ledgerMgr.getcurrchannelpeerma();
     let peer = channelpeermap[curr_channel];
 
-    let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
+    //let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
 
-    let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
+    //peer['requests'] = bcexplorerservice.getPeerRequest(peer['requests']);
+
+    let response_payloads = await fabricservice.getTransaction(curr_channel , bcexplorerservice.getPeerRequestInfo(peer) ,txid);
 
     var header = response_payloads['transactionEnvelope']['payload']['header']
     var data = response_payloads['transactionEnvelope']['payload']['data']
     var signature = response_payloads['transactionEnvelope']['signature'].toString("hex")
+
+
+    let otherorgs = bcexplorerservice.getOtherOrg();
+
 
     res.send({
         'tx_id':header.channel_header.tx_id,
@@ -106,7 +112,9 @@ app.post("/api/tx/json", async function(req, res) {
 
         let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
 
-        let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
+        //peer['requests'] = bcexplorerservice.getPeerRequest(peer['requests']);
+
+        let response_payloads = await fabricservice.getTransaction( curr_channel , bcexplorerservice.getPeerRequestInfo(peer)  , txid );
 
 
         var header = response_payloads['transactionEnvelope']['payload']['header'];
@@ -148,8 +156,11 @@ app.post("/api/block/json", async function(req, res) {
 
     let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
 
+    //peer['requests'] = bcexplorerservice.getPeerRequest(peer['requests']);
+
     //let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
-    let blockinfo = await fabricservice.getblockInfobyNum( curr_channel , peerRequest , parseInt(number) );
+    let blockinfo = await fabricservice.getblockInfobyNum( curr_channel , bcexplorerservice.getPeerRequestInfo(peer)  , parseInt(number) );
+
     var blockjsonstr = JSON.stringify(blockinfo);
 
     res.send(blockjsonstr);
@@ -178,7 +189,11 @@ app.post("/api/block/getinfo", async function(req, res) {
     let peerRequest = bcexplorerservice.getPeerRequest(peer['requests']);
 
     //let response_payloads = await fabricservice.getTransaction(curr_channel , peerRequest ,txid);
-    let blockinfo = await fabricservice.getblockInfobyNum( curr_channel , peerRequest , parseInt(number) );
+
+    //peer['requests'] = bcexplorerservice.getPeerRequest(peer['requests']);
+
+
+    let blockinfo = await fabricservice.getblockInfobyNum( curr_channel , bcexplorerservice.getPeerRequestInfo(peer)  , parseInt(number) );
     let blockjsonstr = JSON.stringify(blockinfo);
 
     let low = blockinfo['header']['number']['low'];
@@ -270,6 +285,125 @@ app.post('/getKeyset',function(req,res){
     })
 })
 
+
+app.post('/peerlist',function(req,res){
+
+
+    let curr_channel = ledgerMgr.getCurrChannel();
+    let curr_channel_peermap = ledgerMgr.getCurrchannelpeersmap()[curr_channel];
+    let curr_channel_peers = [];
+
+    for (let key in curr_channel_peermap) {
+        let peer = curr_channel_peermap[key];
+        curr_channel_peers.push(peer);
+
+    }
+
+    res.send(curr_channel_peers);
+
+    /*keyset.getKeyset().then(rows=>{
+        console.info(JSON.stringify(rows))
+        res.send(rows);
+    })*/
+})
+
+
+app.post('/network',function(req,res){
+
+
+    let curr_channel = ledgerMgr.getCurrChannel();
+    let curr_org = ledgerMgr.getCurrOrg();
+    let curr_peers = bcexplorerservice.getPeers4Org(curr_org);
+    let curr_orderer = bcexplorerservice.orderers[0];
+    let other_org = bcexplorerservice.getOtherOrg();
+
+    let currorgobj = bcexplorerservice.ORGNAMEMAP[curr_org];
+    let currmspid = currorgobj['mspid'];
+
+    /*{id: 1, label: 'CA', font:{size:30}, shape: 'circle'},
+    {id: 2, label: 'Orderer' , font:{size:30}, shape: 'ellipse' },
+    {id: 3, label: 'Org1Msp' ,font:{size:30}, shape: 'ellipse' },*/
+
+    let nodearr = [];
+    let ledag = [];
+
+    let ordererdata = {id: 1, label: 'Orderer', font:{size:30}, shape: 'ellipse'};
+    let currmsp = {id: 2, label: `${currmspid}`, font:{size:30}, shape: 'box'};
+
+    nodearr.push(ordererdata);
+    nodearr.push(currmsp);
+
+
+    let ind = 3;
+
+    let peerind = 3;
+
+    for( let key in other_org   ){
+
+        if(  key == currmspid )
+            continue;
+        let orgmsp = other_org[key];
+        let temp =  {id: peerind , label:  `${key}`  , font:{size:30}, shape: 'box'};
+        nodearr.push(temp);
+
+        peerind ++;
+    }
+
+    for(  let index2 = peerind ;  index2< curr_peers.length+peerind ; index2++   ){
+
+        let peertemp = curr_peers[index2-peerind];
+        let temp1 =  {id: index2 , label:  `${peertemp['name']}`  , font:{size:30,color:'white'}, shape: 'database',color:'DarkViolet'};
+        nodearr.push(temp1);
+
+    }
+
+
+    ledag.push({from: 2, to: 1, arrows:'to'});
+
+    for ( let index5 = ind-1 ; index5<peerind-1;index5++ ){
+
+        let nodetemp = nodearr[index5];
+        let nodeid = nodetemp['id'];
+        ledag.push({from: nodeid , to: 1, arrows:'to'});
+
+    }
+
+
+
+    for( let index6 = peerind-1 ; index6<nodearr.length ; index6++){
+
+
+        let nodetemp = nodearr[index6];
+        let nodeid = nodetemp['id'];
+        ledag.push({from: nodeid , to: 2 , arrows:'to'});
+
+    }
+
+
+    let result = {
+        "nodearr":nodearr, "edgesarr":ledag
+
+
+    }
+
+
+    //{from: 3, to: 2, arrows:'to'},
+
+
+    res.send(result);
+
+
+
+
+    /*keyset.getKeyset().then(rows=>{
+        console.info(JSON.stringify(rows))
+        res.send(rows);
+    })*/
+
+
+
+})
+
 // ============= start server =======================
 
 var server = http.listen(port, function() {
@@ -279,4 +413,11 @@ var server = http.listen(port, function() {
 
 
 
+
+//注册异常处理器
+process.on('unhandledRejection', function (err) {
+    console.error(err.stack);
+});
+
+process.on(`uncaughtException`, console.error);
 
