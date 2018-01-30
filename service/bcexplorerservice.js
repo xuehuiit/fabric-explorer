@@ -1034,8 +1034,25 @@ var getCurrPeerContaitCc = async ()=> {
 
 
 
-var getOrgStatus  = ()=>{
+var getOrgStatus  = async ()=>{
 
+    let currorg = ledgerMgr.getCurrOrg();
+    let peers = getCurrOrgPeers();
+
+    let searchSql = `select id from channel `;
+    let channelss = await sql.getRowsBySQlNoCondtion(searchSql);
+
+    let searchCcSql = ' select count(distinct(name)) as nums from chaincodes ';
+    let chaincodess = await sql.getRowsBySQlNoCondtion( searchCcSql );
+
+
+    let peer_num = peers.length;
+    let channel_num = channelss.length;
+    let chaincode_num = chaincodess[0]['nums'];
+
+
+
+    return { 'peers':peer_num , 'channels':channel_num , 'blocks':0 , 'chaincodes':chaincode_num , 'tx':0 };
 
 }
 
@@ -1048,20 +1065,32 @@ var getChannelStatus = ()=>{
 
 
 
-var getPeerStatus = ()=>{
+var getPeerStatus = async ()=>{
 
 
 
+    let currp = ledgerMgr.getCurrpeer();
+    let peername = currp['name'];
+
+    let searchSql = `select id from channel where channelname in ( select channelname from peer_ref_channel where peer_name = '${peername}' ) `;
+    let rows = await sql.getRowsBySQlNoCondtion(searchSql);
+
+    let searchsql1 = ` select id from chaincodes where peer_name in ( select peer_name from peer_ref_channel where peer_name = '${peername}' )  `;
+    let chaincodelist  = await sql.getRowsBySQlNoCondtion( searchsql1 );
 
 
-    return {'peers':0,'channels':0,'blocks':0,'chaincodes':0,'tx':0};
+    let channels = rows.length;
+    let chaincodess = chaincodelist.length;
+
+    return {'peers':0,'channels':channels,'blocks':0,'chaincodes':chaincodess,'tx':0};
 
 }
 
 
 
 
-
+exports.getPeerStatus = getPeerStatus;
+exports.getOrgStatus = getOrgStatus;
 
 exports.getCurrPeerJoinChannels = getCurrPeerJoinChannels;
 exports.getCurrPeerContaitCc = getCurrPeerContaitCc;
@@ -1082,3 +1111,4 @@ exports.blockScanEvent = blockScanEvent;
 exports.getPeer4Channelid = getPeer4Channelid;
 exports.getPeerRequest = getPeerRequest;
 exports.orderers=orderers;
+
