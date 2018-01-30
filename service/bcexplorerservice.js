@@ -1052,7 +1052,7 @@ var getOrgStatus  = async ()=>{
 
 
 
-    return { 'peers':peer_num , 'channels':channel_num , 'blocks':0 , 'chaincodes':chaincode_num , 'tx':0 };
+    return { 'peerCount':peer_num , 'channelCount':channel_num , 'latestBlock':0 , 'chaincodeCount':chaincode_num , 'txCount':0 };
 
 }
 
@@ -1082,7 +1082,7 @@ var getPeerStatus = async ()=>{
     let channels = rows.length;
     let chaincodess = chaincodelist.length;
 
-    return {'peers':0,'channels':channels,'blocks':0,'chaincodes':chaincodess,'tx':0};
+    return {'peerCount':0,'channelCount':channels,'latestBlock':0,'chaincodeCount':chaincodess,'txCount':0};
 
 }
 

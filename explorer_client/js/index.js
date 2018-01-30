@@ -137,6 +137,7 @@ window.Tower = {
 
 		'default':function () {
 
+            showSection('org');
             syncStatus(function (response) {
                 statusUpdate(response);
             });
@@ -146,6 +147,7 @@ window.Tower = {
 		},
 
         'organization': function () {
+            showSection('org');
             // data that the widgets will use
             var data = {
                 'numUser': 4,
@@ -164,6 +166,7 @@ window.Tower = {
         },
 
 		'channel': function() {
+            showSection('channel');
 			// data that the widgets will use
 			var data = {
 				'numUser': 4,
@@ -212,6 +215,7 @@ window.Tower = {
 		},
 
         'peers': function () {
+            showSection('peer');
             // data that the widgets will use
             var data = {
                 'numUser': 4,
@@ -256,6 +260,7 @@ var statusUpdate = function(response) {
     utils.prettyUpdate(Tower.status.latestBlock, status.latestBlock, $('#default-blocks'));
     utils.prettyUpdate(Tower.status.txCount, status.txCount, $('#default-txn'));
     utils.prettyUpdate(Tower.status.chaincodeCount, status.chaincodeCount, $('#default-chaincode'));
+    utils.prettyUpdate(Tower.status.channelCount, status.channelCount, $('#default-channels'));
 
     Tower.status = status;
 
@@ -267,6 +272,10 @@ var statusUpdate = function(response) {
     Dashboard.Utils.emit('node-status|announce');
 };
 
+function showSection(sectionName) {
+
+    utils.load({ url: 'showSection' ,data:{'sectionName':sectionName},async:false});
+}
 function syncStatus(cb) {
     $.ajax({
         type: "post",
@@ -283,7 +292,8 @@ function syncStatus(cb) {
                 peerCount: 'n/a',
                 latestBlock: 'n/a',
                 txCount: 'n/a',
-                chaincodeCount: 'n/a'
+                chaincodeCount: 'n/a',
+                channelCount: 'n/a'
             });
         }
 

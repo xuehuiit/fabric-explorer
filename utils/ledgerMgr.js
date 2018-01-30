@@ -24,8 +24,9 @@ var currchannelpeerma = {};
 //var currChannel=channels[0]
 var currchannelpeersmap = {};
 var currOrg = '';
-var currChannel='';
+var currChannel = '';
 var currpeer;
+var currSection;
 
 
 function changeChannel(channelName) {
@@ -53,7 +54,7 @@ async function getChannellist4CurrPeer() {
 
 
 function getCurrOrg() {
-   return currOrg;
+    return currOrg;
 }
 
 function changeCurrOrg(orgname) {
@@ -62,59 +63,67 @@ function changeCurrOrg(orgname) {
 
 }
 
-var getcurrchannelpeerma = ()=>{
+var getcurrchannelpeerma = () => {
 
-return currchannelpeerma;
+    return currchannelpeerma;
 }
 
 
-var changecurrchannelpeerma = (currchannelmap)=>{
+var changecurrchannelpeerma = (currchannelmap) => {
 
     currchannelpeerma = currchannelmap;
 
 }
 
 
-
-
-var getCurrchannelpeersmap = ()=>{
+var getCurrchannelpeersmap = () => {
 
     return currchannelpeersmap;
 }
 
 
-var changeCurrchannelpeersmap = (currchannelmap)=>{
+var changeCurrchannelpeersmap = (currchannelmap) => {
 
     currchannelpeersmap = currchannelmap;
 
 }
 
 
-
-var getCurrpeer = ()=>{
+var getCurrpeer = () => {
 
     return currpeer;
 }
 
-var changeCurrPeer = (peer)=>{
+var changeCurrPeer = (peer) => {
 
     currpeer = peer;
+}
+
+function changeSection(sectionName) {
+    currSection = sectionName;
+}
+
+function currSection() {
+    return currSection;
 }
 
 
 exports.changeCurrPeer = changeCurrPeer;
 exports.getCurrpeer = getCurrpeer;
-exports.changeCurrchannelpeersmap=changeCurrchannelpeersmap;
-exports.getCurrchannelpeersmap=getCurrchannelpeersmap;
-exports.getcurrchannelpeerma=getcurrchannelpeerma;
-exports.changecurrchannelpeerma=changecurrchannelpeerma;
+exports.changeCurrchannelpeersmap = changeCurrchannelpeersmap;
+exports.getCurrchannelpeersmap = getCurrchannelpeersmap;
+exports.getcurrchannelpeerma = getcurrchannelpeerma;
+exports.changecurrchannelpeerma = changecurrchannelpeerma;
 
-exports.getCurrChannel=getCurrChannel;
-exports.changeChannel=changeChannel;
-exports.ledgerEvent=ledgerEvent;
-exports.getChannellist=getChannellist;
+exports.getCurrChannel = getCurrChannel;
+exports.changeChannel = changeChannel;
+exports.ledgerEvent = ledgerEvent;
+exports.getChannellist = getChannellist;
 
-exports.getCurrOrg=getCurrOrg;
-exports.changeCurrOrg=changeCurrOrg;
+exports.getCurrOrg = getCurrOrg;
+exports.changeCurrOrg = changeCurrOrg;
+
+exports.currSection = currSection;
+exports.changeSection = changeSection;
 
 exports.getChannellist4CurrPeer = getChannellist4CurrPeer;

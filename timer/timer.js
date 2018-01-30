@@ -26,6 +26,7 @@ var txnPerMinMeter=Metrics.txMetrics
 var stomp=require('../socket/websocketserver.js').stomp()
 
 var statusMertics=require('../service/metricservice.js')
+var bcexplorerservice = require('../service/bcexplorerservice');
 
 var ledgerMgr=require('../utils/ledgerMgr.js')
 
@@ -58,9 +59,20 @@ function start() {
 
     //push status
     setInterval(function () {
-        statusMertics.getStatus(ledgerMgr.getCurrChannel(),function (status) {
-            stomp.send('/topic/metrics/status',{},JSON.stringify(status))
-        })
+        let sectionName=ledgerMgr.currSection();
+        if (sectionName=='channel'){
+            statusMertics.getStatus(ledgerMgr.getCurrChannel(),function (status) {
+                stomp.send('/topic/metrics/status',{},JSON.stringify(status))
+            })
+        } else if(sectionName=='org'){
+            let status=bcexplorerservice.getOrgStatus().then(status=>{
+                stomp.send('/topic/metrics/status',{},JSON.stringify(status))
+            });
+        } else if(sectionName=='peer'){
+            bcexplorerservice.getPeerStatus().then(status=>{
+                stomp.send('/topic/metrics/status',{},JSON.stringify(status))
+            });
+        }
     },1000)
 
     //push chaincode per tx

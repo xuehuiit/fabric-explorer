@@ -51,8 +51,18 @@ export default {
     showSelet: function (target) {
         $('#showSelect').hide();
         var targets = [
-            {name: 'channel', showText: "Channels", url: 'channellist'},
-            {name: 'peers', showText: "Peers", url: ''}
+            {name: 'channel', showText: "Channels", url: 'channellist',cb:function (data) {
+                $("#showSelectContent").html('');
+                _.each(data.channelList, function (item) {
+                    $("#showSelectContent").append('<li><a href="#">' + item.channelname + '</a></li>')
+                })
+            }},
+            {name: 'peers', showText: "Peers", url: 'peerselectlist',cb:function (data) {
+                $("#showSelectContent").html('');
+                _.each(data.peerlist, function (item) {
+                    $("#showSelectContent").append('<li><a href="#">' + item.name + '</a></li>')
+                })
+            }}
         ]
         var selected = _.where(targets, {name: target});
 
@@ -64,14 +74,8 @@ export default {
             $.when(
                 utils.load({ url: 'changeChannel' ,data: { 'channelName':channelName  }})
             ).done(function(data) {
-                $.when(
-                    utils.load({ url: 'curChannel' })
-                ).done(function(data) {
-                    Tower.section[Tower.current]();
-                });
+                Tower.section[Tower.current]();
             });
-
-            // Tower.section[Tower.current]();
         };
 
         $('#showSelectContent').off('click','li a',clkFunc);
@@ -84,10 +88,7 @@ export default {
             $.when(
                 utils.load({url: ele.url})
             ).done(function (data) {
-                $("#showSelectContent").html('');
-                _.each(data.channelList, function (item) {
-                    $("#showSelectContent").append('<li><a href="#">' + item.channelname + '</a></li>')
-                })
+                ele.cb(data);
             });
 
             $('#showSelect').show();
