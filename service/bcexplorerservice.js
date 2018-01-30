@@ -317,10 +317,13 @@ var parserOrg = async (orgname) => {
     for (let ind = 0; ind < peers.length; ind++) {
 
         let peer = peers[ind];
-        //let peerrequest = getPeerRequest(peer['requests']);
 
 
-        //peer['requests'] = getPeerRequest(peer['requests']);
+        let currpeer = ledgerMgr.getCurrpeer();
+
+        if(  ind == 0 && (currpeer == '' || currpeer == null) )
+            ledgerMgr.changeCurrPeer(peer);
+
 
 
         let peerchannel = await fabricservice.getPeerChannel(  getPeerRequestInfo(peer) );

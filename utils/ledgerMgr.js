@@ -23,11 +23,9 @@ var channels = config.channelsList;
 var currchannelpeerma = {};
 //var currChannel=channels[0]
 var currchannelpeersmap = {};
-
-
 var currOrg = '';
-
 var currChannel='';
+var currpeer;
 
 
 function changeChannel(channelName) {
@@ -41,7 +39,6 @@ function getCurrChannel() {
 
 async function getChannellist() {
     let rows = await sql.getRowsBySQlNoCondtion('select channelname from channel ')
-
     return rows;
 }
 
@@ -83,10 +80,23 @@ var changeCurrchannelpeersmap = (currchannelmap)=>{
 
 }
 
+
+
+var getCurrpeer = ()=>{
+
+    return currpeer;
+}
+
+var changeCurrPeer = (peer)=>{
+
+    currpeer = peer;
+}
+
+
+exports.changeCurrPeer = changeCurrPeer;
+exports.getCurrpeer = getCurrpeer;
 exports.changeCurrchannelpeersmap=changeCurrchannelpeersmap;
 exports.getCurrchannelpeersmap=getCurrchannelpeersmap;
-
-
 exports.getcurrchannelpeerma=getcurrchannelpeerma;
 exports.changecurrchannelpeerma=changecurrchannelpeerma;
 

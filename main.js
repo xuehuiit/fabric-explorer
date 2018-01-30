@@ -299,6 +299,8 @@ app.post('/peerlist',function(req,res){
 
     }
 
+    let currp = ledgerMgr.getCurrpeer();
+
     res.send(curr_channel_peers);
 
     /*keyset.getKeyset().then(rows=>{
