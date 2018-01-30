@@ -43,6 +43,15 @@ async function getChannellist() {
 }
 
 
+async function getChannellist4CurrPeer() {
+
+    let currp = ledgerMgr.getCurrpeer();
+    let peername = currp['name'];
+    let rows = await sql.getRowsBySQlNoCondtion(`select channelname from channel where peer_name in ( select peer_name from peer_ref_channel where peer_name = '${peername}' ) `)
+    return rows;
+}
+
+
 function getCurrOrg() {
    return currOrg;
 }
@@ -107,3 +116,5 @@ exports.getChannellist=getChannellist;
 
 exports.getCurrOrg=getCurrOrg;
 exports.changeCurrOrg=changeCurrOrg;
+
+exports.getChannellist4CurrPeer = getChannellist4CurrPeer;

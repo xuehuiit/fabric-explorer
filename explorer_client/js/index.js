@@ -68,6 +68,9 @@ window.Tower = {
             'blocklist': require('./widgets/blocklist'),
             'blockinfo': require('./widgets/blockinfo'),
             'txdetail': require('./widgets/txdetail'),
+
+            'chaincodelist4peer': require('./widgets/chaincodelist4peer'),
+            'channellist4peer': require('./widgets/channellist4peer'),
         });
 
 		//initialize the Dashboard, set up widget container
@@ -266,8 +269,8 @@ window.Tower = {
 
 
             var widgets = [
-                {widgetId: 'channellist', data: data,refetch: true},
-                {widgetId: 'chaincodelist', data: data,refetch: true},
+                {widgetId: 'channellist4peer', data: data,refetch: true},
+                {widgetId: 'chaincodelist4peer', data: data,refetch: true},
             ];
 
             utils.showHead(["default-channels","default-chaincode"]);

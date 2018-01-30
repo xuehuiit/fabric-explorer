@@ -137,6 +137,15 @@ var getPeers4Org = function (orgname) {
 
 }
 
+
+var getCurrOrgPeers = ()=>{
+
+    let orgname = ledgerMgr.getCurrOrg();
+    return getPeers4Org( orgname );
+
+}
+
+
 /**
  *
  * @param orgname
@@ -997,6 +1006,67 @@ function getOrdersRequestInfo(orderers) {
 }
 
 
+var getCurrPeerJoinChannels =  async ()=> {
+
+
+    let currp = ledgerMgr.getCurrpeer();
+    let peername = currp['name'];
+
+    let sqlresult = await sql.getRowsBySQl( ` select count(*) as nums from peer_ref_channel ` ,{'peer_name' : peername},'');
+
+    return sqlresult[0]['nums'];
+
+
+}
+
+
+var getCurrPeerContaitCc = async ()=> {
+
+    let currp = ledgerMgr.getCurrpeer();
+    let peername = currp['name'];
+
+    let sqlresult = await sql.getRowsBySQl( ` select count(distinct(name)) as nums from chaincodes ` ,{'peer_name' : peername},'');
+
+    return sqlresult[0]['nums'];
+
+
+}
+
+
+
+var getOrgStatus  = ()=>{
+
+
+}
+
+
+var getChannelStatus = ()=>{
+
+
+
+}
+
+
+
+var getPeerStatus = ()=>{
+
+
+
+
+
+    return {'peers':0,'channels':0,'blocks':0,'chaincodes':0,'tx':0};
+
+}
+
+
+
+
+
+
+exports.getCurrPeerJoinChannels = getCurrPeerJoinChannels;
+exports.getCurrPeerContaitCc = getCurrPeerContaitCc;
+
+exports.getCurrOrgPeers = getCurrOrgPeers;
 exports.getOtherOrg = getOtherOrg;
 exports.setOtherOrg = setOtherOrg;
 exports.getPeerRequestInfo = getPeerRequestInfo;

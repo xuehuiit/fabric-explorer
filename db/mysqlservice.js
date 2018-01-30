@@ -482,6 +482,40 @@ function getRowsBySQl(sqlchareter,condition,limit){
 }
 
 
+/**
+ * search table by sql
+ * @param datatype sqlchareter   the table name
+ * @param datatype ondtion       the search condition,it is sotre by array. exp condition = array("id"=>"1");
+ * @param datatype limit         the pagedtion.
+ *
+ */
+function getRowsByFullSQl(sqlchareter){
+
+    return new Promise(function (resolve,reject){
+
+
+
+        logger.debug(` the search sql is : ${sql} `)
+
+
+        connection.query( sqlchareter  , function(err, rows, fields  ) {
+
+            if (err){
+                reject(err)
+            }
+
+            console.log(  ` The solution is: ${rows.length }  `  );
+            logger.debug( ' The getRowsBySQl  ')
+
+            resolve(rows)
+
+        });
+    })
+
+
+}
+
+
 
 /**
  * search table by sql and it's not condtion
@@ -630,21 +664,18 @@ function getSQL2Map4Arr(sql,key){
 
 
 
-exports.saveRow = saveRow
-exports.updateRowByPk =updateRowByPk
-exports.updateRow = updateRow
-exports.updateBySql = updateBySql
-exports.getRowByPk = getRowByPk
-exports.getRowByPkOne =getRowByPkOne
-exports.getRowsByCondition =getRowsByCondition
-exports.getRowsBySQl =getRowsBySQl
-exports.getRowsBySQlNoCondtion =getRowsBySQlNoCondtion
-exports.getRowsBySQlCase =getRowsBySQlCase
-exports.getSQL2Map =getSQL2Map
-exports.getSQL2Map4Arr =getSQL2Map4Arr
-
-
-exports.openconnection = openconnection
-exports.closeconnection = closeconnection
-
+exports.saveRow = saveRow;
+exports.updateRowByPk =updateRowByPk;
+exports.updateRow = updateRow;
+exports.updateBySql = updateBySql;
+exports.getRowByPk = getRowByPk;
+exports.getRowByPkOne =getRowByPkOne;
+exports.getRowsByCondition =getRowsByCondition;
+exports.getRowsBySQl =getRowsBySQl;
+exports.getRowsBySQlNoCondtion =getRowsBySQlNoCondtion;
+exports.getRowsBySQlCase =getRowsBySQlCase;
+exports.getSQL2Map =getSQL2Map;
+exports.getSQL2Map4Arr =getSQL2Map4Arr;
+exports.openconnection = openconnection;
+exports.closeconnection = closeconnection;
 

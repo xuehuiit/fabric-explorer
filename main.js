@@ -286,7 +286,38 @@ app.post('/getKeyset',function(req,res){
 })
 
 
-app.post('/peerlist',function(req,res){
+
+
+app.post('/channellist4peer', async function(req,res){
+
+
+    let currp = ledgerMgr.getCurrpeer();
+    let peername = currp['name'];
+
+    let searchSql = `select * from channel where channelname in ( select channelname from peer_ref_channel where peer_name = '${peername}' ) `;
+
+    let rows = await sql.getRowsBySQlNoCondtion(searchSql);
+    res.send(rows);
+
+
+})
+
+app.post('/chaincodelist4peer',async function(req,res){
+
+
+    let currp = ledgerMgr.getCurrpeer();
+    let peername = currp['name'];
+
+    let searchsql = ` select * from chaincodes where peer_name in ( select peer_name from peer_ref_channel where peer_name = '${peername}' )  `;
+    let chaincodelist  = await sql.getRowsBySQlNoCondtion( searchsql );
+    res.send(chaincodelist);
+
+})
+
+
+
+
+app.post('/peerlist', async function(req,res){
 
 
     let curr_channel = ledgerMgr.getCurrChannel();
@@ -299,7 +330,9 @@ app.post('/peerlist',function(req,res){
 
     }
 
-    let currp = ledgerMgr.getCurrpeer();
+    //let currp = ledgerMgr.getCurrpeer();
+    let currpeerjoinchannel = await bcexplorerservice.getCurrPeerJoinChannels();
+    let currpeerconCc = await  bcexplorerservice.getCurrPeerContaitCc();
 
     res.send(curr_channel_peers);
 
