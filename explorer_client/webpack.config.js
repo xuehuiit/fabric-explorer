@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 
 module.exports = {
-    devtool:"source-map",
+    // devtool:"source-map",
     entry: ["webpack/hot/dev-server", "./js/index.js"],
     output: {
         path: path.join(__dirname, 'js'),

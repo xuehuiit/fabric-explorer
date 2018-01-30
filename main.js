@@ -248,9 +248,22 @@ app.post("/api/block/get", function(req, res) {
 
 //return latest status
 app.post("/api/status/get", function(req, res) {
-    statusMertics.getStatus(ledgerMgr.getCurrChannel(),function(status){
-        res.send(status)
-    })
+    let sectionName=ledgerMgr.currSection();
+    if (sectionName=='channel'){
+        statusMertics.getStatus(ledgerMgr.getCurrChannel(),function(status){
+            res.send(status)
+        })
+    } else if(sectionName=='org'){
+        bcexplorerservice.getOrgStatus().then(status=>{
+            res.send(status)
+        });
+
+    } else if(sectionName=='peer'){
+        bcexplorerservice.getPeerStatus().then(status=>{
+            res.send(status)
+        });
+    }
+
 });
 
 app.post('/chaincodelist',function(req,res){
@@ -275,6 +288,17 @@ app.post('/channellist',function(req,res){
     }).catch(err=>{
         res.send({'channelList':[ledgerMgr.getCurrChannel()]});
     })
+})
+
+app.post('/peerselectlist',function(req,res){
+    let peerlist=bcexplorerservice.getCurrOrgPeers();
+    res.send({'peerlist':peerlist});
+})
+
+app.post('/showSection',function(req,res){
+    let sectionName=req.body.sectionName;
+    ledgerMgr.changeSection(sectionName);
+    res.send({'a':ledgerMgr.currSection()});
 })
 
 
