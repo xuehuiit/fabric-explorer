@@ -280,7 +280,6 @@ app.post('/channellist',function(req,res){
 
 app.post('/getKeyset',function(req,res){
     keyset.getKeyset().then(rows=>{
-        console.info(JSON.stringify(rows))
         res.send(rows);
     })
 })
