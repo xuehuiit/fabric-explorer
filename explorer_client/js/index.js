@@ -296,18 +296,6 @@ $(function() {
 		}
 	});
 
-	/*$('#selectchannel').bind('click','li.dropdown-item',function(event){
-		var channelName=$(event.target).html()
-        $.when(
-            utils.load({ url: 'changeChannel' ,data: { 'channelName':channelName  }})
-        ).done(function(data) {
-            $.when(
-                utils.load({ url: 'curChannel' })
-            ).done(function(data) {
-                window.location.reload();
-            });
-        });
-	})*/
 
 	// logo handler
 	$("a.tower-logo").click(function(e) {
