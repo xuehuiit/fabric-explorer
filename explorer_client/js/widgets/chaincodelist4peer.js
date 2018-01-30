@@ -14,7 +14,7 @@ module.exports = function(id) {
 			'<thead style="font-weight: bold;"><tr><td>name</td><td>version</td><td>path</td><td>status</td></tr></thead>'+
 			'<tbody><%= rows %></tbody> </table> <div>'),
 
-		templateRow: _.template('<tr> <td><%= channelname %></td> <td><%= version %></td><td><%= path %></td> <td><%= ccstatus %></td></tr>'),
+		templateRow: _.template('<tr> <td><%= channelname %></td> <td><%= version %></td><td><%= path %></td> <td><%= ccstatus_commit %></td></tr>'),
 
 
         fetch: function() {

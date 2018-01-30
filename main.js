@@ -295,7 +295,32 @@ app.post('/channellist4peer', async function(req,res){
 
     let searchSql = `select * from channel where channelname in ( select channelname from peer_ref_channel where peer_name = '${peername}' ) `;
 
+
+    let chaincodesmap = await sql.getSQL2Map( ` select channelname , count(distinct(name)) as nums from chaincodes  where peer_name = '${peername}'  group by  channelname  `,'channelname');
+    let channeltransmap  = await sql.getSQL2Map( ` select channelname , count(*) as nums from transaction group by  channelname `,'channelname');
+
+
+    let keysetmap  = await sql.getSQL2Map( ` select channelname , count(*) as nums from keyset group by  channelname `,'channelname');
+
+
+
     let rows = await sql.getRowsBySQlNoCondtion(searchSql);
+
+    for( let ind = 0 ; ind < rows.length ; ind++ ){
+
+        let cc = rows[ind];
+        let channelname = cc['channelname'];
+
+        cc['ccnums'] = chaincodesmap.get(channelname)['nums']
+        cc['tranmums'] = channeltransmap.get(channelname)['nums']
+        cc['keynums'] = keysetmap.get(channelname)['nums']
+
+
+    }
+
+
+
+
     res.send(rows);
 
 
@@ -307,8 +332,22 @@ app.post('/chaincodelist4peer',async function(req,res){
     let currp = ledgerMgr.getCurrpeer();
     let peername = currp['name'];
 
-    let searchsql = ` select * from chaincodes where peer_name in ( select peer_name from peer_ref_channel where peer_name = '${peername}' )  `;
+    let searchsql = ` select * from chaincodes where peer_name in ( select peer_name from peer_ref_channel where peer_name = '${peername}' )  order by  ccstatus desc `;
     let chaincodelist  = await sql.getRowsBySQlNoCondtion( searchsql );
+
+
+
+    for( let ind = 0 ; ind < chaincodelist.length ; ind++ ){
+
+        let cc = chaincodelist[ind];
+
+        if( cc['ccstatus'] == 0  )
+                cc['ccstatus_commit'] = 'Install';
+        else
+                cc['ccstatus_commit'] = 'Instantiated';
+
+    }
+
     res.send(chaincodelist);
 
 })
@@ -328,6 +367,11 @@ app.post('/peerlist', async function(req,res){
         curr_channel_peers.push(peer);
 
     }
+
+
+    /* let orgs = await bcexplorerservice.getOrgStatus();
+    let peerstatus = await bcexplorerservice.getPeerStatus();
+    */
 
     //let currp = ledgerMgr.getCurrpeer();
     let currpeerjoinchannel = await bcexplorerservice.getCurrPeerJoinChannels();

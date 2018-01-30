@@ -11,10 +11,10 @@ module.exports = function(id) {
         url: 'channellist4peer',
 
 		template: _.template('<div class="info-table"> <table style="width: 100%; " class="table table-striped">' +
-			'<thead style="font-weight: bold;"><tr><td>name</td><td>blocks</td></tr></thead>'+
+			'<thead style="font-weight: bold;"><tr><td>name</td><td>blocks</td><td>txs</td><td>chaincodes</td><td>keys</td></tr></thead>'+
 			'<tbody><%= rows %></tbody> </table> <div>'),
 
-		templateRow: _.template('<tr> <td><%= channelname %></td> <td><%= blocks %></td></tr>'),
+		templateRow: _.template('<tr> <td><%= channelname %></td> <td><%= blocks %></td><td><%= tranmums  %></td><td><%= ccnums %></td><td><%= keynums %></td></tr>'),
 
 
         fetch: function() {
