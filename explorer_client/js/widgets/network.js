@@ -92,8 +92,6 @@ module.exports = function (id) {
                     },
                     "edges": {
                         width: 1,
-
-                        height:20,
                         arrows: {
                             to: {
                                 scaleFactor: 2
