@@ -6,7 +6,7 @@ export default {
             contentType: opts.type ? opts.type : 'application/json',
             cache: false,
             async: opts.async ? opts.async : true,
-            timeout: opts.timeout ? opts.timeout : 300
+            timeout: opts.timeout ? opts.timeout : 30000
         };
 
         if (opts.data) {
@@ -56,44 +56,26 @@ export default {
         ]
         var selected = _.where(targets, {name: target});
 
-        // $("#showSelectContent").off('click','li a');
-        $('#showSelectContent').on('click', 'li a', function (e) {
+        var clkFunc=function (e) {
             e.preventDefault();
             var channelName=$(e.target).html();
             $('#showTitle').html($('<span>', {html: channelName}));
 
-            /*$.ajax({
-                type: "post",
-                url: '/changeChannel',
-                cache:false,
-                async:true,
-                dataType: "json",
-                data: {'channelName':channelName },
-
-                success: function(response){
-
-                    alert("changeChannel"+JSON.stringify(data))
-
-                },
-                error:function(err){
-                    alert(err)
-                }
-
-            });*/
-
             $.when(
                 utils.load({ url: 'changeChannel' ,data: { 'channelName':channelName  }})
             ).done(function(data) {
-                // alert("changeChannel"+JSON.stringify(data))
                 $.when(
                     utils.load({ url: 'curChannel' })
                 ).done(function(data) {
-                    // alert("getChannel"+JSON.stringify(data));
+                    Tower.section[Tower.current]();
                 });
             });
 
-            Tower.section[Tower.current]();
-        });
+            // Tower.section[Tower.current]();
+        };
+
+        $('#showSelectContent').off('click','li a',clkFunc);
+        $('#showSelectContent').on('click', 'li a',clkFunc);
 
         _.each(selected, function (ele) {
             $("#showSelectTitle").html('Select ' + ele.name + '<b class="caret"></b>');

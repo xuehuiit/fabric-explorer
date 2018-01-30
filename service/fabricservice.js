@@ -11,7 +11,7 @@ var crypto = require('crypto');
 var hfc = require('fabric-client');
 var log4js = require('log4js');
 var logger = log4js.getLogger('Helper');
-logger.setLevel('DEBUG');
+logger.setLevel('ERROR');
 
 
 //var channelid = "roberttestchannel12";
