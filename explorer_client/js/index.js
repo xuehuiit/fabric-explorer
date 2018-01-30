@@ -136,61 +136,10 @@ window.Tower = {
 	section: {
 
 		'default':function () {
-            var statusUpdate = function(response) {
-                var status = response;
 
-                utils.prettyUpdate(Tower.status.peerCount, status.peerCount, $('#default-peers'));
-                utils.prettyUpdate(Tower.status.latestBlock, status.latestBlock, $('#default-blocks'));
-                utils.prettyUpdate(Tower.status.txCount, status.txCount, $('#default-txn'));
-                utils.prettyUpdate(Tower.status.chaincodeCount, status.chaincodeCount, $('#default-chaincode'));
-
-                Tower.status = status;
-
-                // Tower Control becomes ready only after the first status is received from the server
-                if (!Tower.ready) {
-                    Tower.isReady();
-                }
-
-                Dashboard.Utils.emit('node-status|announce');
-            };
-
-            $.ajax({
-                type: "post",
-                url: "api/status/get",
-                cache:false,
-                async:false,
-                dataType: "json",
-                success: function(response){
-                    statusUpdate(response);
-                },
-				error:function(err){
-                    statusUpdate({
-                        peerCount: 'n/a',
-                        latestBlock: 'n/a',
-                        txCount: 'n/a',
-                        chaincodeCount: 'n/a'
-                    });
-				}
-
+            syncStatus(function (response) {
+                statusUpdate(response);
             });
-
-
-
-            //show channel list
-            /*var channelListTemplate = _.template('<li><a href="#"><%=channlename%></a></li>');
-
-            $.when(
-                utils.load({ url: 'channellist' }),//channellist
-            ).done(function(data) {
-                var channelsel = [];
-                var channels = data.channelList;
-                channels.forEach(function(item){
-                    channelsel.push( channelListTemplate ( { channlename: item } ) );
-				})
-
-                $('#selectchannel').html( channelsel.join('') );
-
-            })*/
 
             utils.subscribe('/topic/metrics/status', statusUpdate);
 
@@ -223,13 +172,18 @@ window.Tower = {
 				'description': 'this is a description of the app.'
 			}
 
+			var latestBlock;
+            syncStatus(function (response) {
+                latestBlock=response.latestBlock;
+            });
+
 			// the array of widgets that belong to the section,
 			// these were preregistered in init() because they are unique
 
 			var widgets = [
 
-				{ widgetId: 'blockinfo',data: {bocknum: Tower.status.latestBlock},refetch: true},
-				{ widgetId: 'blocklist' ,data: Tower.status.latestBlock,refetch: true},
+				{ widgetId: 'blockinfo',data: {bocknum: latestBlock},refetch: true},
+				{ widgetId: 'blocklist' ,data: latestBlock,refetch: true},
 				{ widgetId: 'blockview' ,data: data,refetch: true},
 				{ widgetId: 'txdetail'  ,data: {txid:'0'},refetch: true},
 				{ widgetId: 'peerlist'  ,data: data,refetch: true},
@@ -248,7 +202,6 @@ window.Tower = {
             ).done(function(data) {
                 var channelName=data.currentChannel;
                 $('#showTitle').html($('<span>', {html: channelName}));
-                console.info(JSON.stringify(data));
             });
 
 
@@ -296,6 +249,46 @@ window.Tower = {
 };
 
 
+var statusUpdate = function(response) {
+    var status = response;
+
+    utils.prettyUpdate(Tower.status.peerCount, status.peerCount, $('#default-peers'));
+    utils.prettyUpdate(Tower.status.latestBlock, status.latestBlock, $('#default-blocks'));
+    utils.prettyUpdate(Tower.status.txCount, status.txCount, $('#default-txn'));
+    utils.prettyUpdate(Tower.status.chaincodeCount, status.chaincodeCount, $('#default-chaincode'));
+
+    Tower.status = status;
+
+    // Tower Control becomes ready only after the first status is received from the server
+    if (!Tower.ready) {
+        Tower.isReady();
+    }
+
+    Dashboard.Utils.emit('node-status|announce');
+};
+
+function syncStatus(cb) {
+    $.ajax({
+        type: "post",
+        url: "api/status/get",
+        cache:false,
+        async:false,
+        dataType: "json",
+        success: function(response){
+            cb(response);
+
+        },
+        error:function(err){
+            statusUpdate({
+                peerCount: 'n/a',
+                latestBlock: 'n/a',
+                txCount: 'n/a',
+                chaincodeCount: 'n/a'
+            });
+        }
+
+    });
+}
 
 $(function() {
 	$(window).on('scroll', function(e) {
