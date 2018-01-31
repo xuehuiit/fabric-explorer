@@ -174,8 +174,8 @@ var testfunc = async (orgname) => {
 
 
     let peerrequest = { "requests": "grpc://192.168.23.212:7051",
-        "serverhostname": "peer1.org1.robertfabrictest.com",
-        "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"}
+        "serverhostname": "peer0.org1.robertfabrictest.com",
+        "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer0.org1.robertfabrictest.com/tls/ca.crt"}
 
 
 
@@ -191,14 +191,13 @@ var testfunc = async (orgname) => {
     }
 */
 
-    let orderers = getOrdersRequestInfo(bcconfig['orderer']);
+   /* let orderers = getOrdersRequestInfo(bcconfig['orderer']);
     let join_groups = await getChannelJoinOrg('roberttestchannel12',peerrequest,orderers,fabricservice)
-    console.info( join_groups );
+    console.info( join_groups );*/
 
-/*
-    let peerchannel = await fabricservice.getPeerChannel(peerrequest);
+    let peerchannel = await fabricservice.getPeerChannel( peerrequest );
     console.info(JSON.stringify(peerchannel));
-*/
+
 
     /*let blockchaininfo = await fabricservice.getBlockChainInfo('roberttestchannel', peerrequest);
     console.info(JSON.stringify(blockchaininfo));*/

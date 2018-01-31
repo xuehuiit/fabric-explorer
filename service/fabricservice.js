@@ -1,5 +1,6 @@
 var path = require('path');
 var fs = require('fs');
+var fsansyc = require('fs-extra');
 var util = require('util');
 var hfc = require('fabric-client');
 var Peer = require('fabric-client/lib/Peer.js');
@@ -12,7 +13,6 @@ var hfc = require('fabric-client');
 var log4js = require('log4js');
 var logger = log4js.getLogger('Helper');
 logger.setLevel('ERROR');
-
 
 //var channelid = "roberttestchannel12";
 
@@ -467,7 +467,29 @@ function getpeer(peerRequest) {
     //let requesturl_pro = getpeer
 
     if( peermap[requesturl] == null){
-        let  peer = client.newPeer(requesturl);
+
+
+        let  peer ;
+
+        if( requesturl.indexOf("grpc://") === 0 ){
+
+            peer = client.newPeer(requesturl);
+
+        }else if( requesturl.indexOf("grpcs://") === 0 ){
+
+            let tls_cacerts_content = fsansyc.readFileSync(peerRequest['tls_cacerts']);
+
+            let opt = {
+                pem: Buffer.from(tls_cacerts_content).toString(),
+                'ssl-target-name-override': peerRequest['serverhostname']
+            }
+            peer = client.newPeer(requesturl,opt);
+
+
+        }
+
+
+
         peermap[requesturl]=peer;
     }
 
@@ -476,12 +498,34 @@ function getpeer(peerRequest) {
 }
 
 
-function getOrderer( Orderer ) {
+function getOrderer( orderer ) {
 
-    let orderurl = Orderer['url'];
+    let orderurl = orderer['url'];
 
     if( orderermap[orderurl] == null){
-        let order = client.newOrderer(orderurl);
+
+        let order;
+
+        if( orderurl.indexOf("grpc://") === 0 ){
+
+            order = client.newOrderer(orderurl);
+
+
+        }else if(orderurl.indexOf("grpcs://") === 0 ){
+
+            let tls_cacerts_content = fsansyc.readFileSync(orderer['tls_cacerts']);
+
+            let opt = {
+                         pem: Buffer.from(tls_cacerts_content).toString(),
+                        'ssl-target-name-override': orderer['serverhostname']
+                    }
+            order = client.newOrderer(orderurl,opt);
+
+
+        }
+
+
+
         orderermap[orderurl]=order;
     }
 

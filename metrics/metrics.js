@@ -14,8 +14,14 @@
  limitations under the License.
  */
 var Stats = require('fast-stats').Stats;
+var bcconfig = require('../config');
+/*
 var helper = require('../app/helper.js');
 var logger = helper.getLogger('metrics');
+*/
+var log4js = require('log4js');
+var logger = log4js.getLogger('metrics');
+logger.setLevel(bcconfig.loglevel);
 
 class Metrics {
     constructor(size=10){

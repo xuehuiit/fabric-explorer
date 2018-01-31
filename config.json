@@ -9,21 +9,21 @@
             "requests": "192.168.23.212:7051",
             "events": "192.168.23.212:7053",
             "serverhostname": "peer0.org1.robertfabrictest.com",
-            "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer0.org1.robertfabrictest.com/tls/ca.crt"
          },
          {
             "name": "peer2",
             "requests": "172.16.10.186:7051",
             "events": "172.16.10.186:7053",
             "serverhostname": "peer1.org1.robertfabrictest.com",
-            "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer1.org1.robertfabrictest.com/tls/ca.crt"
          },
          {
             "name": "peer3",
             "requests": "172.16.10.187:7051",
             "events": "172.16.10.187:7053",
             "serverhostname": "peer2.org1.robertfabrictest.com",
-            "tls_cacerts": "/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer2.org1.robertfabrictest.com/tls/ca.crt"
          }
 
       ],
@@ -35,8 +35,8 @@
 
    "orderer": [{
       "url": "192.168.23.212:7050",
-      "serverhostname": "orderer0.example.com",
-      "tls_cacerts": "/artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/ca.crt"
+      "serverhostname": "orderer.robertfabrictest.com",
+      "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/ordererOrganizations/robertfabrictest.com/orderers/orderer.robertfabrictest.com/tls/ca.crt"
    }],
 
    "host": "localhost",
@@ -44,7 +44,7 @@
    "keyValueStore": "/project/ws_nodejs/fabric_sdk_node_studynew/fabric-client-kvs",
    "eventWaitTime": "30000",
    "enableTls":false,
-   "loglevel":"INFO",
+   "loglevel":"ERROR",
    "channelsList": ["mychannel"],
    "mysql": {
       "host": "localhost",
