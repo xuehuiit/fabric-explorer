@@ -4,9 +4,6 @@ fabric explorer 是帮助大家学习、管理、监控fabric 的开源项目。
 
 [English document](https://github.com/hyperledger/blockchain-explorer/blob/master/fabric-explorer/README.md)
 
-## Demo
-[See live demo here](http://112.124.115.82:8800/)
-
 
 ## Requirements
 
@@ -39,80 +36,72 @@ Run the database setup scripts located under `db/fabricexplorer.sql`
 ## 启动fabric 浏览器
 
 1. `git clone https://github.com/hyperledger/blockchain-explorer.git`
-2. `cd blockchain-explorer/fabric-explorer`
-3. `mkdir artifacts`
-4. `cp -r $GOPATH/src/github.com/hyperledger/fabric/examples/fabric-docker-compose-svt/crypto-config artifacts/crypto-config/`
+2. `cd blockchain-explorer`
 
-5. modify config.json,set channel,mysql,tls (if you use tls communication, please set  enableTls  true ,if not set false) 
-```json
- "channelsList": ["mychannel"],
- "mysql":{
-      "host":"172.16.10.162",
-      "database":"fabricexplorer",
-      "username":"root",
-      "passwd":"123456"
-   }
-```
 
-5. 修改 app/network-config.json ,配置节点信息
+3. 修改 config.json ,配置节点信息
 
 ```json
  {
-	"network-config": {
-		"orderer": [{
-			"url": "grpc://112.124.115.82:7050",
-			"server-hostname": "orderer0.example.com"
-		},{
-			"url": "grpc://112.124.115.82:8050",
-			"server-hostname": "orderer1.example.com"
-		},{
-			"url": "grpc://112.124.115.82:9050",
-			"server-hostname": "orderer2.example.com"
-		}],
-		"org1": {
-			"name": "peerOrg1",
-			"mspid": "Org1MSP",
-			"ca": "http://112.124.115.82:7054",
-			"peer1": {
-				"requests": "grpc://112.124.115.82:7051",
-				"events": "grpc://112.124.115.82:7053",
-				"server-hostname": "peer0.org1.example.com"
-			},
-			"peer2": {
-				"requests": "grpc://112.124.115.82:8051",
-				"events": "grpc://112.124.115.82:8053",
-				"server-hostname": "peer1.org1.example.com"
-			},
-			"admin": {
-				"key": "/artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
-				"cert": "/artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
-			}
-		},
-		"org2": {
-			"name": "peerOrg2",
-			"mspid": "Org2MSP",
-			"ca": "http://112.124.115.82:8054",
-			"peer1": {
-				"requests": "grpc://112.124.115.82:9051",
-				"events": "grpc://112.124.115.82:9053",
-				"server-hostname": "peer0.org2.example.com"
-			},
-			"peer2": {
-				"requests": "grpc://112.124.115.82:10051",
-				"events": "grpc://112.124.115.82:10053",
-				"server-hostname": "peer1.org2.example.com"
-			},
-			"admin": {
-				"key": "../artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/5681d5bed252077272137ebbcd141616229862fa4deeedbb9c1cb515e95ed82d_sk",
-				"cert": "../artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem"
-			}
-		}
-	}
+
+   "orgs": [{  //系统中所有的组织
+      "name": "org1",   //组织名称
+      "mspid": "Org1MSP", //组织的mspid
+      "peers": [   //组织中包含的Peer
+         {
+            "name": "peer1",
+            "requests": "192.168.23.212:7051",
+            "events": "192.168.23.212:7053",
+            "serverhostname": "peer0.org1.robertfabrictest.com",
+            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer0.org1.robertfabrictest.com/tls/ca.crt"
+         },
+         {
+            "name": "peer2",
+            "requests": "172.16.10.186:7051",
+            "events": "172.16.10.186:7053",
+            "serverhostname": "peer1.org1.robertfabrictest.com",
+            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer1.org1.robertfabrictest.com/tls/ca.crt"
+         },
+         {
+            "name": "peer3",
+            "requests": "172.16.10.187:7051",
+            "events": "172.16.10.187:7053",
+            "serverhostname": "peer2.org1.robertfabrictest.com",
+            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer2.org1.robertfabrictest.com/tls/ca.crt"
+         }
+
+      ],
+      "admin": {  //组织管理员张的证书和私钥
+         "key": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/users/Admin@org1.robertfabrictest.com/msp/keystore",
+         "cert": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/users/Admin@org1.robertfabrictest.com/msp/signcerts"
+      }
+   }],
+
+   "orderer": [{   //Order节点的信息
+      "url": "192.168.23.212:7050",
+      "serverhostname": "orderer.robertfabrictest.com",
+      "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/ordererOrganizations/robertfabrictest.com/orderers/orderer.robertfabrictest.com/tls/ca.crt"
+   }],
+
+   "host": "localhost",  //当前服务器的地址
+   "port": "8080",  //当前服务器的节点
+   "keyValueStore": "/project/ws_nodejs/fabric_sdk_node_studynew/fabric-client-kvs",  //私钥的存放位置，
+   "eventWaitTime": "30000",
+   "enableTls":false,  //是否启用TLS模式
+   "loglevel":"ERROR",  //系统日志级别
+   "mysql": {   //数据库的相关配置
+      "host": "localhost",
+      "port": "3306",
+      "database": "blockchainexplorer",
+      "username": "root",
+      "passwd": "123456"
+   }
 }
+
 ```
 
-6. `npm install`
-7. `./start.sh`
+4. `npm install`
+5. `./start.sh`
 
 Launch the URL http://localhost:8080 on a browser.
 
@@ -120,33 +109,10 @@ Launch the URL http://localhost:8080 on a browser.
 
 这是系统的截图
 
-![Fabric Explorer](https://github.com/xspeedcruiser/explorer-images/raw/master/blockchain-exp1.png)
+![Fabric Explorer](https://raw.githubusercontent.com/robertfeng1980/gitresource/master/b1.png)
 
-![Fabric Explorer](https://github.com/xspeedcruiser/explorer-images/raw/master/blockchain-exp.png)
+![Fabric Explorer](https://raw.githubusercontent.com/robertfeng1980/gitresource/master/b1.png)
 
-![Fabric Explorer](https://github.com/xspeedcruiser/explorer-images/raw/master/blockchain-exp3.png)
-
-
-## 简单的 REST-API
-
-I provide a simple rest-api
-
-```
-//get block info
-curl -X POST  http://localhost:8080/api/block/json -H 'cache-control: no-cache' -H 'content-type: application/json' -d '{
-    "number":"${block number}"
-}'
-
-//get transcation JOSN
-curl -X POST  http://localhost:8080/api/tx/json -H 'cache-control: no-cache' -H 'content-type: application/json' -d '{
-    "number":"${ Tx hex }"
-}'
+![Fabric Explorer](https://raw.githubusercontent.com/robertfeng1980/gitresource/master/b1.png)
 
 
-//get peer status
-curl -X POST  http://localhost:8080/api/status/get -H 'cache-control: no-cache' -H 'content-type: application/json' -d ''
-
-//get chaincode list
-curl -X POST  http://localhost:8080/chaincodelist -H 'cache-control: no-cache' -H 'content-type: application/json' -d ''
-
-```
