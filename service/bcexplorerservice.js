@@ -154,7 +154,7 @@ var getCurrOrgPeers = ()=>{
  */
 var getPeer = function (orgname, peername) {
 
-    return orgnamemap[orgname][peername];
+    return orgnamemap[orgname]['peernamemap'][peername];
 
 }
 
