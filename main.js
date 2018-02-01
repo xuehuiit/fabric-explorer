@@ -297,7 +297,8 @@ app.post('/peerselectlist',function(req,res){
 
 app.post('/changePeer',function(req,res){
     let peerName=req.body.peerName
-    ledgerMgr.changeCurrPeer(peerName)
+    let peer = bcexplorerservice.getPeer(ledgerMgr.getCurrOrg(),peerName);
+    ledgerMgr.changeCurrPeer(peer)
     res.send({'a':ledgerMgr.getCurrpeer()})
 })
 

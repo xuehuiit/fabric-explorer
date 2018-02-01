@@ -17,7 +17,7 @@ import 'jif-dashboard/dashboard-template';
     steps: [].concat([
       {
         element: "div.tower-logo-container",
-        title: "Welcome to the Fabric Explorer!",
+        title: "Welcome to the Hyperledger Explorer!",
         content: "Let's start with a brief tour",
         container: ".tower-navigation",
         backdropContainer: ".tower-navigation",
@@ -43,6 +43,32 @@ import 'jif-dashboard/dashboard-template';
         },
       },
     ])
+        .concat([
+            //------------------------------------------------------------------------
+            // CONSOLE
+            {
+                element: "#organization",
+                title: "Channel",
+                content: "You can see all the information in the organization, including peers , channel, chaincodes",
+                backdropContainer: ".tower-sidebar",
+                onShow: showMenuStep("#console"),
+                onHide: hideMenuStep,
+            },
+            {
+                element: "#heads-up",
+                content: "Here are some simple metrics which are always available, such as number of connected peers, chaincode number and chancodes count",
+                placement: "bottom",
+                onShow: showMenuStep("#organization"),
+                onHide: hideMenuStep,
+            },
+            {
+                element: "#grounds",
+                content: "Here are Network architecture diagram",
+                placement: "bottom",
+                onShow: showMenuStep("#organization"),
+                onHide: hideMenuStep,
+            }
+        ])
     .concat([
       //------------------------------------------------------------------------
       // CONSOLE
@@ -55,12 +81,19 @@ import 'jif-dashboard/dashboard-template';
         onHide: hideMenuStep,
       },
       {
-          element: "#channel-name",
-          content: "current channel",
+          element: "#showTitle",
+          content: "current channel name",
           placement: "bottom",
           onShow: showMenuStep("#channel"),
           onHide: hideMenuStep,
       },
+        {
+            element: "#showSelect",
+            content: "select other channel in current Organization",
+            placement: "bottom",
+            onShow: showMenuStep("#channel"),
+            onHide: hideMenuStep,
+        },
       {
         element: "#heads-up",
         content: "Here are some simple metrics which are always available, such as number of connected peers, current block number,  transaction count and chancodes count",
@@ -110,6 +143,13 @@ import 'jif-dashboard/dashboard-template';
         onShow: showMenuStep("#channel"),
         onHide: hideMenuStep,
       },
+        {
+            element: "#button_showtxjson",
+            content: "click to show tx's JSON  ",
+            placement: "top",
+            onShow: showMenuStep("#channel"),
+            onHide: hideMenuStep,
+        },
       {
         element: ".widget-shell.peerlist",
         content: " nodes in channel",
@@ -145,7 +185,60 @@ import 'jif-dashboard/dashboard-template';
           onShow: showMenuStep("#channel"),
           onHide: hideMenuStep,
       },
-    ])
+    {
+        element: ".widget-shell.keyset",
+        content: "show all keys in channel",
+        placement: "top",
+        onShow: showMenuStep("#channel"),
+        onHide: hideMenuStep,
+    },
+    ]).concat([
+            //------------------------------------------------------------------------
+            // CONSOLE
+            {
+                element: "#peers",
+                title: "Peers",
+                content: "You can see all the information in the peer, including channel , chaincodes",
+                backdropContainer: ".tower-sidebar",
+                onShow: showMenuStep("#console"),
+                onHide: hideMenuStep,
+            },
+            {
+                element: "#showTitle",
+                content: "current peer",
+                placement: "bottom",
+                onShow: showMenuStep("#peers"),
+                onHide: hideMenuStep,
+            },
+            {
+                element: "#showSelectTitle",
+                content: "select peer in Organization",
+                placement: "bottom",
+                onShow: showMenuStep("#peers"),
+                onHide: hideMenuStep,
+            },
+            {
+                element: "#heads-up",
+                content: "Here are some simple metrics which are always available, such as number of  channels, chaincode, ",
+                placement: "bottom",
+                onShow: showMenuStep("#peers"),
+                onHide: hideMenuStep,
+            },
+            {
+                element: ".widget-shell.channellist4peer",
+                content: "show all channel in peer",
+                placement: "top",
+                onShow: showMenuStep("#peers"),
+                onHide: hideMenuStep,
+            },
+            {
+                element: ".widget-shell.chaincodelist4peer",
+                content: "show all chaincode in peer",
+                placement: "top",
+                onShow: showMenuStep("#chaincodelist4peer"),
+                onHide: hideMenuStep,
+            }
+        ])
     .concat([
       //------------------------------------------------------------------------
       // API DOCS

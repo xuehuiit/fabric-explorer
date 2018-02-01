@@ -45,7 +45,6 @@
    "eventWaitTime": "30000",
    "enableTls":false,
    "loglevel":"ERROR",
-   "channelsList": ["mychannel"],
    "mysql": {
       "host": "localhost",
       "port": "3306",
