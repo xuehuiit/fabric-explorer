@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "773d46bc503e23ef96d0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "699d01fb3e2f08878299"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -920,6 +920,12 @@
 	            };
 
 	            var widgets = [{ widgetId: 'channellist4peer', data: data, refetch: true }, { widgetId: 'chaincodelist4peer', data: data, refetch: true }];
+
+	            //show current peer
+	            _jquery2['default'].when(_utils2['default'].load({ url: 'curPeer' })).done(function (data) {
+	                var peerName = data.currentPeer;
+	                (0, _jquery2['default'])('#showTitle').html((0, _jquery2['default'])('<span>', { html: peerName }));
+	            });
 
 	            _utils2['default'].showHead(["default-channels", "default-chaincode"]);
 	            Dashboard.showSection('peers', widgets);
@@ -131349,7 +131355,7 @@
 
 	    steps: [].concat([{
 	      element: "div.tower-logo-container",
-	      title: "Welcome to the Fabric Explorer!",
+	      title: "Welcome to the Hyperledger Explorer!",
 	      content: "Let's start with a brief tour",
 	      container: ".tower-navigation",
 	      backdropContainer: ".tower-navigation",
@@ -131375,6 +131381,28 @@
 	    //------------------------------------------------------------------------
 	    // CONSOLE
 	    {
+	      element: "#organization",
+	      title: "Channel",
+	      content: "You can see all the information in the organization, including peers , channel, chaincodes",
+	      backdropContainer: ".tower-sidebar",
+	      onShow: showMenuStep("#console"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#heads-up",
+	      content: "Here are some simple metrics which are always available, such as number of connected peers, chaincode number and chancodes count",
+	      placement: "bottom",
+	      onShow: showMenuStep("#organization"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#grounds",
+	      content: "Here are Network architecture diagram",
+	      placement: "bottom",
+	      onShow: showMenuStep("#organization"),
+	      onHide: hideMenuStep
+	    }]).concat([
+	    //------------------------------------------------------------------------
+	    // CONSOLE
+	    {
 	      element: "#channel",
 	      title: "Channel",
 	      content: "You're currently looking at the channel Console, which gives you an overview of the blockchain node running on the local system",
@@ -131382,8 +131410,14 @@
 	      onShow: showMenuStep("#console"),
 	      onHide: hideMenuStep
 	    }, {
-	      element: "#channel-name",
-	      content: "current channel",
+	      element: "#showTitle",
+	      content: "current channel name",
+	      placement: "bottom",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#showSelect",
+	      content: "select other channel in current Organization",
 	      placement: "bottom",
 	      onShow: showMenuStep("#channel"),
 	      onHide: hideMenuStep
@@ -131430,6 +131464,12 @@
 	      onShow: showMenuStep("#channel"),
 	      onHide: hideMenuStep
 	    }, {
+	      element: "#button_showtxjson",
+	      content: "click to show tx's JSON  ",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
 	      element: ".widget-shell.peerlist",
 	      content: " nodes in channel",
 	      placement: "top",
@@ -131458,6 +131498,52 @@
 	      content: "show all chaincodes in channel",
 	      placement: "top",
 	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.keyset",
+	      content: "show all keys in channel",
+	      placement: "top",
+	      onShow: showMenuStep("#channel"),
+	      onHide: hideMenuStep
+	    }]).concat([
+	    //------------------------------------------------------------------------
+	    // CONSOLE
+	    {
+	      element: "#peers",
+	      title: "Peers",
+	      content: "You can see all the information in the peer, including channel , chaincodes",
+	      backdropContainer: ".tower-sidebar",
+	      onShow: showMenuStep("#console"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#showTitle",
+	      content: "current peer",
+	      placement: "bottom",
+	      onShow: showMenuStep("#peers"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#showSelectTitle",
+	      content: "select peer in Organization",
+	      placement: "bottom",
+	      onShow: showMenuStep("#peers"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: "#heads-up",
+	      content: "Here are some simple metrics which are always available, such as number of  channels, chaincode, ",
+	      placement: "bottom",
+	      onShow: showMenuStep("#peers"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.channellist4peer",
+	      content: "show all channel in peer",
+	      placement: "top",
+	      onShow: showMenuStep("#peers"),
+	      onHide: hideMenuStep
+	    }, {
+	      element: ".widget-shell.chaincodelist4peer",
+	      content: "show all chaincode in peer",
+	      placement: "top",
+	      onShow: showMenuStep("#chaincodelist4peer"),
 	      onHide: hideMenuStep
 	    }]).concat([
 	    //------------------------------------------------------------------------
