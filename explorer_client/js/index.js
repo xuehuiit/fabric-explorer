@@ -230,6 +230,14 @@ window.Tower = {
                 {widgetId: 'chaincodelist4peer', data: data,refetch: true},
             ];
 
+            //show current peer
+            $.when(
+                utils.load({ url: 'curPeer' })
+            ).done(function(data) {
+                var peerName=data.currentPeer;
+                $('#showTitle').html($('<span>', {html: peerName}));
+            });
+
             utils.showHead(["default-channels","default-chaincode"]);
             Dashboard.showSection('peers', widgets);
         },

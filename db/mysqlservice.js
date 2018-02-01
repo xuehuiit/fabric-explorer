@@ -57,7 +57,7 @@ function handleDisconnect() {
         }
     });
     connection.on('error', function(err) {
-        console.log('db error', err);
+        console.logconsole.log('db error', err);
         if(err.code === 'PROTOCOL_CONNECTION_LOST') {
             handleDisconnect();
         }else{
@@ -470,7 +470,7 @@ function getRowsBySQl(sqlchareter,condition,limit){
                 reject(err)
             }
 
-            console.log(  ` The solution is: ${rows.length }  `  );
+            // console.log(  ` The solution is: ${rows.length }  `  );
             logger.debug( ' The getRowsBySQl  ')
 
             resolve(rows)
@@ -504,7 +504,7 @@ function getRowsByFullSQl(sqlchareter){
                 reject(err)
             }
 
-            console.log(  ` The solution is: ${rows.length }  `  );
+            // console.log(  ` The solution is: ${rows.length }  `  );
             logger.debug( ' The getRowsBySQl  ')
 
             resolve(rows)

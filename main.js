@@ -290,6 +290,10 @@ app.post('/channellist',function(req,res){
     })
 })
 
+app.post('/curPeer',function(req,res){
+    res.send({'currentPeer':ledgerMgr.getCurrpeer()['name']})
+})
+
 app.post('/peerselectlist',function(req,res){
     let peerlist=bcexplorerservice.getCurrOrgPeers();
     res.send({'peerlist':peerlist});

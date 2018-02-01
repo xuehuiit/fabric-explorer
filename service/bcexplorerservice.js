@@ -196,7 +196,6 @@ var testfunc = async (orgname) => {
     console.info( join_groups );*/
 
     let peerchannel = await fabricservice.getPeerChannel( peerrequest );
-    console.info(JSON.stringify(peerchannel));
 
 
     /*let blockchaininfo = await fabricservice.getBlockChainInfo('roberttestchannel', peerrequest);
@@ -678,7 +677,7 @@ var modify_channel_block = async (channel_id, peer, fabricservice) => {
     let blockheight = blockchaininfo['height']['low'];
 
     let updageresult = await sql.updateBySql(` update channel set blocks = ${blockheight} where id = ${channelid}  `);
-    console.info(JSON.stringify(blockchaininfo['height']['low']));
+    // console.info(JSON.stringify(blockchaininfo['height']['low']));
 
 
     let countblocks = channel['countblocks'];
@@ -820,7 +819,6 @@ var modify_channel_block_trans = async (channel_id, peer, blockinfo, fabricservi
                     }else{
 
                         let updatesql = ` update keyset set valuess = '${value}' , trandtstr = '${timestamp}' where keyname = '${keyname}' and  channelname = '${channel_id}' and  chaincode = '${chaincodename}'  `;
-                        console.info(updatesql);
                         let updateresult = await sql.updateBySql(updatesql);
 
 
