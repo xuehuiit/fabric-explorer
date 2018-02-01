@@ -295,6 +295,12 @@ app.post('/peerselectlist',function(req,res){
     res.send({'peerlist':peerlist});
 })
 
+app.post('/changePeer',function(req,res){
+    let peerName=req.body.peerName
+    ledgerMgr.changeCurrPeer(peerName)
+    res.send({'a':ledgerMgr.getCurrpeer()})
+})
+
 app.post('/showSection',function(req,res){
     let sectionName=req.body.sectionName;
     ledgerMgr.changeSection(sectionName);

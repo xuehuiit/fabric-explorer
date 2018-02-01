@@ -50,23 +50,11 @@ export default {
     },
     showSelet: function (target) {
         $('#showSelect').hide();
-        var targets = [
-            {name: 'channel', showText: "Channels", url: 'channellist',cb:function (data) {
-                $("#showSelectContent").html('');
-                _.each(data.channelList, function (item) {
-                    $("#showSelectContent").append('<li><a href="#">' + item.channelname + '</a></li>')
-                })
-            }},
-            {name: 'peers', showText: "Peers", url: 'peerselectlist',cb:function (data) {
-                $("#showSelectContent").html('');
-                _.each(data.peerlist, function (item) {
-                    $("#showSelectContent").append('<li><a href="#">' + item.name + '</a></li>')
-                })
-            }}
-        ]
-        var selected = _.where(targets, {name: target});
+        $('#showSelectContent').off('click','li a',clkChannelFunc);
+        $('#showSelectContent').off('click','li a',clkPeerFunc);
+        $("#showSelectContent").empty();
 
-        var clkFunc=function (e) {
+        var clkChannelFunc=function (e) {
             e.preventDefault();
             var channelName=$(e.target).html();
             $('#showTitle').html($('<span>', {html: channelName}));
@@ -77,13 +65,39 @@ export default {
                 Tower.section[Tower.current]();
             });
         };
+        var clkPeerFunc=function (e) {
+            e.preventDefault();
+            var peerName=$(e.target).html();
+            $('#showTitle').html($('<span>', {html: peerName}));
 
-        $('#showSelectContent').off('click','li a',clkFunc);
-        $('#showSelectContent').on('click', 'li a',clkFunc);
+            $.when(
+                utils.load({ url: 'changePeer' ,data: { 'peerName':peerName  }})
+            ).done(function(data) {
+                Tower.section[Tower.current]();
+            });
+        };
+
+        var targets = [
+            {name: 'channel', showText: "Channels", url: 'channellist',cb:function (data) {
+                $("#showSelectContent").empty();
+                _.each(data.channelList, function (item) {
+                    $("#showSelectContent").append('<li><a href="#">' + item.channelname + '</a></li>')
+                })
+            },clcFunc:clkChannelFunc},
+            {name: 'peers', showText: "Peers", url: 'peerselectlist',cb:function (data) {
+                $("#showSelectContent").empty();
+                _.each(data.peerlist, function (item) {
+                    $("#showSelectContent").append('<li><a href="#">' + item.name + '</a></li>')
+                })
+            },clcFunc:clkPeerFunc}
+        ];
+
+        var selected = _.where(targets, {name: target});
 
         _.each(selected, function (ele) {
             $("#showSelectTitle").html('Select ' + ele.name + '<b class="caret"></b>');
 
+            $('#showSelectContent').on('click', 'li a',ele.clcFunc);
 
             $.when(
                 utils.load({url: ele.url})
