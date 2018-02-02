@@ -3,7 +3,6 @@ var webpack = require('webpack');
 
 
 module.exports = {
-    // devtool:"source-map",
     entry: ["webpack/hot/dev-server", "./js/index.js"],
     output: {
         path: path.join(__dirname, 'js'),
@@ -19,18 +18,8 @@ module.exports = {
         hot: true,
         inline: true,
         stats: 'errors-only',
-        port: 8081,
-        proxy: {
-            '*': {
-                target: 'http://localhost:8080',
-                secure: false,
-                changeOrigin: true
-            }
-        }
+        port: 8081
     },
-    externals: [{
-        xmlhttprequest: '{XMLHttpRequest:XMLHttpRequest}'
-    }],
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
