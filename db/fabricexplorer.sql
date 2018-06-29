@@ -1,3 +1,19 @@
+/*
+ Navicat MySQL Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MariaDB
+ Source Server Version : 100121
+ Source Host           : localhost
+ Source Database       : blockchainexplorer
+
+ Target Server Type    : MariaDB
+ Target Server Version : 100121
+ File Encoding         : utf-8
+
+ Date: 06/29/2018 14:32:35 PM
+*/
+
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -15,7 +31,7 @@ CREATE TABLE `blocks` (
   `createdt` datetime DEFAULT NULL,
   `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='block';
+) ENGINE=InnoDB AUTO_INCREMENT=6403 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='block';
 
 -- ----------------------------
 --  Table structure for `ca`
@@ -45,12 +61,12 @@ CREATE TABLE `chaincodes` (
   `path` varchar(256) DEFAULT NULL,
   `escc` varchar(32) DEFAULT NULL,
   `vscc` varchar(32) DEFAULT NULL,
-  `txcount` int(11) DEFAULT '0' ,
-  `ccstatus` varchar(32) DEFAULT NULL COMMENT ,
+  `txcount` int(11) DEFAULT '0' COMMENT '¸Ãchaincode·¢ÆðµÄ½»Ò×Êý',
+  `ccstatus` varchar(32) DEFAULT NULL COMMENT 'chaincodeµÄ×´Ì¬£¬Ä¿Ç°install ºÍ instantiate Á½ÖÖ×´Ì¬',
   `createdt` datetime DEFAULT NULL,
   `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='chaincode';
+) ENGINE=InnoDB AUTO_INCREMENT=272 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='chaincode';
 
 -- ----------------------------
 --  Table structure for `channel`
@@ -65,7 +81,7 @@ CREATE TABLE `channel` (
   `createdt` datetime DEFAULT NULL,
   `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='channel';
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='channel';
 
 -- ----------------------------
 --  Table structure for `keyset`
@@ -86,7 +102,7 @@ CREATE TABLE `keyset` (
   `createdt` datetime DEFAULT NULL,
   `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='keyset';
+) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='keyset';
 
 -- ----------------------------
 --  Table structure for `keyset_history`
@@ -104,7 +120,7 @@ CREATE TABLE `keyset_history` (
   `chaincode` varchar(64) DEFAULT NULL,
   `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='keyset_history';
+) ENGINE=InnoDB AUTO_INCREMENT=1405 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='keyset';
 
 -- ----------------------------
 --  Table structure for `orderer`
@@ -171,7 +187,7 @@ CREATE TABLE `peer_ref_channel` (
   `peer_name` varchar(64) DEFAULT NULL,
   `channelname` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='peer_ref_channel';
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='peer_ref_channel';
 
 -- ----------------------------
 --  Table structure for `transaction`
@@ -188,7 +204,7 @@ CREATE TABLE `transaction` (
   `createdt` datetime DEFAULT NULL,
   `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='transactions';
+) ENGINE=InnoDB AUTO_INCREMENT=8165 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='transactions';
 
 -- ----------------------------
 --  Table structure for `write_lock`
@@ -200,3 +216,4 @@ CREATE TABLE `write_lock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='write_lock';
 
 SET FOREIGN_KEY_CHECKS = 1;
+
