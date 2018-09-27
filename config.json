@@ -1,47 +1,33 @@
 {
 
    "orgs": [{
-      "name": "org1",
-      "mspid": "Org1MSP",
+      "name": "LvgangTestMSP",
+      "mspid": "LvgangTestMSP",
       "peers": [
          {
             "name": "peer1",
-            "requests": "192.168.23.212:7051",
-            "events": "192.168.23.212:7053",
-            "serverhostname": "peer0.org1.robertfabrictest.com",
+            "requests": "192.168.100.110:7051",
+            "events": "192.168.100.110:7053",
+            "serverhostname": "peer0.org1.qklszzn.com",
             "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer0.org1.robertfabrictest.com/tls/ca.crt"
-         },
-         {
-            "name": "peer2",
-            "requests": "172.16.10.186:7051",
-            "events": "172.16.10.186:7053",
-            "serverhostname": "peer1.org1.robertfabrictest.com",
-            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer1.org1.robertfabrictest.com/tls/ca.crt"
-         },
-         {
-            "name": "peer3",
-            "requests": "172.16.10.187:7051",
-            "events": "172.16.10.187:7053",
-            "serverhostname": "peer2.org1.robertfabrictest.com",
-            "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/peers/peer2.org1.robertfabrictest.com/tls/ca.crt"
          }
 
       ],
       "admin": {
-         "key": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/users/Admin@org1.robertfabrictest.com/msp/keystore",
-         "cert": "/project/opt_fabric/fabricconfig/crypto-config/peerOrganizations/org1.robertfabrictest.com/users/Admin@org1.robertfabrictest.com/msp/signcerts"
+         "key": "/project/fabric/testnew/crypto-config/peerOrganizations/lvgangtest.test.com/users/Admin@lvgangtest.test.com/msp/keystore",
+         "cert": "/project/fabric/testnew/crypto-config/peerOrganizations/lvgangtest.test.com/users/Admin@lvgangtest.test.com/msp/signcerts"
       }
    }],
 
    "orderer": [{
-      "url": "192.168.23.212:7050",
-      "serverhostname": "orderer.robertfabrictest.com",
-      "tls_cacerts": "/project/opt_fabric/fabricconfig/crypto-config/ordererOrganizations/robertfabrictest.com/orderers/orderer.robertfabrictest.com/tls/ca.crt"
+      "url": "192.168.100.110:7050",
+      "serverhostname": "orderer.qklszzn.com",
+      "tls_cacerts": "/project/huohu/fabric/fabricconfig/crypto-config/ordererOrganizations/qklszzn.com/orderers/orderer.qklszzn.com/tls/ca.crt"
    }],
 
    "host": "localhost",
    "port": "8080",
-   "keyValueStore": "/project/ws_nodejs/fabric_sdk_node_studynew/fabric-client-kvs",
+   "keyValueStore": "/project/ws_nodejs/fabric-explorer/fabric-client-kvs",
    "eventWaitTime": "30000",
    "enableTls":false,
    "loglevel":"ERROR",

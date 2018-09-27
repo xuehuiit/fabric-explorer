@@ -7,6 +7,8 @@ var Peer = require('fabric-client/lib/Peer.js');
 var EventHub = require('fabric-client/lib/EventHub.js');
 var User = require('fabric-client/lib/User.js');
 var crypto = require('crypto');
+
+var ledgerMgr=require('../utils/ledgerMgr.js')
 //svar FabricCAService = require('fabric-ca-client');
 
 var hfc = require('fabric-client');
@@ -416,6 +418,9 @@ function getOrgUser4Local() {
     let certPath = admin_sert;
     let certPEM = readAllFiles(certPath)[0].toString();
 
+    let mspid = ledgerMgr.getCurrOrg();
+
+
     return hfc.newDefaultKeyValueStore({
 
         path:tempdir
@@ -425,7 +430,7 @@ function getOrgUser4Local() {
 
         return client.createUser({
             username: 'Admin',
-            mspid: 'Org1MSP',
+            mspid: mspid,
             cryptoContent: {
                 privateKeyPEM: keyPEM,
                 signedCertPEM: certPEM
